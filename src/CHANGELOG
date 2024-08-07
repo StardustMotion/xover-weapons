@@ -1,0 +1,315 @@
+
+						#-------------------#
+						#	  ~ 2.2.0 ~     #
+						# 	[2024-01-01] 	#
+						#     MM8BDM v6b    #
+						#-------------------#
+
+Originally a v6b compatibility patch, it offers some new weapons, a rework of the system, and allow modders
+to interact with Xover Weapons
+
+- optimized size graphic
+
+
+						#-------------------#
+						#	  ~ 2.1.0 ~     #
+						# 	[2021-12-26] 	#
+						#     MM8BDM v6a    #
+						#-------------------#
+
+Since Xover Weapons 2.1.0, this changelog is inspired by https://keepachangelog.com/
+guidelines and the mod adheres to https://semver.org/spec/v2.0.0.html
+
+			 ################
+			# -- GAMEPLAY -- #
+			 ################
+		
+<< GENERAL >>
+
+	> Added 11 new Xover Weapons
+	> Added compatibility with Cooperative/Survival/Invasion ("PvM") game modes
+		Xover Weapons work against monsters and won't hinder allies
+	> Xover Weapons options menu :
+		- Added a "Update log" menu recapping this changelog
+		- Added a game setting to multiply fusion prices (x0, x1, x2, x3, x4, x8)
+		- Added a game setting to discard Xover Weapon ingredients on death
+		- Added a game setting to keep weapons between maps (PvM modes only)
+		- Removed the game setting to toggle item drop (screws/weapons) on death
+	> Changed recipe Mix recipe animation to stay on screen
+	> Changed players either drop screws or one of their vanilla weapon on death =>
+		now players always drop screws on death, and if killed by a Xover Weapon, 
+		will also drop one of their vanilla weapons
+
+<< SCREWS >>
+	> Changed screw economy. Old (left) and new (right) fusion prices are :
+	
+		From\To	2D	3D	4D	5D			From\To	2D	3D	4D	5D	
+		1D		100 150 175 185			1D		100 200 300 400
+		2D		--- 120 180 210			2D		--- 150 275 400
+		3D		--- --- 150 225			3D		--- --- 250 400
+		4D		--- --- --- 200			4D		--- --- --- 400	
+		
+	> Changed screw gains from pickups : small/medium/large 25/60/100 => 50/125/200
+	> Changed screws replacing ammo probability 33% => 40% of the time
+	> Changed screws/ammo respawn timer 30s => 18s
+	> Changed starting screws (50 + [0,185 based on # of players]) => 
+		50 (for PvP game modes)      0 (for PvM game modes)
+	> Removed screws refund on uncombining
+	
+		
+	
+						
+			 ###############
+			# -- WEAPONS -- #
+			 ###############
+			 
+
+<<< AIMING LASER >>>
+	> Uncharged attack
+		- Damage 9*2 => 11*2	
+		- Ammo cost 3.0 => 2.25 units	
+		- RoF 1.17/s => 0.972/s
+		- Can now target any shootable object
+		- Added target count display on screen
+	> Charged attack
+		- Changed sound effect and obituary
+		
+<<< COUNTERSHADING TRACER >>>
+	> Damage now increases over projectile life time
+	> Over time increase :
+		- Damage : 40 => [30 to 92]
+		- Seeking angle [6 to 76] => [12 to 85]
+		- Seeking range [64 to 320] => [128 to 640]
+	> RoF 0.625/s => 0.36/s
+	> Ammo cost 4.0 => 5.5 units
+	
+<<< DELAY FLAME >>>
+	> Added new sound effect to distinguish with Atomic Fire's
+	
+<<< FOREST WHIP >>>
+	> Whip
+		- Dunks twice as hard
+		- Now uses a continuous formula for locking duration
+		- Sprite is now affected by online latency to better reflect the whip's position
+	> Bramble
+		- Radius 80 => 50, height 80 => 128 (matching sprite height)
+		- Damage doesn't fall off with distance anymore
+		- Added sound effects to distinguish with Slash Claw's
+		
+<<< GLUE SHOT >>>
+	> Block health 75 => 50 (same as Concrete Shot block)
+	> Damage 33 => 30
+	> Now applies 25% of the fully stacked slow effect on hit
+	
+<<< GROUND DASH >>>
+	> Uncharged attack
+		- Now resets player pitch to match the rock's trajectory when aimed too low
+	> Charged attack
+		- Damage 16 => 13
+		- Speed when bumped (based on how big the boulder) : [15 to 8] => [23 to 10]
+		- Bumping detection more generous
+		- The boulder's HP depletes over time in non-PVP game modes
+	
+<<< HELLFIRE CUTTER >>>
+	> Now returns after half a second
+	> Ammo cost 4.0 => 5.0 units
+	
+<<< ICE GATLING >>>
+	> Hits required to freeze 10 => 13, frozen duration 2.0 => 3.0s
+	> Ice round damage 2 => 1, speed 35 => 48
+	
+<<< LEAF BOOMERANG >>>
+	> Gives a new leaf if one didn't return after 3.0s => 1.7s
+		
+<<< MELT CREEPER >>>
+	> Wave stops after 14.17s => 7.3s
+	> RoF 0.55/s => 0.69/s
+	> Ammo cost (charged) 8.0 => 6.5 units
+	> The first column spawns one step ahead (rather than on user's position)
+	
+<<< METGUARD FAMILY >>>
+	> MetGuard1 cooldown increased by 0.43s
+	> MetGuard2 cooldown increased by 0.29s
+	> MetGuard1 and MetGuard2 damage 17 => 22
+	> MetGuard3 and MetGuard3EX
+		- Shockwave now clips to upper sectors
+	> MetGuard3EX
+		- Poison panel duration 2.74s => 4.11s
+		
+<<< RECYCLE INHALER >>>
+	> Can now pull vertically
+	> Can't pull players through monster blocking lines ("pits") anymore
+	> Damage 27 => 24
+	> Auto-releases after hitting a target
+	> Recycle players into 3 random pickups => one R-Tank (fully restores HP)
+		and 2 random pickups. Health and screws are removed from the pickup list
+	
+<<< SONIC SLICER >>>
+	> Charged attack
+		- Can now also damage objects
+		- Min/max damage over time 18/69 => 28/78
+		- Ammo cost 8.0 => 6.5 units
+		
+<<< SUPER ARROW >>>
+	> Arrow HP : infinite => 160
+	> Doesn't block ripping projectiles anymore
+	> Won't damage/vanish on enemy contact when held
+	> Automatically releases after two seconds of hold
+	> Crashing radius 26 => 34
+	> Maximum up/down angle while traveling 3 => 5
+	> Ammo cost 4 => 3.25 units
+			
+<<< THOUSAND KNIVES >>>
+	> Knives pattern reworked into a slower, accurate and hard hitstunning attack
+	
+<<< THOUSAND SPEAR FAMILY >>>
+	> Stab damage 6 => 7, final thrust 16 => 18
+	> Lateral stabs delay 0.09s => 0.91s
+	> Now only use RNG for its pitch direction
+	> Thousand Spear
+		- Momentum gain 6 => 9 (final thrust)
+	> Thousand Spear V2/V3/V5
+		- Momentum gain 2 => 3 (stab), 6 => 12 (final thrust)
+	> Thousand Spear V5
+		- Summoned soldier
+			+ Vanishes after 6 => 4 seconds
+			+ Is summoned with a burst of forward speed
+			+ Attack damage 2 => 4
+			+ Locks target for 0.77s => 1.26s
+			+ Has a more natural behavior
+
+<<< TIME BOMB >>>
+	> Damage 28 => 24
+	> Max damage reached at quarter => half radius
+	> Explosion radius 192 => 256
+	> Slow strength 40% => 69%
+	> Slow duration 2.08s => 1.29s
+	
+<<< TRIAD THUNDER >>>
+	> Moved uncharged attack obituary to charged attack and got a new one
+	> Charged attack
+		- Quake min/max damage 3/10 => 2/8
+		- Quake can now damage objects
+		- Lightning ball damage 10 => 22
+			
+<<< WHITE ROSE CLUSTER >>> 
+	> Uncharged orb damage 30 => 26
+	> Mid charged orb
+		- Damage same as fully charged (melee 10 => 13, thrown 14 => 16)
+		- Ammo cost 6.0 => 5.0 units
+	> Fully charged orb 
+		- (melee and thrown) Damage now falls with range in the outer 33% orb radius
+		
+<< YOGA INFERNO >>>
+	> Damage 11 => 12
+	> Cost 5.0 => 4.0 units
+		
+						
+				
+			 ################
+			# -- BUGFIXES -- #	
+			 ################
+	
+<<< GENERAL >>>	
+	> Recipe Mix's randomly given recipe doesn't favor anymore the leftmost 
+		weapon ingredients on the current map weapon list. It truely is random now
+	> Corrected "Power up! [Weapon name]" message and Xover Weapon bar colors 
+		sometimes being displayed erroneously online
+	> Recipe Mix bags shouldn't unsync online anymore
+	> Ammo and screws now don't respawn if sv_itemrespawn is disabled
+	> Xover Weapons now won't consume ammo if sv_infiniteammo is enabled
+	> Fixed an issue where the registered fusions weren't cleared, diverging
+		from the player's actually owned fusions
+	> The screen properly clears Xover Weapons ammo bars and the crafting table
+		when joining the dead spectators in game modes like (T)LMS or Survival
+	> Xover Weapons' tag name's color doesn't affect the text coming after anymore
+	> Screws dropped by players now properly eventually vanish
+	> Fixed the generic animated bar's animation
+	> Vanilla weapons stay on map when picked up, rather than respawning 
+		half a second later
+	
+<<< WEAPONS >>>
+	> Glue Shot
+		- Block shouldn't get players stuck inside anymore
+		- Block sprite displays properly if voxels are turned off
+		- Voxel lateral offset properly centered
+	> Ground Dash
+		- Fixed other players seeing a charged attack boulder's health by damaging it
+		- Uncharged rock properly bounces (visually) on walls online
+	> Hellfire Cutter
+		- Can't mark non-players anymore
+	> Ice Gatling
+		- Now properly prevent frozen enemies from firing
+		- Rate of fire now doesn't erroneously wait an extra 0.06s every 6 shots
+	> Sonic Slicer
+		- Uncharged attack properly vanishes and damage certain non-players
+	> Thousand Spear V5
+		- Soldiers correctly vanish after a set time, even if they are stabbing something
+	> Time Bomb
+		- Fixed speed down arrows inconsistant display
+		- Properly disappears (visually) on negative gravity ceiling contact
+		
+<<< KNOWN BUGS >>>
+	> If Xover Weapons are kept between PvM maps, a player dieing on map start
+		(likely due to telefrag because of the map not having enough spawn spots)
+		might glitch their weapon inventory. Enabling sv_unblockallies prevents 
+		this issue, but it's the mappers' job to have sufficient spawn spots
+
+
+
+
+
+        		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+				~~~~~~~~~~~~~~~~~ Version 2 ~~~~~~~~~~~~~~~~~~~~
+				~~~~~~~~~~~ 09/07/2021 (MM8BDM-v6a) ~~~~~~~~~~~~
+				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+				
+	> Major update. Mod completely rebuilt and redesigned from zero.
+		The only leftover from the previous versions is the mod's name.
+		This is rather a stable engine/pre-beta build than an actual,
+		finished mod release
+
+
+
+
+
+				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+				~~~~~~~~~~~~~~~~ Version 1b	~~~~~~~~~~~~~~~~~~~~
+				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			"Haha nope I didn't added Mega Man 2 yet. Creating 28 weapons takes time!"
+
+> The weapons instantly respawn after being picked up, even the rare weapons like Time Slow!
+> Actions with the wrench key are more dynamic, executed faster
+> The way the weapons which aren't of the selected episode are converted was changed. Each non-MM1
+weapon now morphes randomly into a weapon from a list of weapons (for instance ; Search Snake
+can either turns into a Fire Storm, a Thunder Beam or a Ice Slasher, instead of turning into a 
+Fire Storm with 100% of chance, like in v1a.)
+Additionally, the 4 MMK killers weapons aren't converted, and the same goes for Mega Ball, they're
+unique
+> You can now see all the weapons locations on the map! Marvelous I call it
+
+> Guts x Time slight damage buff. The weapon correctly falls and play the chime sound online!
+> Continual earthquake when you sometimes finish using Bomb x Elec is fixed
+> Fire rate of Fire x Oil (for the oil machinegun) reduced by 1 tic. Damage of the blobs lightly
+increased (6 ==> 8)
+> Fire x Time kamikaze suicide blasting radius increased (500 => 575)
+> Fire x Ice fire rate slightly buffed, and obit references the weapon's name
+> Cut x Guts damager damage reduced (13 ==> 11)
+> Cut x Time's knives damage : 1 ripping ==> 3 ripping
+> Bomb x Elec range and damage nerf
+> Ice x Time (Glacial Spell) damage buff (A_Explode 10 => 15)
+> Elec x Oil obit changed ; hitstun removed
+> Cut x Fire's slight damage nerf
+> Guts x Bomb damage increased
+> Cut x Ice damage reduced by 1 ripping
+> Bomb x Oil ammo receiving on pickup increased ; radius damage reduced
+> Goodbye Eddie (he's evil >.>) ! Hello Reggae! He can steal crossover weapons, yup
+> A few Secret Recipes were introduced
+			
+	
+				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+				~~~~~~~~~~~~~~~~ Version 1a	~~~~~~~~~~~~~~~~~~~~
+				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			"An attempt toward the weapon mixing/crossover/hybrid utopian project"
+	
+> ENJOY!! 8D

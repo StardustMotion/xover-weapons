@@ -1,0 +1,59 @@
+actor CometDashWep_JXW : XWBase { inventory.pickupmessage "$PU_COMETDASH" states { sprite: CMDA A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("CometDashWep_JXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 17) stop}}
+actor CometDashWep_JXWToken : Once {}
+actor CometDashWep_JXWDrop : CometDashWep_JXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 17) stop }}
+
+actor GlueShotWep_JXW : XWBase { inventory.pickupmessage "$PU_GLUESHOT" states { sprite: GLUS A 0 
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("GlueShotWep_JXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 18) stop}}
+actor GlueShotWep_JXWToken : Once {}
+actor GlueShotWep_JXWDrop : GlueShotWep_JXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 18) stop }}
+
+actor JetMissileWep_JXW : XWBase { inventory.pickupmessage "$PU_JETMISSILE" states { sprite: JETM X 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("JetMissileWep_JXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 19) stop}}
+actor JetMissileWep_JXWToken : Once {}
+actor JetMissileWep_JXWDrop : JetMissileWep_JXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 19) stop }}
+
+actor NailShieldWep_JXW : XWBase { inventory.pickupmessage "$PU_NAILSHIELD" states { sprite: NAIS X 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("NailShieldWep_JXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 20) stop}}
+actor NailShieldWep_JXWToken : Once {}
+actor NailShieldWep_JXWDrop : NailShieldWep_JXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 20) stop }}
+
+actor NitroBlastWep_JXW : XWBase { inventory.pickupmessage "$PU_NITROBLAST" states { sprite: NITB A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("NitroBlastWep_JXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 21) stop}}
+actor NitroBlastWep_JXWToken : Once {}
+actor NitroBlastWep_JXWDrop : NitroBlastWep_JXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 21) stop }}
+
+actor RainbowBeamWep_JXW : XWBase { inventory.pickupmessage "$PU_RAINBOWBEAM" states { sprite: RBEM A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("RainbowBeamWep_JXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 22) stop}}
+actor RainbowBeamWep_JXWToken : Once {}
+actor RainbowBeamWep_JXWDrop : RainbowBeamWep_JXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 22) stop }}
+
+actor TankArsenalWep_JXW : XWBase { inventory.pickupmessage "$PU_TANKARSENAL" states { sprite: TNAR A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("TankArsenalWep_JXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 23) stop}}
+actor TankArsenalWep_JXWToken : Once {}
+actor TankArsenalWep_JXWDrop : TankArsenalWep_JXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 23) stop }}
+
+actor WaterCannonWep_JXW : XWBase { inventory.pickupmessage "$PU_WATERCANNON" states { sprite: WTCA X 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("WaterCannonWep_JXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 24) stop}}
+actor WaterCannonWep_JXWToken : Once {}
+actor WaterCannonWep_JXWDrop : WaterCannonWep_JXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 24) stop }}
+
+actor YokuAttackWep_JXW : XWBase { inventory.pickupmessage "$PU_YOKUATTACK" states { sprite: YKUA A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("YokuAttackWep_JXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 25) stop}}
+actor YokuAttackWep_JXWToken : Once {}
+actor YokuAttackWep_JXWDrop : YokuAttackWep_JXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 25) stop }}
+
+actor YoYoCutterWep_JXW : XWBase { inventory.pickupmessage "$PU_YOYOCUTTER" states { sprite: YOYC A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("YoYoCutterWep_JXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 26) stop}}
+actor YoYoCutterWep_JXWToken : Once {}
+actor YoYoCutterWep_JXWDrop : YoYoCutterWep_JXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 26) stop }}

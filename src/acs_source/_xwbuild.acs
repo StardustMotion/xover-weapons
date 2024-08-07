@@ -1,0 +1,16 @@
+#library "_xwbuild"
+
+#nocompact // allow to overpass the 256 function definition limits
+
+#include "zcommon.acs"
+#import "8BDT.acs"
+#include "8BDMLIB.acs"
+#include "DTADD.acs"
+#include "ASSTLIB.acs"
+
+
+// -----------------------------
+#include "data.acs"
+#include "server_core.acs"
+#include "client_core.acs"
+// -----------------------------

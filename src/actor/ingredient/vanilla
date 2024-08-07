@@ -1,0 +1,551 @@
+actor RollingCutterWepXW : XWBase { inventory.pickupmessage "$PU_RollingCutter" states { sprite: WEA2 F 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("RollingCutterWepXWToken",1,"no") "----" A 0 A_GiveInventory("RollingCutterWep")  "----" A 0 A_GiveInventory("RollingCutterWepXWToken") stop}}
+actor RollingCutterWepXWToken : Once {}
+actor RollingCutterWepXWDrop : RollingCutterWepXW { states { no: "----" A 0 A_GiveInventory("RollingCutterAmmo", 0xFFFF) stop }}
+actor SuperArmWepXW : XWBase { inventory.pickupmessage "$PU_SuperArm" states { sprite: WEAP O 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("SuperArmWepXWToken",1,"no") "----" A 0 A_GiveInventory("SuperArmWep")  "----" A 0 A_GiveInventory("SuperArmWepXWToken") stop}}
+actor SuperArmWepXWToken : Once {}
+actor SuperArmWepXWDrop : SuperArmWepXW { states { no: "----" A 0 A_GiveInventory("SuperArmAmmo", 0xFFFF) stop }}
+actor IceSlasherWepXW : XWBase { inventory.pickupmessage "$PU_IceSlasher" states { sprite: WEAP P 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("IceSlasherWepXWToken",1,"no") "----" A 0 A_GiveInventory("IceSlasherWep")  "----" A 0 A_GiveInventory("IceSlasherWepXWToken") stop}}
+actor IceSlasherWepXWToken : Once {}
+actor IceSlasherWepXWDrop : IceSlasherWepXW { states { no: "----" A 0 A_GiveInventory("IceSlasherAmmo", 0xFFFF) stop }}
+actor HyperBombWepXW : XWBase { inventory.pickupmessage "$PU_HyperBomb" states { sprite: WEAP H 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("HyperBombWepXWToken",1,"no") "----" A 0 A_GiveInventory("HyperBombWep")  "----" A 0 A_GiveInventory("HyperBombWepXWToken") stop}}
+actor HyperBombWepXWToken : Once {}
+actor HyperBombWepXWDrop : HyperBombWepXW { states { no: "----" A 0 A_GiveInventory("HyperBombAmmo", 0xFFFF) stop }}
+actor FireStormWepXW : XWBase { inventory.pickupmessage "$PU_FireStorm" states { sprite: WEAP Y 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("FireStormWepXWToken",1,"no") "----" A 0 A_GiveInventory("FireStormWep")  "----" A 0 A_GiveInventory("FireStormWepXWToken") stop}}
+actor FireStormWepXWToken : Once {}
+actor FireStormWepXWDrop : FireStormWepXW { states { no: "----" A 0 A_GiveInventory("FireStormAmmo", 0xFFFF) stop }}
+actor ThunderBeamWepXW : XWBase { inventory.pickupmessage "$PU_ThunderBeam" states { sprite: WEAP R 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("ThunderBeamWepXWToken",1,"no") "----" A 0 A_GiveInventory("ThunderBeamWep")  "----" A 0 A_GiveInventory("ThunderBeamWepXWToken") stop}}
+actor ThunderBeamWepXWToken : Once {}
+actor ThunderBeamWepXWDrop : ThunderBeamWepXW { states { no: "----" A 0 A_GiveInventory("ThunderBeamAmmo", 0xFFFF) stop }}
+actor OilSliderWepXW : XWBase { inventory.pickupmessage "$PU_OilSlider" states { sprite: WEA7 J 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("OilSliderWepXWToken",1,"no") "----" A 0 A_GiveInventory("OilSliderWep")  "----" A 0 A_GiveInventory("OilSliderWepXWToken") stop}}
+actor OilSliderWepXWToken : Once {}
+actor OilSliderWepXWDrop : OilSliderWepXW { states { no: "----" A 0 A_GiveInventory("OilSliderAmmo", 0xFFFF) stop }}
+actor TimeSlowWepXW : XWBase { inventory.pickupmessage "$PU_TimeSlow" states { sprite: SLOT X 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("TimeSlowWepXWToken",1,"no") "----" A 0 A_GiveInventory("TimeSlowWep")  "----" A 0 A_GiveInventory("TimeSlowWepXWToken") stop}}
+actor TimeSlowWepXWToken : Once {}
+actor TimeSlowWepXWDrop : TimeSlowWepXW { states { no: "----" A 0 A_GiveInventory("TimeSlowAmmo", 0xFFFF) stop }}
+
+
+
+actor AtomicFireWepXW : XWBase { inventory.pickupmessage "$PU_AtomicFire" states { sprite: WEAP E 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("AtomicFireWepXWToken",1,"no") "----" A 0 A_GiveInventory("AtomicFireWep")  "----" A 0 A_GiveInventory("AtomicFireWepXWToken") stop}}
+actor AtomicFireWepXWToken : Once {}
+actor AtomicFireWepXWDrop : AtomicFireWepXW { states { no: "----" A 0 A_GiveInventory("AtomicFireAmmo", 0xFFFF) stop }}
+actor BubbleLeadWepXW : XWBase { inventory.pickupmessage "$PU_BubbleLead" states { sprite: WEAP D 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("BubbleLeadWepXWToken",1,"no") "----" A 0 A_GiveInventory("BubbleLeadWep")  "----" A 0 A_GiveInventory("BubbleLeadWepXWToken") stop}}
+actor BubbleLeadWepXWToken : Once {}
+actor BubbleLeadWepXWDrop : BubbleLeadWepXW { states { no: "----" A 0 A_GiveInventory("BubbleLeadAmmo", 0xFFFF) stop }}
+actor AirShooterWepXW : XWBase { inventory.pickupmessage "$PU_AirShooter" states { sprite: WEAP G 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("AirShooterWepXWToken",1,"no") "----" A 0 A_GiveInventory("AirShooterWep")  "----" A 0 A_GiveInventory("AirShooterWepXWToken") stop}}
+actor AirShooterWepXWToken : Once {}
+actor AirShooterWepXWDrop : AirShooterWepXW { states { no: "----" A 0 A_GiveInventory("AirShooterAmmo", 0xFFFF) stop }}
+actor CrashBombWepXW : XWBase { inventory.pickupmessage "$PU_CrashBomb" states { sprite: WEA2 C 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("CrashBombWepXWToken",1,"no") "----" A 0 A_GiveInventory("CrashBombWep")  "----" A 0 A_GiveInventory("CrashBombWepXWToken") stop}}
+actor CrashBombWepXWToken : Once {}
+actor CrashBombWepXWDrop : CrashBombWepXW { states { no: "----" A 0 A_GiveInventory("CrashBombAmmo", 0xFFFF) stop }}
+actor LeafShieldWepXW : XWBase { inventory.pickupmessage "$PU_LeafShield" states { sprite: WEAP F 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("LeafShieldWepXWToken",1,"no") "----" A 0 A_GiveInventory("LeafShieldWep")  "----" A 0 A_GiveInventory("LeafShieldWepXWToken") stop}}
+actor LeafShieldWepXWToken : Once {}
+actor LeafShieldWepXWDrop : LeafShieldWepXW { states { no: "----" A 0 A_GiveInventory("LeafShieldAmmo", 0xFFFF) stop }}
+actor MetalBladeWepXW : XWBase { inventory.pickupmessage "$PU_MetalBlade" states { sprite: WEAP S 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("MetalBladeWepXWToken",1,"no") "----" A 0 A_GiveInventory("MetalBladeWep")  "----" A 0 A_GiveInventory("MetalBladeWepXWToken") stop}}
+actor MetalBladeWepXWToken : Once {}
+actor MetalBladeWepXWDrop : MetalBladeWepXW { states { no: "----" A 0 A_GiveInventory("MetalBladeAmmo", 0xFFFF) stop }}
+actor QuickBoomerangWepXW : XWBase { inventory.pickupmessage "$PU_QuickBoomerang" states { sprite: WEAP Z 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("QuickBoomerangWepXWToken",1,"no") "----" A 0 A_GiveInventory("QuickBoomerangWep")  "----" A 0 A_GiveInventory("QuickBoomerangWepXWToken") stop}}
+actor QuickBoomerangWepXWToken : Once {}
+actor QuickBoomerangWepXWDrop : QuickBoomerangWepXW { states { no: "----" A 0 A_GiveInventory("QuickBoomerangAmmo", 0xFFFF) stop }}
+actor TimeStopperWepXW : XWBase { inventory.pickupmessage "$PU_TimeStopper" states { sprite: WEAP N 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("TimeStopperWepXWToken",1,"no") "----" A 0 A_GiveInventory("TimeStopperWep")  "----" A 0 A_GiveInventory("TimeStopperWepXWToken") stop}}
+actor TimeStopperWepXWToken : Once {}
+actor TimeStopperWepXWDrop : TimeStopperWepXW { states { no: "----" A 0 A_GiveInventory("TimeStopperAmmo", 0xFFFF) stop }}
+
+
+
+actor NeedleCannonWepXW : XWBase { inventory.pickupmessage "$PU_NeedleCannon" states { sprite: WEAP L 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("NeedleCannonWepXWToken",1,"no") "----" A 0 A_GiveInventory("NeedleCannonWep")  "----" A 0 A_GiveInventory("NeedleCannonWepXWToken") stop}}
+actor NeedleCannonWepXWToken : Once {}
+actor NeedleCannonWepXWDrop : NeedleCannonWepXW { states { no: "----" A 0 A_GiveInventory("NeedleCannonAmmo", 0xFFFF) stop }}
+actor GeminiLaserWepXW : XWBase { inventory.pickupmessage "$PU_GeminiLaser" states { sprite: WEAP M 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("GeminiLaserWepXWToken",1,"no") "----" A 0 A_GiveInventory("GeminiLaserWep")  "----" A 0 A_GiveInventory("GeminiLaserWepXWToken") stop}}
+actor GeminiLaserWepXWToken : Once {}
+actor GeminiLaserWepXWDrop : GeminiLaserWepXW { states { no: "----" A 0 A_GiveInventory("GeminiLaserAmmo", 0xFFFF) stop }}
+actor HardKnuckleWepXW : XWBase { inventory.pickupmessage "$PU_HardKnuckle" states { sprite: WEAP T 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("HardKnuckleWepXWToken",1,"no") "----" A 0 A_GiveInventory("HardKnuckleWep")  "----" A 0 A_GiveInventory("HardKnuckleWepXWToken") stop}}
+actor HardKnuckleWepXWToken : Once {}
+actor HardKnuckleWepXWDrop : HardKnuckleWepXW { states { no: "----" A 0 A_GiveInventory("HardKnuckleAmmo", 0xFFFF) stop }}
+actor MagnetMissileWepXW : XWBase { inventory.pickupmessage "$PU_MagnetMissile" states { sprite: WEAP I 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("MagnetMissileWepXWToken",1,"no") "----" A 0 A_GiveInventory("MagnetMissileWep")  "----" A 0 A_GiveInventory("MagnetMissileWepXWToken") stop}}
+actor MagnetMissileWepXWToken : Once {}
+actor MagnetMissileWepXWDrop : MagnetMissileWepXW { states { no: "----" A 0 A_GiveInventory("MagnetMissileAmmo", 0xFFFF) stop }}
+actor TopSpinWepXW : XWBase { inventory.pickupmessage "$PU_TopSpin" states { sprite: WEAP J 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("TopSpinWepXWToken",1,"no") "----" A 0 A_GiveInventory("TopSpinWep")  "----" A 0 A_GiveInventory("TopSpinWepXWToken") stop}}
+actor TopSpinWepXWToken : Once {}
+actor TopSpinWepXWDrop : TopSpinWepXW { states { no: "----" A 0 A_GiveInventory("TopSpinAmmo", 0xFFFF) stop }}
+actor SearchSnakeWepXW : XWBase { inventory.pickupmessage "$PU_SearchSnake" states { sprite: WEAP K 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("SearchSnakeWepXWToken",1,"no") "----" A 0 A_GiveInventory("SearchSnakeWep")  "----" A 0 A_GiveInventory("SearchSnakeWepXWToken") stop}}
+actor SearchSnakeWepXWToken : Once {}
+actor SearchSnakeWepXWDrop : SearchSnakeWepXW { states { no: "----" A 0 A_GiveInventory("SearchSnakeAmmo", 0xFFFF) stop }}
+actor ShadowBladeWepXW : XWBase { inventory.pickupmessage "$PU_ShadowBlade" states { sprite: WEAP A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("ShadowBladeWepXWToken",1,"no") "----" A 0 A_GiveInventory("ShadowBladeWep")  "----" A 0 A_GiveInventory("ShadowBladeWepXWToken") stop}}
+actor ShadowBladeWepXWToken : Once {}
+actor ShadowBladeWepXWDrop : ShadowBladeWepXW { states { no: "----" A 0 A_GiveInventory("ShadowBladeAmmo", 0xFFFF) stop }}
+actor SparkShockWepXW : XWBase { inventory.pickupmessage "$PU_SparkShock" states { sprite: WEA2 G 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("SparkShockWepXWToken",1,"no") "----" A 0 A_GiveInventory("SparkShockWep")  "----" A 0 A_GiveInventory("SparkShockWepXWToken") stop}}
+actor SparkShockWepXWToken : Once {}
+actor SparkShockWepXWDrop : SparkShockWepXW { states { no: "----" A 0 A_GiveInventory("SparkShockAmmo", 0xFFFF) stop }}
+
+
+
+actor DiveMissileWepXW : XWBase { inventory.pickupmessage "$PU_DiveMissile" states { sprite: WEA2 S 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("DiveMissileWepXWToken",1,"no") "----" A 0 A_GiveInventory("DiveMissileWep")  "----" A 0 A_GiveInventory("DiveMissileWepXWToken") stop}}
+actor DiveMissileWepXWToken : Once {}
+actor DiveMissileWepXWDrop : DiveMissileWepXW { states { no: "----" A 0 A_GiveInventory("DiveMissileAmmo", 0xFFFF) stop }}
+actor DrillBombWepXW : XWBase { inventory.pickupmessage "$PU_DrillBomb" states { sprite: WEAP V 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("DrillBombWepXWToken",1,"no") "----" A 0 A_GiveInventory("DrillBombWep")  "----" A 0 A_GiveInventory("DrillBombWepXWToken") stop}}
+actor DrillBombWepXWToken : Once {}
+actor DrillBombWepXWDrop : DrillBombWepXW { states { no: "----" A 0 A_GiveInventory("DrillBombAmmo", 0xFFFF) stop }}
+actor DustCrusherWepXW : XWBase { inventory.pickupmessage "$PU_DustCrusher" states { sprite: WEA2 K 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("DustCrusherWepXWToken",1,"no") "----" A 0 A_GiveInventory("DustCrusherWep")  "----" A 0 A_GiveInventory("DustCrusherWepXWToken") stop}}
+actor DustCrusherWepXWToken : Once {}
+actor DustCrusherWepXWDrop : DustCrusherWepXW { states { no: "----" A 0 A_GiveInventory("DustCrusherAmmo", 0xFFFF) stop }}
+actor FlashStopperWepXW : XWBase { inventory.pickupmessage "$PU_FlashStopper" states { sprite: WEA3 E 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("FlashStopperWepXWToken",1,"no") "----" A 0 A_GiveInventory("FlashStopperWep")  "----" A 0 A_GiveInventory("FlashStopperWepXWToken") stop}}
+actor FlashStopperWepXWToken : Once {}
+actor FlashStopperWepXWDrop : FlashStopperWepXW { states { no: "----" A 0 A_GiveInventory("FlashStopperAmmo", 0xFFFF) stop }}
+actor PharaohShotWepXW : XWBase { inventory.pickupmessage "$PU_PharaohShot" states { sprite: WEA2 L 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("PharaohShotWepXWToken",1,"no") "----" A 0 A_GiveInventory("PharaohShotWep")  "----" A 0 A_GiveInventory("PharaohShotWepXWToken") stop}}
+actor PharaohShotWepXWToken : Once {}
+actor PharaohShotWepXWDrop : PharaohShotWepXW { states { no: "----" A 0 A_GiveInventory("PharaohShotAmmo", 0xFFFF) stop }}
+actor RainFlushWepXW : XWBase { inventory.pickupmessage "$PU_RainFlush" states { sprite: WEA2 Y 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("RainFlushWepXWToken",1,"no") "----" A 0 A_GiveInventory("RainFlushWep")  "----" A 0 A_GiveInventory("RainFlushWepXWToken") stop}}
+actor RainFlushWepXWToken : Once {}
+actor RainFlushWepXWDrop : RainFlushWepXW { states { no: "----" A 0 A_GiveInventory("RainFlushAmmo", 0xFFFF) stop }}
+actor RingBoomerangWepXW : XWBase { inventory.pickupmessage "$PU_RingBoomerang" states { sprite: WEA2 H 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("RingBoomerangWepXWToken",1,"no") "----" A 0 A_GiveInventory("RingBoomerangWep")  "----" A 0 A_GiveInventory("RingBoomerangWepXWToken") stop}}
+actor RingBoomerangWepXWToken : Once {}
+actor RingBoomerangWepXWDrop : RingBoomerangWepXW { states { no: "----" A 0 A_GiveInventory("RingBoomerangAmmo", 0xFFFF) stop }}
+actor SkullBarrierWepXW : XWBase { inventory.pickupmessage "$PU_SkullBarrier" states { sprite: WEA2 O 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("SkullBarrierWepXWToken",1,"no") "----" A 0 A_GiveInventory("SkullBarrierWep")  "----" A 0 A_GiveInventory("SkullBarrierWepXWToken") stop}}
+actor SkullBarrierWepXWToken : Once {}
+actor SkullBarrierWepXWDrop : SkullBarrierWepXW { states { no: "----" A 0 A_GiveInventory("SkullBarrierAmmo", 0xFFFF) stop }}
+
+
+
+actor ChargeKickWepXW : XWBase { inventory.pickupmessage "$PU_ChargeKick" states { sprite: WEA2 E 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("ChargeKickWepXWToken",1,"no") "----" A 0 A_GiveInventory("ChargeKickWep")  "----" A 0 A_GiveInventory("ChargeKickWepXWToken") stop}}
+actor ChargeKickWepXWToken : Once {}
+actor ChargeKickWepXWDrop : ChargeKickWepXW { states { no: "----" A 0 A_GiveInventory("ChargeKickAmmo", 0xFFFF) stop }}
+actor CrystalEyeWepXW : XWBase { inventory.pickupmessage "$PU_CrystalEye" states { sprite: WEA2 N 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("CrystalEyeWepXWToken",1,"no") "----" A 0 A_GiveInventory("CrystalEyeWep")  "----" A 0 A_GiveInventory("CrystalEyeWepXWToken") stop}}
+actor CrystalEyeWepXWToken : Once {}
+actor CrystalEyeWepXWDrop : CrystalEyeWepXW { states { no: "----" A 0 A_GiveInventory("CrystalEyeAmmo", 0xFFFF) stop }}
+actor GravityHoldWepXW : XWBase { inventory.pickupmessage "$PU_GravityHold" states { sprite: WEA3 F 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("GravityHoldWepXWToken",1,"no") "----" A 0 A_GiveInventory("GravityHoldWep")  "----" A 0 A_GiveInventory("GravityHoldWepXWToken") stop}}
+actor GravityHoldWepXWToken : Once {}
+actor GravityHoldWepXWDrop : GravityHoldWepXW { states { no: "----" A 0 A_GiveInventory("GravityHoldAmmo", 0xFFFF) stop }}
+actor GyroAttackWepXW : XWBase { inventory.pickupmessage "$PU_GyroAttack" states { sprite: WEA2 I 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("GyroAttackWepXWToken",1,"no") "----" A 0 A_GiveInventory("GyroAttackWep")  "----" A 0 A_GiveInventory("GyroAttackWepXWToken") stop}}
+actor GyroAttackWepXWToken : Once {}
+actor GyroAttackWepXWDrop : GyroAttackWepXW { states { no: "----" A 0 A_GiveInventory("GyroAttackAmmo", 0xFFFF) stop }}
+actor NapalmBombWepXW : XWBase { inventory.pickupmessage "$PU_NapalmBomb" states { sprite: WEAP C 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("NapalmBombWepXWToken",1,"no") "----" A 0 A_GiveInventory("NapalmBombWep")  "----" A 0 A_GiveInventory("NapalmBombWepXWToken") stop}}
+actor NapalmBombWepXWToken : Once {}
+actor NapalmBombWepXWDrop : NapalmBombWepXW { states { no: "----" A 0 A_GiveInventory("NapalmBombAmmo", 0xFFFF) stop }}
+actor PowerStoneWepXW : XWBase { inventory.pickupmessage "$PU_PowerStone" states { sprite: WEA2 J 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("PowerStoneWepXWToken",1,"no") "----" A 0 A_GiveInventory("PowerStoneWep")  "----" A 0 A_GiveInventory("PowerStoneWepXWToken") stop}}
+actor PowerStoneWepXWToken : Once {}
+actor PowerStoneWepXWDrop : PowerStoneWepXW { states { no: "----" A 0 A_GiveInventory("PowerStoneAmmo", 0xFFFF) stop }}
+actor StarCrashWepXW : XWBase { inventory.pickupmessage "$PU_StarCrash" states { sprite: WEA2 X 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("StarCrashWepXWToken",1,"no") "----" A 0 A_GiveInventory("StarCrashWep")  "----" A 0 A_GiveInventory("StarCrashWepXWToken") stop}}
+actor StarCrashWepXWToken : Once {}
+actor StarCrashWepXWDrop : StarCrashWepXW { states { no: "----" A 0 A_GiveInventory("StarCrashAmmo", 0xFFFF) stop }}
+actor WaterWaveWepXW : XWBase { inventory.pickupmessage "$PU_WaterWave" states { sprite: WEA2 M 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("WaterWaveWepXWToken",1,"no") "----" A 0 A_GiveInventory("WaterWaveWep")  "----" A 0 A_GiveInventory("WaterWaveWepXWToken") stop}}
+actor WaterWaveWepXWToken : Once {}
+actor WaterWaveWepXWDrop : WaterWaveWepXW { states { no: "----" A 0 A_GiveInventory("WaterWaveAmmo", 0xFFFF) stop }}
+
+
+
+actor BlizzardAttackWepXW : XWBase { inventory.pickupmessage "$PU_BlizzardAttack" states { sprite: WEAP W 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("BlizzardAttackWepXWToken",1,"no") "----" A 0 A_GiveInventory("BlizzardAttackWep")  "----" A 0 A_GiveInventory("BlizzardAttackWepXWToken") stop}}
+actor BlizzardAttackWepXWToken : Once {}
+actor BlizzardAttackWepXWDrop : BlizzardAttackWepXW { states { no: "----" A 0 A_GiveInventory("BlizzardAttackAmmo", 0xFFFF) stop }}
+actor CentaurFlashWepXW : XWBase { inventory.pickupmessage "$PU_CentaurFlash" states { sprite: WEA3 G 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("CentaurFlashWepXWToken",1,"no") "----" A 0 A_GiveInventory("CentaurFlashWep")  "----" A 0 A_GiveInventory("CentaurFlashWepXWToken") stop}}
+actor CentaurFlashWepXWToken : Once {}
+actor CentaurFlashWepXWDrop : CentaurFlashWepXW { states { no: "----" A 0 A_GiveInventory("CentaurFlashAmmo", 0xFFFF) stop }}
+actor FlameBlastWepXW : XWBase { inventory.pickupmessage "$PU_FlameBlast" states { sprite: WEA2 P 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("FlameBlastWepXWToken",1,"no") "----" A 0 A_GiveInventory("FlameBlastWep")  "----" A 0 A_GiveInventory("FlameBlastWepXWToken") stop}}
+actor FlameBlastWepXWToken : Once {}
+actor FlameBlastWepXWDrop : FlameBlastWepXW { states { no: "----" A 0 A_GiveInventory("FlameBlastAmmo", 0xFFFF) stop }}
+actor KnightCrushWepXW : XWBase { inventory.pickupmessage "$PU_KnightCrush" states { sprite: WEA2 W 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("KnightCrushWepXWToken",1,"no") "----" A 0 A_GiveInventory("KnightCrushWep")  "----" A 0 A_GiveInventory("KnightCrushWepXWToken") stop}}
+actor KnightCrushWepXWToken : Once {}
+actor KnightCrushWepXWDrop : KnightCrushWepXW { states { no: "----" A 0 A_GiveInventory("KnightCrushAmmo", 0xFFFF) stop }}
+actor PlantBarrierWepXW : XWBase { inventory.pickupmessage "$PU_PlantBarrier" states { sprite: WEA2 T 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("PlantBarrierWepXWToken",1,"no") "----" A 0 A_GiveInventory("PlantBarrierWep")  "----" A 0 A_GiveInventory("PlantBarrierWepXWToken") stop}}
+actor PlantBarrierWepXWToken : Once {}
+actor PlantBarrierWepXWDrop : PlantBarrierWepXW { states { no: "----" A 0 A_GiveInventory("PlantBarrierAmmo", 0xFFFF) stop }}
+actor SilverTomahawkWepXW : XWBase { inventory.pickupmessage "$PU_SilverTomahawk" states { sprite: WEA2 U 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("SilverTomahawkWepXWToken",1,"no") "----" A 0 A_GiveInventory("SilverTomahawkWep")  "----" A 0 A_GiveInventory("SilverTomahawkWepXWToken") stop}}
+actor SilverTomahawkWepXWToken : Once {}
+actor SilverTomahawkWepXWDrop : SilverTomahawkWepXW { states { no: "----" A 0 A_GiveInventory("SilverTomahawkAmmo", 0xFFFF) stop }}
+actor WindStormWepXW : XWBase { inventory.pickupmessage "$PU_WindStorm" states { sprite: WEA2 V 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("WindStormWepXWToken",1,"no") "----" A 0 A_GiveInventory("WindStormWep")  "----" A 0 A_GiveInventory("WindStormWepXWToken") stop}}
+actor WindStormWepXWToken : Once {}
+actor WindStormWepXWDrop : WindStormWepXW { states { no: "----" A 0 A_GiveInventory("WindStormAmmo", 0xFFFF) stop }}
+actor YamatoSpearWepXW : XWBase { inventory.pickupmessage "$PU_YamatoSpear" states { sprite: WEA2 R 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("YamatoSpearWepXWToken",1,"no") "----" A 0 A_GiveInventory("YamatoSpearWep")  "----" A 0 A_GiveInventory("YamatoSpearWepXWToken") stop}}
+actor YamatoSpearWepXWToken : Once {}
+actor YamatoSpearWepXWDrop : YamatoSpearWepXW { states { no: "----" A 0 A_GiveInventory("YamatoSpearAmmo", 0xFFFF) stop }}
+
+
+
+actor DangerWrapWepXW : XWBase { inventory.pickupmessage "$PU_DangerWrap" states { sprite: WEA3 L 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("DangerWrapWepXWToken",1,"no") "----" A 0 A_GiveInventory("DangerWrapWep")  "----" A 0 A_GiveInventory("DangerWrapWepXWToken") stop}}
+actor DangerWrapWepXWToken : Once {}
+actor DangerWrapWepXWDrop : DangerWrapWepXW { states { no: "----" A 0 A_GiveInventory("DangerWrapAmmo", 0xFFFF) stop }}
+actor FreezeCrackerWepXW : XWBase { inventory.pickupmessage "$PU_FreezeCracker" states { sprite: WEA3 O 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("FreezeCrackerWepXWToken",1,"no") "----" A 0 A_GiveInventory("FreezeCrackerWep")  "----" A 0 A_GiveInventory("FreezeCrackerWepXWToken") stop}}
+actor FreezeCrackerWepXWToken : Once {}
+actor FreezeCrackerWepXWDrop : FreezeCrackerWepXW { states { no: "----" A 0 A_GiveInventory("FreezeCrackerAmmo", 0xFFFF) stop }}
+actor JunkShieldWepXW : XWBase { inventory.pickupmessage "$PU_JunkShield" states { sprite: WEA3 N 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("JunkShieldWepXWToken",1,"no") "----" A 0 A_GiveInventory("JunkShieldWep")  "----" A 0 A_GiveInventory("JunkShieldWepXWToken") stop}}
+actor JunkShieldWepXWToken : Once {}
+actor JunkShieldWepXWDrop : JunkShieldWepXW { states { no: "----" A 0 A_GiveInventory("JunkShieldAmmo", 0xFFFF) stop }}
+actor NoiseCrushWepXW : XWBase { inventory.pickupmessage "$PU_NoiseCrush" states { sprite: WEA3 J 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("NoiseCrushWepXWToken",1,"no") "----" A 0 A_GiveInventory("NoiseCrushWep")  "----" A 0 A_GiveInventory("NoiseCrushWepXWToken") stop}}
+actor NoiseCrushWepXWToken : Once {}
+actor NoiseCrushWepXWDrop : NoiseCrushWepXW { states { no: "----" A 0 A_GiveInventory("NoiseCrushAmmo", 0xFFFF) stop }}
+actor ScorchWheelWepXW : XWBase { inventory.pickupmessage "$PU_ScorchWheel" states { sprite: WEA3 M 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("ScorchWheelWepXWToken",1,"no") "----" A 0 A_GiveInventory("ScorchWheelWep")  "----" A 0 A_GiveInventory("ScorchWheelWepXWToken") stop}}
+actor ScorchWheelWepXWToken : Once {}
+actor ScorchWheelWepXWDrop : ScorchWheelWepXW { states { no: "----" A 0 A_GiveInventory("ScorchWheelAmmo", 0xFFFF) stop }}
+actor SlashClawWepXW : XWBase { inventory.pickupmessage "$PU_SlashClaw" states { sprite: WEA3 Q 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("SlashClawWepXWToken",1,"no") "----" A 0 A_GiveInventory("SlashClawWep")  "----" A 0 A_GiveInventory("SlashClawWepXWToken") stop}}
+actor SlashClawWepXWToken : Once {}
+actor SlashClawWepXWDrop : SlashClawWepXW { states { no: "----" A 0 A_GiveInventory("SlashClawAmmo", 0xFFFF) stop }}
+actor ThunderBoltWepXW : XWBase { inventory.pickupmessage "$PU_ThunderBolt" states { sprite: WEA3 R 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("ThunderBoltWepXWToken",1,"no") "----" A 0 A_GiveInventory("ThunderBoltWep")  "----" A 0 A_GiveInventory("ThunderBoltWepXWToken") stop}}
+actor ThunderBoltWepXWToken : Once {}
+actor ThunderBoltWepXWDrop : ThunderBoltWepXW { states { no: "----" A 0 A_GiveInventory("ThunderBoltAmmo", 0xFFFF) stop }}
+actor WildCoilWepXW : XWBase { inventory.pickupmessage "$PU_WildCoil" states { sprite: WEA3 K 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("WildCoilWepXWToken",1,"no") "----" A 0 A_GiveInventory("WildCoilWep")  "----" A 0 A_GiveInventory("WildCoilWepXWToken") stop}}
+actor WildCoilWepXWToken : Once {}
+actor WildCoilWepXWDrop : WildCoilWepXW { states { no: "----" A 0 A_GiveInventory("WildCoilAmmo", 0xFFFF) stop }}
+
+
+
+actor AstroCrushWepXW : XWBase { inventory.pickupmessage "$PU_AstroCrush" states { sprite: WEA4 E 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("AstroCrushWepXWToken",1,"no") "----" A 0 A_GiveInventory("AstroCrushWep")  "----" A 0 A_GiveInventory("AstroCrushWepXWToken") stop}}
+actor AstroCrushWepXWToken : Once {}
+actor AstroCrushWepXWDrop : AstroCrushWepXW { states { no: "----" A 0 A_GiveInventory("AstroCrushAmmo", 0xFFFF) stop }}
+actor FlameSwordWepXW : XWBase { inventory.pickupmessage "$PU_FlameSword" states { sprite: WEA4 F 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("FlameSwordWepXWToken",1,"no") "----" A 0 A_GiveInventory("FlameSwordWep")  "----" A 0 A_GiveInventory("FlameSwordWepXWToken") stop}}
+actor FlameSwordWepXWToken : Once {}
+actor FlameSwordWepXWDrop : FlameSwordWepXW { states { no: "----" A 0 A_GiveInventory("FlameSwordAmmo", 0xFFFF) stop }}
+actor FlashBombWepXW : XWBase { inventory.pickupmessage "$PU_FlashBomb" states { sprite: WEA4 B 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("FlashBombWepXWToken",1,"no") "----" A 0 A_GiveInventory("FlashBombWep")  "----" A 0 A_GiveInventory("FlashBombWepXWToken") stop}}
+actor FlashBombWepXWToken : Once {}
+actor FlashBombWepXWDrop : FlashBombWepXW { states { no: "----" A 0 A_GiveInventory("FlashBombAmmo", 0xFFFF) stop }}
+actor HomingSniperWepXW : XWBase { inventory.pickupmessage "$PU_HomingSniper" states { sprite: WEA4 H 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("HomingSniperWepXWToken",1,"no") "----" A 0 A_GiveInventory("HomingSniperWep")  "----" A 0 A_GiveInventory("HomingSniperWepXWToken") stop}}
+actor HomingSniperWepXWToken : Once {}
+actor HomingSniperWepXWDrop : HomingSniperWepXW { states { no: "----" A 0 A_GiveInventory("HomingSniperAmmo", 0xFFFF) stop }}
+actor IceWaveWepXW : XWBase { inventory.pickupmessage "$PU_IceWave" states { sprite: WEA4 A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("IceWaveWepXWToken",1,"no") "----" A 0 A_GiveInventory("IceWaveWep")  "----" A 0 A_GiveInventory("IceWaveWepXWToken") stop}}
+actor IceWaveWepXWToken : Once {}
+actor IceWaveWepXWDrop : IceWaveWepXW { states { no: "----" A 0 A_GiveInventory("IceWaveAmmo", 0xFFFF) stop }}
+actor MegaBallWepXW : XWBase { inventory.pickupmessage "$PU_MegaBall" states { sprite: WEA4 D 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("MegaBallWepXWToken",1,"no") "----" A 0 A_GiveInventory("MegaBallWep")  "----" A 0 A_GiveInventory("MegaBallWepXWToken") stop}}
+actor MegaBallWepXWToken : Once {}
+actor MegaBallWepXWDrop : MegaBallWepXW { states { no: "----" A 0 A_GiveInventory("MegaBallAmmo", 0xFFFF) stop }}
+actor ThunderClawWepXW : XWBase { inventory.pickupmessage "$PU_ThunderClaw" states { sprite: WEA4 G 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("ThunderClawWepXWToken",1,"no") "----" A 0 A_GiveInventory("ThunderClawWep")  "----" A 0 A_GiveInventory("ThunderClawWepXWToken") stop}}
+actor ThunderClawWepXWToken : Once {}
+actor ThunderClawWepXWDrop : ThunderClawWepXW { states { no: "----" A 0 A_GiveInventory("ThunderClawAmmo", 0xFFFF) stop }}
+actor TornadoHoldWepXW : XWBase { inventory.pickupmessage "$PU_TornadoHold" states { sprite: WEA4 C 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("TornadoHoldWepXWToken",1,"no") "----" A 0 A_GiveInventory("TornadoHoldWep")  "----" A 0 A_GiveInventory("TornadoHoldWepXWToken") stop}}
+actor TornadoHoldWepXWToken : Once {}
+actor TornadoHoldWepXWDrop : TornadoHoldWepXW { states { no: "----" A 0 A_GiveInventory("TornadoHoldAmmo", 0xFFFF) stop }}
+actor WaterBalloonWepXW : XWBase { inventory.pickupmessage "$PU_WaterBalloon" states { sprite: WEA4 I 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("WaterBalloonWepXWToken",1,"no") "----" A 0 A_GiveInventory("WaterBalloonWep")  "----" A 0 A_GiveInventory("WaterBalloonWepXWToken") stop}}
+actor WaterBalloonWepXWToken : Once {}
+actor WaterBalloonWepXWDrop : WaterBalloonWepXW { states { no: "----" A 0 A_GiveInventory("WaterBalloonAmmo", 0xFFFF) stop }}
+
+
+
+actor BlackHoleBombWepXW : XWBase { inventory.pickupmessage "$PU_BlackHoleBomb" states { sprite: BLKH A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("BlackHoleBombWepXWToken",1,"no") "----" A 0 A_GiveInventory("BlackHoleBombWep")  "----" A 0 A_GiveInventory("BlackHoleBombWepXWToken") stop}}
+actor BlackHoleBombWepXWToken : Once {}
+actor BlackHoleBombWepXWDrop : BlackHoleBombWepXW { states { no: "----" A 0 A_GiveInventory("BlackHoleBombAmmo", 0xFFFF) stop }}
+actor ConcreteShotWepXW : XWBase { inventory.pickupmessage "$PU_ConcreteShot" states { sprite: CONC A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("ConcreteShotWepXWToken",1,"no") "----" A 0 A_GiveInventory("ConcreteShotWep")  "----" A 0 A_GiveInventory("ConcreteShotWepXWToken") stop}}
+actor ConcreteShotWepXWToken : Once {}
+actor ConcreteShotWepXWDrop : ConcreteShotWepXW { states { no: "----" A 0 A_GiveInventory("ConcreteShotAmmo", 0xFFFF) stop }}
+actor HornetChaserWepXW : XWBase { inventory.pickupmessage "$PU_HornetChaser" states { sprite: HCHS A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("HornetChaserWepXWToken",1,"no") "----" A 0 A_GiveInventory("HornetChaserWep")  "----" A 0 A_GiveInventory("HornetChaserWepXWToken") stop}}
+actor HornetChaserWepXWToken : Once {}
+actor HornetChaserWepXWDrop : HornetChaserWepXW { states { no: "----" A 0 A_GiveInventory("HornetChaserAmmo", 0xFFFF) stop }}
+actor JewelSatelliteWepXW : XWBase { inventory.pickupmessage "$PU_JewelSatellite" states { sprite: JEWE A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("JewelSatelliteWepXWToken",1,"no") "----" A 0 A_GiveInventory("JewelSatelliteWep")  "----" A 0 A_GiveInventory("JewelSatelliteWepXWToken") stop}}
+actor JewelSatelliteWepXWToken : Once {}
+actor JewelSatelliteWepXWDrop : JewelSatelliteWepXW { states { no: "----" A 0 A_GiveInventory("JewelSatelliteAmmo", 0xFFFF) stop }}
+actor LaserTridentWepXW : XWBase { inventory.pickupmessage "$PU_LaserTrident" states { sprite: LTRI A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("LaserTridentWepXWToken",1,"no") "----" A 0 A_GiveInventory("LaserTridentWep")  "----" A 0 A_GiveInventory("LaserTridentWepXWToken") stop}}
+actor LaserTridentWepXWToken : Once {}
+actor LaserTridentWepXWDrop : LaserTridentWepXW { states { no: "----" A 0 A_GiveInventory("LaserTridentAmmo", 0xFFFF) stop }}
+actor MagmaBazookaWepXW : XWBase { inventory.pickupmessage "$PU_MagmaBazooka" states { sprite: MGM1 A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("MagmaBazookaWepXWToken",1,"no") "----" A 0 A_GiveInventory("MagmaBazookaWep")  "----" A 0 A_GiveInventory("MagmaBazookaWepXWToken") stop}}
+actor MagmaBazookaWepXWToken : Once {}
+actor MagmaBazookaWepXWDrop : MagmaBazookaWepXW { states { no: "----" A 0 A_GiveInventory("MagmaBazookaAmmo", 0xFFFF) stop }}
+actor PlugBallWepXW : XWBase { inventory.pickupmessage "$PU_PlugBall" states { sprite: PBAL A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("PlugBallWepXWToken",1,"no") "----" A 0 A_GiveInventory("PlugBallWep")  "----" A 0 A_GiveInventory("PlugBallWepXWToken") stop}}
+actor PlugBallWepXWToken : Once {}
+actor PlugBallWepXWDrop : PlugBallWepXW { states { no: "----" A 0 A_GiveInventory("PlugBallAmmo", 0xFFFF) stop }}
+actor TornadoBlowWepXW : XWBase { inventory.pickupmessage "$PU_TornadoBlow" states { sprite: TBLO A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("TornadoBlowWepXWToken",1,"no") "----" A 0 A_GiveInventory("TornadoBlowWep")  "----" A 0 A_GiveInventory("TornadoBlowWepXWToken") stop}}
+actor TornadoBlowWepXWToken : Once {}
+actor TornadoBlowWepXWDrop : TornadoBlowWepXW { states { no: "----" A 0 A_GiveInventory("TornadoBlowAmmo", 0xFFFF) stop }}
+
+
+
+actor CopyVisionWepXW : XWBase { inventory.pickupmessage "$PU_CopyVision" states { sprite: COPY X 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("CopyVisionWepXWToken",1,"no") "----" A 0 A_GiveInventory("CopyVisionWep")  "----" A 0 A_GiveInventory("CopyVisionWepXWToken") stop}}
+actor CopyVisionWepXWToken : Once {}
+actor CopyVisionWepXWDrop : CopyVisionWepXW { states { no: "----" A 0 A_GiveInventory("CopyVisionAmmo", 0xFFFF) stop }}
+actor IceWallWepXW : XWBase { inventory.pickupmessage "$PU_IceWall" states { sprite: ICWL X 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("IceWallWepXWToken",1,"no") "----" A 0 A_GiveInventory("IceWallWep")  "----" A 0 A_GiveInventory("IceWallWepXWToken") stop}}
+actor IceWallWepXWToken : Once {}
+actor IceWallWepXWDrop : IceWallWepXW { states { no: "----" A 0 A_GiveInventory("IceWallAmmo", 0xFFFF) stop }}
+actor LightningBoltWepXW : XWBase { inventory.pickupmessage "$PU_LightningBolt" states { sprite: LIBO A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("LightningBoltWepXWToken",1,"no") "----" A 0 A_GiveInventory("LightningBoltWep")  "----" A 0 A_GiveInventory("LightningBoltWepXWToken") stop}}
+actor LightningBoltWepXWToken : Once {}
+actor LightningBoltWepXWDrop : LightningBoltWepXW { states { no: "----" A 0 A_GiveInventory("LightningBoltAmmo", 0xFFFF) stop }}
+actor MagicCardWepXW : XWBase { inventory.pickupmessage "$PU_MagicCard" states { sprite: MCAR X 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("MagicCardWepXWToken",1,"no") "----" A 0 A_GiveInventory("MagicCardWep")  "----" A 0 A_GiveInventory("MagicCardWepXWToken") stop}}
+actor MagicCardWepXWToken : Once {}
+actor MagicCardWepXWDrop : MagicCardWepXW { states { no: "----" A 0 A_GiveInventory("MagicCardAmmo", 0xFFFF) stop }}
+actor RemoteMineWepXW : XWBase { inventory.pickupmessage "$PU_RemoteMine" states { sprite: REMI X 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("RemoteMineWepXWToken",1,"no") "----" A 0 A_GiveInventory("RemoteMineWep")  "----" A 0 A_GiveInventory("RemoteMineWepXWToken") stop}}
+actor RemoteMineWepXWToken : Once {}
+actor RemoteMineWepXWDrop : RemoteMineWepXW { states { no: "----" A 0 A_GiveInventory("RemoteMineAmmo", 0xFFFF) stop }}
+actor SpreadDrillWepXW : XWBase { inventory.pickupmessage "$PU_SpreadDrill" states { sprite: SPRE X 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("SpreadDrillWepXWToken",1,"no") "----" A 0 A_GiveInventory("SpreadDrillWep")  "----" A 0 A_GiveInventory("SpreadDrillWepXWToken") stop}}
+actor SpreadDrillWepXWToken : Once {}
+actor SpreadDrillWepXWDrop : SpreadDrillWepXW { states { no: "----" A 0 A_GiveInventory("SpreadDrillAmmo", 0xFFFF) stop }}
+actor TenguBladeWepXW : XWBase { inventory.pickupmessage "$PU_TenguBlade" states { sprite: TBLA X 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("TenguBladeWepXWToken",1,"no") "----" A 0 A_GiveInventory("TenguBladeWep")  "----" A 0 A_GiveInventory("TenguBladeWepXWToken") stop}}
+actor TenguBladeWepXWToken : Once {}
+actor TenguBladeWepXWDrop : TenguBladeWepXW { states { no: "----" A 0 A_GiveInventory("TenguBladeAmmo", 0xFFFF) stop }}
+actor WaveBurnerWepXW : XWBase { inventory.pickupmessage "$PU_WaveBurner" states { sprite: WABU X 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("WaveBurnerWepXWToken",1,"no") "----" A 0 A_GiveInventory("WaveBurnerWep")  "----" A 0 A_GiveInventory("WaveBurnerWepXWToken") stop}}
+actor WaveBurnerWepXWToken : Once {}
+actor WaveBurnerWepXWDrop : WaveBurnerWepXW { states { no: "----" A 0 A_GiveInventory("WaveBurnerAmmo", 0xFFFF) stop }}
+
+
+
+actor SolarBlazeWepXW : XWBase { inventory.pickupmessage "$PU_SolarBlaze" states { sprite: SOLA A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("SolarBlazeWepXWToken",1,"no") "----" A 0 A_GiveInventory("SolarBlazeWep")  "----" A 0 A_GiveInventory("SolarBlazeWepXWToken") stop}}
+actor SolarBlazeWepXWToken : Once {}
+actor SolarBlazeWepXWDrop : SolarBlazeWepXW { states { no: "----" A 0 A_GiveInventory("SolarBlazeAmmo", 0xFFFF) stop }}
+actor WheelCutterWepXW : XWBase { inventory.pickupmessage "$PU_WheelCutter" states { sprite: WHEE A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("WheelCutterWepXWToken",1,"no") "----" A 0 A_GiveInventory("WheelCutterWep")  "----" A 0 A_GiveInventory("WheelCutterWepXWToken") stop}}
+actor WheelCutterWepXWToken : Once {}
+actor WheelCutterWepXWDrop : WheelCutterWepXW { states { no: "----" A 0 A_GiveInventory("WheelCutterAmmo", 0xFFFF) stop }}
+actor ReboundStrikerWepXW : XWBase { inventory.pickupmessage "$PU_ReboundStriker" states { sprite: STRI A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("ReboundStrikerWepXWToken",1,"no") "----" A 0 A_GiveInventory("ReboundStrikerWep")  "----" A 0 A_GiveInventory("ReboundStrikerWepXWToken") stop}}
+actor ReboundStrikerWepXWToken : Once {}
+actor ReboundStrikerWepXWDrop : ReboundStrikerWepXW { states { no: "----" A 0 A_GiveInventory("ReboundStrikerAmmo", 0xFFFF) stop }}
+actor ThunderWoolWepXW : XWBase { inventory.pickupmessage "$PU_ThunderWool" states { sprite: THWO A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("ThunderWoolWepXWToken",1,"no") "----" A 0 A_GiveInventory("ThunderWoolWep")  "----" A 0 A_GiveInventory("ThunderWoolWepXWToken") stop}}
+actor ThunderWoolWepXWToken : Once {}
+actor ThunderWoolWepXWDrop : ThunderWoolWepXW { states { no: "----" A 0 A_GiveInventory("ThunderWoolAmmo", 0xFFFF) stop }}
+actor CommandoBombWepXW : XWBase { inventory.pickupmessage "$PU_CommandoBomb" states { sprite: COMM A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("CommandoBombWepXWToken",1,"no") "----" A 0 A_GiveInventory("CommandoBombWep")  "----" A 0 A_GiveInventory("CommandoBombWepXWToken") stop}}
+actor CommandoBombWepXWToken : Once {}
+actor CommandoBombWepXWDrop : CommandoBombWepXW { states { no: "----" A 0 A_GiveInventory("CommandoBombAmmo", 0xFFFF) stop }}
+actor ChillSpikeWepXW : XWBase { inventory.pickupmessage "$PU_ChillSpike" states { sprite: CHIL A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("ChillSpikeWepXWToken",1,"no") "----" A 0 A_GiveInventory("ChillSpikeWep")  "----" A 0 A_GiveInventory("ChillSpikeWepXWToken") stop}}
+actor ChillSpikeWepXWToken : Once {}
+actor ChillSpikeWepXWDrop : ChillSpikeWepXW { states { no: "----" A 0 A_GiveInventory("ChillSpikeAmmo", 0xFFFF) stop }}
+actor WaterShieldWepXW : XWBase { inventory.pickupmessage "$PU_WaterShield" states { sprite: WATS A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("WaterShieldWepXWToken",1,"no") "----" A 0 A_GiveInventory("WaterShieldWep")  "----" A 0 A_GiveInventory("WaterShieldWepXWToken") stop}}
+actor WaterShieldWepXWToken : Once {}
+actor WaterShieldWepXWDrop : WaterShieldWepXW { states { no: "----" A 0 A_GiveInventory("WaterShieldAmmo", 0xFFFF) stop }}
+actor TripleBladeWepXW : XWBase { inventory.pickupmessage "$PU_TripleBlade" states { sprite: TRIP A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("TripleBladeWepXWToken",1,"no") "----" A 0 A_GiveInventory("TripleBladeWep")  "----" A 0 A_GiveInventory("TripleBladeWepXWToken") stop}}
+actor TripleBladeWepXWToken : Once {}
+actor TripleBladeWepXWDrop : TripleBladeWepXW { states { no: "----" A 0 A_GiveInventory("TripleBladeAmmo", 0xFFFF) stop }}
+
+
+
+actor GrabBusterWepXW : XWBase { inventory.pickupmessage "$PU_GrabBuster" states { sprite: GRBU A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("GrabBusterWepXWToken",1,"no") "----" A 0 A_GiveInventory("GrabBusterWep")  "----" A 0 A_GiveInventory("GrabBusterWepXWToken") stop}}
+actor GrabBusterWepXWToken : Once {}
+actor GrabBusterWepXWDrop : GrabBusterWepXW { states { no: "----" A 0 A_GiveInventory("GrabBusterAmmo", 0xFFFF) stop }}
+actor BubbleBombWepXW : XWBase { inventory.pickupmessage "$PU_BubbleBomb" states { sprite: BBOM A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("BubbleBombWepXWToken",1,"no") "----" A 0 A_GiveInventory("BubbleBombWep")  "----" A 0 A_GiveInventory("BubbleBombWepXWToken") stop}}
+actor BubbleBombWepXWToken : Once {}
+actor BubbleBombWepXWDrop : BubbleBombWepXW { states { no: "----" A 0 A_GiveInventory("BubbleBombAmmo", 0xFFFF) stop }}
+actor PhotonMissileWepXW : XWBase { inventory.pickupmessage "$PU_PhotonMissile" states { sprite: PMIS A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("PhotonMissileWepXWToken",1,"no") "----" A 0 A_GiveInventory("PhotonMissileWep")  "----" A 0 A_GiveInventory("PhotonMissileWepXWToken") stop}}
+actor PhotonMissileWepXWToken : Once {}
+actor PhotonMissileWepXWDrop : PhotonMissileWepXW { states { no: "----" A 0 A_GiveInventory("PhotonMissileAmmo", 0xFFFF) stop }}
+actor SaltWaterWepXW : XWBase { inventory.pickupmessage "$PU_SaltWater" states { sprite: SWAT A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("SaltWaterWepXWToken",1,"no") "----" A 0 A_GiveInventory("SaltWaterWep")  "----" A 0 A_GiveInventory("SaltWaterWepXWToken") stop}}
+actor SaltWaterWepXWToken : Once {}
+actor SaltWaterWepXWDrop : SaltWaterWepXW { states { no: "----" A 0 A_GiveInventory("SaltWaterAmmo", 0xFFFF) stop }}
+actor ElectricShockWepXW : XWBase { inventory.pickupmessage "$PU_ElectricShock" states { sprite: ESPA A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("ElectricShockWepXWToken",1,"no") "----" A 0 A_GiveInventory("ElectricShockWep")  "----" A 0 A_GiveInventory("ElectricShockWepXWToken") stop}}
+actor ElectricShockWepXWToken : Once {}
+actor ElectricShockWepXWDrop : ElectricShockWepXW { states { no: "----" A 0 A_GiveInventory("ElectricShockAmmo", 0xFFFF) stop }}
+actor BlackHoleWepXW : XWBase { inventory.pickupmessage "$PU_BlackHole" states { sprite: BHOL A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("BlackHoleWepXWToken",1,"no") "----" A 0 A_GiveInventory("BlackHoleWep")  "----" A 0 A_GiveInventory("BlackHoleWepXWToken") stop}}
+actor BlackHoleWepXWToken : Once {}
+actor BlackHoleWepXWDrop : BlackHoleWepXW { states { no: "----" A 0 A_GiveInventory("BlackHoleAmmo", 0xFFFF) stop }}
+actor DeepDiggerWepXW : XWBase { inventory.pickupmessage "$PU_DeepDigger" states { sprite: DDIG A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("DeepDiggerWepXWToken",1,"no") "----" A 0 A_GiveInventory("DeepDiggerWep")  "----" A 0 A_GiveInventory("DeepDiggerWepXWToken") stop}}
+actor DeepDiggerWepXWToken : Once {}
+actor DeepDiggerWepXWDrop : DeepDiggerWepXW { states { no: "----" A 0 A_GiveInventory("DeepDiggerAmmo", 0xFFFF) stop }}
+actor BreakDashWepXW : XWBase { inventory.pickupmessage "$PU_BreakDash" states { sprite: BDAS A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("BreakDashWepXWToken",1,"no") "----" A 0 A_GiveInventory("BreakDashWep")  "----" A 0 A_GiveInventory("BreakDashWepXWToken") stop}}
+actor BreakDashWepXWToken : Once {}
+actor BreakDashWepXWDrop : BreakDashWepXW { states { no: "----" A 0 A_GiveInventory("BreakDashAmmo", 0xFFFF) stop }}
+actor SparkChaserWepXW : XWBase { inventory.pickupmessage "$PU_SparkChaser" states { sprite: SCHS A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("SparkChaserWepXWToken",1,"no") "----" A 0 A_GiveInventory("SparkChaserWep")  "----" A 0 A_GiveInventory("SparkChaserWepXWToken") stop}}
+actor SparkChaserWepXWToken : Once {}
+actor SparkChaserWepXWDrop : SparkChaserWepXW { states { no: "----" A 0 A_GiveInventory("SparkChaserAmmo", 0xFFFF) stop }}
+
+
+
+actor BalladeCrackerWepXW : XWBase { inventory.pickupmessage "$PU_BalladeCracker" states { sprite: WEA3 C 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("BalladeCrackerWepXWToken",1,"no") "----" A 0 A_GiveInventory("BalladeCrackerWep")  "----" A 0 A_GiveInventory("BalladeCrackerWepXWToken") stop}}
+actor BalladeCrackerWepXWToken : Once {}
+actor BalladeCrackerWepXWDrop : BalladeCrackerWepXW { states { no: "----" A 0 A_GiveInventory("BalladeCrackerAmmo", 0xFFFF) stop }}
+actor MirrorBusterWepXW : XWBase { inventory.pickupmessage "$PU_MirrorBuster" states { sprite: WEA3 H 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("MirrorBusterWepXWToken",1,"no") "----" A 0 A_GiveInventory("MirrorBusterWep")  "----" A 0 A_GiveInventory("MirrorBusterWepXWToken") stop}}
+actor MirrorBusterWepXWToken : Once {}
+actor MirrorBusterWepXWDrop : MirrorBusterWepXW { states { no: "----" A 0 A_GiveInventory("MirrorBusterAmmo", 0xFFFF) stop }}
+actor SakugarneWepXW : XWBase { inventory.pickupmessage "$PU_Sakugarne" states { sprite: WEA2 Z 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("SakugarneWepXWToken",1,"no") "----" A 0 A_GiveInventory("SakugarneWep")  "----" A 0 A_GiveInventory("SakugarneWepXWToken") stop}}
+actor SakugarneWepXWToken : Once {}
+actor SakugarneWepXWDrop : SakugarneWepXW { states { no: "----" A 0 A_GiveInventory("SakugarneAmmo", 0xFFFF) stop }}
+actor ScrewCrusherWepXW : XWBase { inventory.pickupmessage "$PU_ScrewCrusher" states { sprite: WEA3 D 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("ScrewCrusherWepXWToken",1,"no") "----" A 0 A_GiveInventory("ScrewCrusherWep")  "----" A 0 A_GiveInventory("ScrewCrusherWepXWToken") stop}}
+actor ScrewCrusherWepXWToken : Once {}
+actor ScrewCrusherWepXWDrop : ScrewCrusherWepXW { states { no: "----" A 0 A_GiveInventory("ScrewCrusherAmmo", 0xFFFF) stop }}
+actor DawnBreakerWepXW : XWBase { inventory.pickupmessage "$PU_DawnBreaker" states { sprite: DBR1 A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("DawnBreakerWepXWToken",1,"no") "----" A 0 A_GiveInventory("DawnBreakerWep")  "----" A 0 A_GiveInventory("DawnBreakerWepXWToken") stop}}
+actor DawnBreakerWepXWToken : Once {}
+actor DawnBreakerWepXWDrop : DawnBreakerWepXW { states { no: "----" A 0 A_GiveInventory("DawnBreakerAmmo", 0xFFFF) stop }}

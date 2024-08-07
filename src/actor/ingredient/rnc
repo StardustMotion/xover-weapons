@@ -1,0 +1,40 @@
+actor DelayFlameWepXW : XWBase { inventory.pickupmessage "$PU_DelayFlame" states { sprite: RNCW A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("DelayFlameWepXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 0) stop}}
+actor DelayFlameWepXWToken : Once {}
+actor DelayFlameWepXWDrop : DelayFlameWepXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 0) stop }}
+actor IceCircleWepXW : XWBase { inventory.pickupmessage "$PU_IceCircle" states { sprite: RNCW B 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("IceCircleWepXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 1) stop}}
+actor IceCircleWepXWToken : Once {}
+actor IceCircleWepXWDrop : IceCircleWepXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 1) stop }}
+actor ProtoChargeWepXW : XWBase { inventory.pickupmessage "$PU_ProtoCharge" states { sprite: RNCW C 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("ProtoChargeWepXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 2) stop}}
+actor ProtoChargeWepXWToken : Once {}
+actor ProtoChargeWepXWDrop : ProtoChargeWepXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 2) stop }}
+actor RisingSunWepXW : XWBase { inventory.pickupmessage "$PU_RisingSun" states { sprite: RNCW D 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("RisingSunWepXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 3) stop}}
+actor RisingSunWepXWToken : Once {}
+actor RisingSunWepXWDrop : RisingSunWepXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 3) stop }}
+actor RumblingBangWepXW : XWBase { inventory.pickupmessage "$PU_RumblingBang" states { sprite: RNCW E 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("RumblingBangWepXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 4) stop}}
+actor RumblingBangWepXWToken : Once {}
+actor RumblingBangWepXWDrop : RumblingBangWepXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 4) stop }}
+actor SpinWheelWepXW : XWBase { inventory.pickupmessage "$PU_SpinWheel" states { sprite: RNCW F 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("SpinWheelWepXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 5) stop}}
+actor SpinWheelWepXWToken : Once {}
+actor SpinWheelWepXWDrop : SpinWheelWepXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 5) stop }}
+actor WindSlicerWepXW : XWBase { inventory.pickupmessage "$PU_WindSlicer" states { sprite: RNCW G 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("WindSlicerWepXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 6) stop}}
+actor WindSlicerWepXWToken : Once {}
+actor WindSlicerWepXWDrop : WindSlicerWepXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 6) stop }}
+actor ZaWarudoWepXW : XWBase { inventory.pickupmessage "$PU_ZaWarudo" states { sprite: RNCW H 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("ZaWarudoWepXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 7) stop}}
+actor ZaWarudoWepXWToken : Once {}
+actor ZaWarudoWepXWDrop : ZaWarudoWepXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 7) stop }}

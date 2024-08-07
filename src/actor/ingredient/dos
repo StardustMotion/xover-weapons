@@ -1,0 +1,57 @@
+actor BlowTorchWepXW : XWBase { inventory.pickupmessage "$PU_BlowTorch" states { sprite: DOSW E 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("BlowTorchWepXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 8) stop}}
+actor BlowTorchWepXWToken : Once {}
+actor BlowTorchWepXWDrop : BlowTorchWepXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 8) stop }}
+
+actor BubbleBathWepXW : XWBase { inventory.pickupmessage "$PU_BubbleBath" states { sprite: DOSW H 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("BubbleBathWepXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 9) stop}}
+actor BubbleBathWepXWToken : Once {}
+actor BubbleBathWepXWDrop : BubbleBathWepXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 9) stop }}
+
+actor DrillPikeWepXW : XWBase { inventory.pickupmessage "$PU_DrillPike" states { sprite: DOSW F 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("DrillPikeWepXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 10) stop}}
+actor DrillPikeWepXWToken : Once {}
+actor DrillPikeWepXWDrop : DrillPikeWepXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 10) stop }}
+
+actor DynamiteClusterWepXW : XWBase { inventory.pickupmessage "$PU_DynamiteCluster" states { sprite: DOSW C 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("DynamiteClusterWepXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 11) stop}}
+actor DynamiteClusterWepXWToken : Once {}
+actor DynamiteClusterWepXWDrop : DynamiteClusterWepXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 11) stop }}
+
+actor KnifeSpreadWepXW : XWBase { inventory.pickupmessage "$PU_KnifeSpread" states { sprite: DOSW D 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("KnifeSpreadWepXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 12) stop}}
+actor KnifeSpreadWepXWToken : Once {}
+actor KnifeSpreadWepXWDrop : KnifeSpreadWepXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 12) stop }}
+
+actor PlasmaCutterWepXW : XWBase { inventory.pickupmessage "$PU_PlasmaCutter" states { sprite: DOSW B 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("PlasmaCutterWepXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 13) stop}}
+actor PlasmaCutterWepXWToken : Once {}
+actor PlasmaCutterWepXWDrop : PlasmaCutterWepXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 13) stop }}
+
+actor SharkAttackWepXW : XWBase { inventory.pickupmessage "$PU_SharkAttack" states { sprite: DOSW G 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("SharkAttackWepXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 14) stop}}
+actor SharkAttackWepXWToken : Once {}
+actor SharkAttackWepXWDrop : SharkAttackWepXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 14) stop }}
+
+actor SludgeBurstWepXW : XWBase { inventory.pickupmessage "$PU_SludgeBurst" states { sprite: DOSW I 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("SludgeBurstWepXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 15) stop}}
+actor SludgeBurstWepXWToken : Once {}
+actor SludgeBurstWepXWDrop : SludgeBurstWepXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 15) stop }}
+
+actor SonicPulseWepXW : XWBase { inventory.pickupmessage "$PU_SonicPulse" states { sprite: DOSW A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("SonicPulseWepXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 16) stop}}
+actor SonicPulseWepXWToken : Once {}
+actor SonicPulseWepXWDrop : SonicPulseWepXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 16) stop }}
+
+
+
+

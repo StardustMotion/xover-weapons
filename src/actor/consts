@@ -1,0 +1,3 @@
+const int XW_WEP_PICKUP = 1;
+const int XW_ARTIFICIAL_RESPAWN = 2;
+const int XW_MODS_PICKUP = 3;

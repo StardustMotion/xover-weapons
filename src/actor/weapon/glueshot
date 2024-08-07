@@ -1,0 +1,178 @@
+const int XW_GLUE_SHOT_SPEED = 25;
+
+actor XWGlueShotWep : BaseXoverWep { 
+	weapon.slotNumber 4 
+	inventory.icon "GLUESHOT" obituary "$OB_XWGLUESHOT" tag "$TAG_XWGLUESHOT"
+	states {
+		noAmmo: XWAJ A 0
+			goto super::noAmmo
+		select: XWAJ A 0 ACS_NamedExecuteWithResult("core_weaponcolor",6756)
+			goto super::select
+		ready: XWAJ A 0
+			goto super::ready	
+		fire: altfire:
+			XWAJ A 0 A_JumpIf(!CallACS("XW Ammo Check", 2), "noAmmo")
+			XWAJ A 0 A_PlaySoundEx("GLUESHOT","Weapon")
+			XWAJ A 0 A_SpawnItemEx("Glue Shot", 0, 8, 28, 
+				XW_GLUE_SHOT_SPEED*cos(pitch), 0, XW_GLUE_SHOT_SPEED*sin(-pitch), 0, SXF_TRANSFERPITCH)
+			XWAJ A 0 ACS_NamedExecuteAlways("XW Ammo Use", 0, 2)
+			XWAJ A 2
+			XWAJ BCB 3
+			XWAJ A 13
+			XWAJ A 0 A_Refire
+			goto ready}}
+			
+actor "Glue Shot" : proj {
+	-NOGRAVITY obituary "$OB_XWGLUESHOT" radius 20 height 48 damage (30)
+	speed 25 damagetype "GlueShot" +FORCEXYBILLBOARD +HITTRACER
+	states {
+		spawn:
+			XWAJ D 0
+			TNT1 A 2 ThrustThingZ(0,10,0,1)
+		goin:
+			XWAJ D 10
+			loop
+		xdeath: crash: 
+			//TNT1 A 0 A_JumpIf(CallACS("XW Weapons", SS_IS_LIVING_BEING, AAPTR_TRACER), 1)
+			goto end
+			//TNT1 A 0 A_JumpIf(!CallACS("XW Weapons", SS_IS_SAME_TEAM), 1)
+			goto end
+			TNT1 A 0 A_RearrangePointers(AAPTR_TRACER, AAPTR_DEFAULT, AAPTR_TARGET)	
+			TNT1 A 0 A_SpawnItemEx("Glue Shot Watcher")
+			stop
+		death:
+			XWAJ D 0 A_SpawnItemEx("Glue Block Check")
+			stop}}
+			
+actor "Glue Block Check" : "Glue Shot" {
+	+MOVEWITHSECTOR damage (0) +DONTBLAST +NOGRAVITY +DONTREFLECT
+	//damagefactor "VehicleHazard", 9999.0 // ???	
+	states {
+		spawn: 
+			XWAJ E 0 nodelay A_ClearTarget
+			XWAJ E 1
+			XWAJ E 1 A_ChangeFlag("SOLID", true)
+			XWAJ E 0 A_SpawnItemEx("Glue Block")
+			stop
+		death: xdeath: crash: TNT1 A 0
+			stop}}
+			
+actor "Glue Block" : "Glue Block Check" { 
+	-MISSILE +SOLID health 50 args 5,4 +SHOOTABLE +CANTSEEK +DONTRIP +GHOST +NOBLOOD
+	species "MovingPlatform" +THRUSPECIES -NOBLOCKMAP mass 20000
+	states {
+		spawn: TNT1 A 0 nodelay A_PlaySoundEx("GLUELAND","Weapon")
+			XWAJ FG 3
+			XWAJ H 90
+		fade1: XWAJ H 3
+			TNT1 A 1 A_SetArg(0, args[0]-1)
+			TNT1 A 0 A_JumpIf(!args[0], "fade2")
+			loop
+		fade2: XWAJ H 2
+			TNT1 A 1 A_SetArg(1, args[1]-1)
+			TNT1 A 0 A_JumpIf(!args[1], "death")
+			loop
+	death: TNT1 A 0 A_SpawnItemEx("Glue Block Death")
+		stop}}
+						
+actor "Glue Block Death" : gfx { args 3 +FORCEXYBILLBOARD
+	states {
+		spawn: 
+			XWAJ H 1
+			TNT1 A 1 A_SetArg(0, args[0]-1)
+			TNT1 A 0 A_JumpIf(!args[0], "end")
+			loop}}
+			
+			
+// --------------- STATUS EFFECT --------------- // 
+
+// status duration
+actor "Glue Shot Counter" : Powerup { powerup.duration 105 }
+
+// status strength
+actor "Glue Shot Stack" : var8 { }
+
+// status vision/color
+actor "Glue Shot Status" : Powerup { 
+		powerup.duration 0x7FFFFFFA
+		//50% / 100%
+		powerup.colormap 0.5, 0.292, 0.292,      0.972, 0.878, 0.627//1.0, 0.584, 0.584,      0.972, 0.878, 0.627
+}
+
+actor "Glue Shot Watcher" : watcher {
+	states {
+		spawn: 
+			TNT1 A 0 nodelay A_TakeFromTarget("Glue Shot Counter")
+			TNT1 A 0 A_GiveToTarget("Glue Shot Counter")
+			
+			TNT1 A 0 A_GiveToTarget("Glue Shot Stack", 64) // on-hit slow
+			TNT1 A 0 A_JumpIfInTargetInventory("Glue Shot Status", 1, "end")
+			TNT1 A 0 A_GiveToTarget("Glue Shot Status", 1)
+			TNT1 A 0 A_GiveToTarget("Xover Monster Speed")
+		glueStart:
+			TNT1 A 0 A_GiveToTarget("Glue Shot Glue", 1)
+			TNT1 AA 1 A_GiveToTarget("Glue Shot GFX 1 Summon", 1)
+			TNT1 A 0 A_GiveToTarget("Glue Shot Glue", 1)
+			TNT1 AA 1 A_GiveToTarget("Glue Shot GFX 2 Summon", 1)
+			TNT1 A 0 A_GiveToTarget("Glue Shot Glue", 1)
+			TNT1 AA 1 A_GiveToTarget("Glue Shot GFX 3 Summon", 1)
+		glue:
+			TNT1 A 0 A_GiveToTarget("Glue Shot Glue", 1)
+			TNT1 A 1 A_GiveToTarget("Glue Shot GFX 4 Summon", 1)
+			TNT1 A 0 A_JumpIf(!CallACS("core_targetexists"),"end")
+			TNT1 A 0 A_JumpIfInTargetInventory("Glue Shot Counter", 1, 1)
+			goto clean
+			TNT1 A 1 A_GiveToTarget("Glue Shot GFX 4 Summon", 1)
+			TNT1 A 0 A_JumpIfInTargetInventory("Glue Shot Counter", 1, "glue")
+		clean:
+			TNT1 A 0 A_TakeFromTarget("Glue Shot Status", 1)
+			TNT1 A 0 A_TakeFromTarget("Glue Shot Stack", 256)
+			stop}}
+
+actor "Glue Shot Glue" : item {
+	states {
+		pickup: 
+			TNT1 A 0 A_JumpIf(z-floorz <= 5, "addGlue")
+		removeGlue:
+			TNT1 A 0 A_TakeInventory("Glue Shot Stack", 5)
+			goto apply
+		addGlue: TNT1 A 0 A_GiveInventory("Glue Shot Stack", 8)
+		apply:
+			TNT1 A 0 ACS_NamedExecuteAlways("XW Weapons", 0, 13)
+			stop}}
+			
+actor "Glue Shot GFX 1 Summon" : item { states { 
+	pickup: TNT1 A 0 A_SpawnItemEx("Glue Shot GFX 1 Server",0,0,8,0,0,0,0,0,0,TID+5736) stop}}
+actor "Glue Shot GFX 2 Summon" : item { states { 
+	pickup: TNT1 A 0 A_SpawnItemEx("Glue Shot GFX 2 Server",0,0,8,0,0,0,0,0,0,TID+5736) stop}}
+actor "Glue Shot GFX 3 Summon" : item { states { 
+	pickup: TNT1 A 0 A_SpawnItemEx("Glue Shot GFX 3 Server",0,0,8,0,0,0,0,0,0,TID+5736) stop}}
+actor "Glue Shot GFX 4 Summon" : item { states { 
+	pickup: TNT1 A 0 A_SpawnItemEx("Glue Shot GFX 4 Server",0,0,5,0,0,0,0,0,0,TID+5736) stop}}
+			
+actor "Glue Shot GFX 1 Server" : watcher { states { spawn: 
+	TNT1 A 0 nodelay A_SetScale(TID-6735)
+	TNT1 A 0 A_SpawnItemEx("Glue Shot GFX 1 Client",0,0,0,0,0,0,0,SXF_TRANSFERSCALE) stop}}
+actor "Glue Shot GFX 2 Server" : watcher { states { spawn: 
+	TNT1 A 0 nodelay A_SetScale(TID-6735)
+	TNT1 A 0 A_SpawnItemEx("Glue Shot GFX 2 Client",0,0,0,0,0,0,0,SXF_TRANSFERSCALE) stop}}
+actor "Glue Shot GFX 3 Server" : watcher { states { spawn: 
+	TNT1 A 0 nodelay A_SetScale(TID-6735)
+	TNT1 A 0 A_SpawnItemEx("Glue Shot GFX 3 Client",0,0,0,0,0,0,0,SXF_TRANSFERSCALE) stop}}
+actor "Glue Shot GFX 4 Server" : watcher { states { spawn: 
+	TNT1 A 0 nodelay A_SetScale(TID-6735)
+	TNT1 A 0 A_SpawnItemEx("Glue Shot GFX 4 Client",0,0,0,0,0,0,0,SXF_TRANSFERSCALE) stop}}
+	
+actor "Glue Shot GFX 1 Client" : gfx { +FORCEXYBILLBOARD alpha 0.2 // BasicClientSideFrameTID
+	states { 
+		sprite: XWAJ E 0
+			stop}}
+			//goto clientSideCheck}}	
+				
+actor "Glue Shot GFX 2 Client" : "Glue Shot GFX 1 Client" { states { sprite: XWAJ F 0
+				stop}} //clientSideCheck
+actor "Glue Shot GFX 3 Client" : "Glue Shot GFX 1 Client" { states { sprite: XWAJ G 0
+				stop}}
+actor "Glue Shot GFX 4 Client" : "Glue Shot GFX 1 Client" { scale 1.75  states { sprite: XWAJ I 0
+				stop}}
+				

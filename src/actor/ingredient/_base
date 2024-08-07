@@ -1,0 +1,25 @@
+/*
+Ingredient pickup would be much simpler if DECORATE supported sending string arguments to ACS,
+if there were event catch/hooks for pickup state
+
+Ammo/Wep/XWToken are managed via ACS for mods' weapons, because Zandro throws "unknown class" 
+warnings if you mention non-defined actor in DECORATE (i.e in case Xover is hosted without the mods)
+*/
+
+actor XWBase : item {
+	inventory.amount 1 	scale 2.0 var int user_xw_respawn;
+	Inventory.Pickupmessage "$PU_XW_UNKNOWNWEP" inventory.pickupsound "weapon/weaponup"
+	mass 0 // represents the weapon runtime ID (returned by DefineWeapon)
+	//Inventory.RespawnTics 1
+	states	{
+		Spawn: WEA2 F 0
+			TNT1 A 0 ACS_NamedExecuteWithResult("XW", XW_ARTIFICIAL_RESPAWN, 0)
+			TNT1 A 0 A_JumpIf(true, "sprite") goto sprite
+		sprite: WEA2 L 0
+		idle: "----" A 69
+			wait
+		no:
+			"----" A 0
+			fail
+}}
+

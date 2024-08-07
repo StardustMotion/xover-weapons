@@ -1,0 +1,14 @@
+
+
+[enu default]
+
+
+PU_XOVER = "Picked up a Xover Weapon apparently";
+TAG_BASEXOVERWEAPON = "\ccBase Xover Weapon";
+OB_XOVERWEAPON = "%o was destroyed by %k's Base Xover Weapon.";
+
+TAG_XWDELAYFLAME = "\c[Xover2D]Delay Flame\c-";
+OB_XWDELAYFLAME = "%k scorched %o repeatedly with \c[Xover2D]Delay Flame\c-.";
+
+TAG_XWGLUESHOT = "\c[Xover2D]Glue Shot\c-";
+OB_XWGLUESHOT = "%o was given a hand to fix %hself with %k's \c[Xover2D]Glue Shot\c-.";

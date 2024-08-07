@@ -1,0 +1,49 @@
+//const int XW_DELAY_FLAME_AMMO = 1*XW_AMMOBAR_UNIT;
+
+actor XWDelayFlameWep : BaseXoverWep { 
+    weapon.slotNumber 3
+	inventory.icon "DELYFLAM" 	obituary "$OB_XWDELAYFLAME"	tag "$TAG_XWDELAYFLAME"
+	states {
+		noAmmo: XWAC J 0
+			goto super::noAmmo
+		select: XWAC J 0 ACS_NamedExecuteWithResult("core_weaponcolor",6741)
+			goto super::select
+		deselect: "----" A 0 A_TakeInventory("var8", 0xFF)
+			goto super::deselect			
+		ready: XWAC J 0
+			goto super::ready		
+		
+		fire: altfire:
+			XWAC J 0 A_JumpIfInventory("var8", 1, "shoot")
+			XWAC J 0 A_JumpIf(!CallACS("XW Ammo Check", 1), "noAmmo")
+			XWAC J 0 ACS_NamedExecuteAlways("XW Ammo Use", 0, 1)
+			XWAC J 0 A_GiveInventory("var8", 4)
+		shoot: 
+			DSTS B 0 A_PlaySoundEx("DELYFLMA","Weapon")
+			XWAC J 0 A_TakeInventory("var8", 1)
+			XWAC J 0 A_SpawnItemEx("XW Delay Flame", cos(-pitch)*16, 8, 28+sin(-pitch)*16, 65*cos(pitch), 0, 65*sin(-pitch), 0, SXF_TRANSFERPITCH)
+            XWAC J 0 A_JumpIfInventory("PowerSpreadRune", 1, "spread") goto end
+        spread:
+			XWAC J 0 A_SpawnItemEx("XW Delay Flame", cos(-pitch)*16, 8, 28+sin(-pitch)*16, 65*cos(pitch), 0, 65*sin(-pitch), -20, SXF_TRANSFERPITCH)
+			XWAC J 0 A_SpawnItemEx("XW Delay Flame", cos(-pitch)*16, 8, 28+sin(-pitch)*16, 65*cos(pitch), 0, 65*sin(-pitch), 20, SXF_TRANSFERPITCH)
+        end:
+			XWAC JKLK 1
+			XWAC J 0 A_Refire
+			goto ready}}
+	
+actor "XW Delay Flame" : QuickBoomerang { +FLOATBOB damagetype "DelayFlame" damage (13) obituary "$OB_XWDELAYFLAME" +BRIGHT
+	states {
+		spawn: TNT1 A 0
+			XWAC M 1
+			XWAC MNNMMNNM 1 A_ScaleVelocity(0.8)
+			XWAC M 1 A_Stop
+			XWAC NMNMNM 2
+			XWAC M 1 A_PlaySoundEx("DELYFLMB", "Weapon")
+			TNT1 A 0 A_ChangeVelocity(4*cos(pitch), 0, 4*sin(-pitch), CVF_REPLACE | CVF_RELATIVE )
+			XWAC MMNN 2 A_ScaleVelocity(2.1)
+		woo:
+			XWAC MN 2
+			loop
+		death: 
+			TNT1 A 0 A_SpawnItemEx("OilPitIgnite",0,0,8)
+			stop}}

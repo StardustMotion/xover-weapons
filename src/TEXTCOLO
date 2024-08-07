@@ -1,0 +1,33 @@
+"XW1" { // emerald
+#208050  #20f8f0
+Console: #208050  #208050    0 127 #20f8f0  #20f8f0  128 256
+Flat: #20f8f0 }
+
+"XW2" { // fuchsia
+#502080  #f020f8
+Console: #502080  #502080    0 127 #f020f8  #f020f8  128 256
+Flat: #f020f8 }
+
+// bright = tierColor
+// dark = brightBrightness*0.25
+// Flat = brightBrightness*0.5
+
+"Xover2D" {
+#104000	 #40FF00
+Console: #104000  #104000    0 127 #40FF00  #40FF00  128 256
+Flat: #208000 }
+
+"Xover3D" {
+#003040  #00BFFF
+Console: #003040  #003040    0 127   #00BFFF  #00BFFF  128 256
+Flat: #006080 }
+
+"Xover4D" {
+#1F1429  #7851A9
+Console:    #1F1429  #1F1429    0 127    #7851A9  #7851A9  128 256
+Flat: #3D2855 }
+
+"Xover5D" {
+#401000  #FF4000
+Console:  #401000  #401000    0 127   #FF4000  #FF4000  128 256
+Flat:  #802000 }

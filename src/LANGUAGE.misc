@@ -1,0 +1,195 @@
+
+[enu default]
+PU_XW_UNKNOWNWEP = "\ci/!/ No pickup message defined for this Xover Weapon giver /!/";
+
+
+
+PU_SMALLSCREW = "Picked up few screws.";
+PU_MEDIUMSCREW = "Picked up some screws.";
+PU_LARGESCREW = "Picked up a lot of screws.";
+
+PU_RECIPEMIX = "Found a recipe mix!";
+
+			// ##### //
+			// MENUS //
+			// ##### //
+
+XW_MENU_PREFERENCES_TITLE = "\c[XW1]X\c[XW2]OVER \c[XW1]W\c[XW2]EAPONS \c[XW1]P\c[XW2]REFERENCES";
+XW_MENU_HELP = "\c[XW1]X\c[XW2]OVER \c[XW1]W\c[XW2]EAPONS \c[XW1]H\c[XW2]ELP";
+XW_MENU_SEPARATOR = "\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=\c[XW1]=\c[XW2]=";
+XW_MENU_RESTARTMAP = "\ci/!\\ \ckRestart the map to apply modifications \ci/!\\ ";
+XW_MENU_PLAYER = "\c[XW1]-\c[XW2]--------------------\c[XW1]-\n\ck~ Player settings ~\n\c[XW1]-\c[XW2]--------------------\c[XW1]-";
+XW_MENU_KEYBINDS = "\ckKey bindings and hold duration (in seconds)";
+XW_MENU_GAME = "\c[XW1]-\c[XW2]------------------\c[XW1]-\n\ck~ Game settings ~\n\c[XW1]-\c[XW2]------------------\c[XW1]-";
+XW_MENU_PREFERENCES = "\ckPreferences";
+XW_MENU_PVM = "\ckCooperative / Survival / Invasion";
+XW_MENU_LMS = "\ckLast man standing";
+
+	// Changelogs
+			
+XW_LOG_2_1_0_TITLE = "\c[XW1]V\c[XW2]ersion \c[XW1]2\c[XW2].\c[XW1]1\c[XW2].\c[XW1]0";
+XW_LOG_2_1_0_0 = "\ck A large amount of coffee was consumed\n but here's 2.1.0. Ty for playing XW :D\n \n\c[XW1] # \c[XW2]--- \ck GAMEPLAY \c[XW2]--- \c[XW1]#\n \cd> 11 new Xover Weapons\n \ca> Recipe tips stay on screen until combined\n \cd> Now works in PvM game modes (Cooperative,\n    Survival and Invasion)\n \ca> Players now always drop screws on death.\n    If fragged by a Xover Weapon, they also\n    drop one of their vanilla weapons\n \ck> Xover Weapons new Game Settings :\n   \ca- Can change screw price\n   \cd- Can lose ingredients on death\n   \ca- Can keep weapons between maps (PvM)\n   \cd- Removed drop item on death game setting";
+XW_LOG_2_1_0_1 = "\c[XW1]   # \c[XW2]--- \ck SCREWS \c[XW2]--- \c[XW1]#\n   \cd> Fusion price formula re-evaluated\n\ca   > Uncombining doesn't refund screws anymore\n\cd   > Doubled gains from screw pickups\n\ca   > Screws replace ammo 33% => 40% of the time\n\cd   > Screws/ammo respawn time 30 => 18 sec\n\ca   > Starting screws is a flat 50 (or 0 in PvM)\n\n\c[XW1]   # \c[XW2]--- \ck WEAPONS \c[XW2]--- \c[XW1]#\n   \cd> Various rebalancing, all known bugs fixed.\n     Xover Weapons can now all attack players,\n     objects or monsters, and monsters\n     can be affected by status effects\n\n\ck   For more details check out Stardust's\n   Workshop thread on Cutstuff.net forums\n                                                                = w=";
+
+
+
+// $$VARIABLE_NAME todo when it'll work
+/*
+C_2D = "\c[Xover2D]";
+C_3D = "\c[Xover3D]";
+C_4D = "\c[Xover4D]";
+C_5D = "\c[Xover5D]";
+*/
+
+
+			// ######################## //
+			// WEAPON TAGS / OBITUARIES //
+			// ######################## //
+			
+
+
+
+// ------------------ Tier 2 ------------------ //
+
+TAG_METGUARD1 = "\c[Xover2D]Met Guard 1\c-";
+OB_METGUARD1 = "%o was defense broken by %k's \c[Xover2D]Met Guard 1\c-.";
+
+TAG_MELTCREEPER = "\c[Xover2D]Melt Creeper\c-";
+OB_MELTCREEPER = "%o was calcinated by %k's \c[Xover2D]Melt Creeper\c-.";
+
+TAG_AIMINGLASER = "\c[Xover2D]Aiming Laser\c-";
+OB_AIMINGLASER = "%o was detected and deleted by %k's \c[Xover2D]Aiming Laser\c-.";
+OB_AIMINGLASERBEAM = "%k provided that \c[Xover2D]Aiming Laser\c- enlightenment to %o.";
+
+
+TAG_RECYCLEINHALER = "\c[Xover2D]Recycle Inhaler\c-";
+OB_RECYCLEINHALER = "%o was recycled into something more useful thanks to %k's \c[Xover2D]Recycle Inhaler\c-.";
+//PU_RUSHSEARCH = "Support Item! Rush Search!";
+PU_RTANK = "R-Tank! Health restored!";
+
+TAG_FORESTWHIP = "\c[Xover2D]Forest Whip\c-";
+OB_FORESTWHIP = "%k slapped and slammed %o with the \c[Xover2D]Forest Whip\c-.";
+OB_FORESTWHIPBRAMBLE = "%o was imprisoned by %k's \c[Xover2D]Forest Whip\c- bramble.";
+
+TAG_BLASTMISSILE = "\c[Xover2D]Blast Missile\c-";
+OB_BLASTMISSILE = "%o went out of control by %k's \c[Xover2D]Blast Missile\c- and %g is gonna crash, ahhh!";
+
+TAG_THOUSANDSPEAR = "\c[Xover2D]Thousand Spear\c-";
+OB_THOUSANDSPEAR = "%o died with honor by %k's \c[Xover2D]Thousand Spear\c-.";
+
+TAG_WHITEROSECLUSTER = "\c[Xover2D]White Rose Cluster\c-";
+OB_WHITEROSECLUSTER = "%o got snowballed on by %k's \c[Xover2D]White Rose Cluster\c-.";
+
+TAG_LEAFBOOMERANG = "\c[Xover2D]Leaf Boomerang\c-";
+OB_LEAFBOOMERANG = "%o was prepared as an infusion with %k's \c[Xover2D]Leaf Boomerang\c-.";
+
+TAG_TRIADTHUNDER = "\c[Xover2D]Triad Thunder\c-";
+OB_TRIADTHUNDER = "%k zapped %o to the extreme with \c[Xover2D]Triad Thunder\c-.";
+OB_TRIADTHUNDERQUAKE = "%o was put in a state of shock by %k's \c[Xover2D]Triad Thunder\c-.";
+
+TAG_SONICSLICER = "\c[Xover2D]Sonic Slicer\c-";
+OB_SONICSLICER = "%o was omnislashed by %k's \c[Xover2D]Sonic Slicer\c-.";
+OB_SONICSLICERRAIN = "%o was airborne omnislashed by %k's \c[Xover2D]Sonic Slicer\c-.";
+
+TAG_SCATTERRING = "\c[Xover2D]Scatter Ring\c-";
+OB_SCATTERRING = "%o was sent flying to a bottomless pit by %k's \c[Xover2D]Scatter Ring\c-.";
+
+TAG_YOGAINFERNO = "\c[Xover2D]Yoga Inferno\c-";
+OB_YOGAINFERNO = "%o was robot torched by %k's \c[Xover2D]Yoga Inferno\c-.";
+
+
+TAG_SUPERARROW = "\c[Xover2D]Super Arrow\c-";
+OB_SUPERARROW = "%k crashed into %o with the \c[Xover2D]Super Arrow\c-.";
+
+TAG_GROUNDDASH = "\c[Xover2D]Ground Dash\c-";
+OB_GROUNDDASHROCK = "%o was buried alive under %k's \c[Xover2D]Ground Dash\c-.";
+OB_GROUNDDASHBOULDER = "%o was mangled in a dead end by %k's \c[Xover2D]Ground Dash\c-.";
+
+TAG_HELLFIRECUTTER = "\c[Xover2D]Hellfire Cutter\c-";
+OB_HELLFIRECUTTER = "%o was lacerated and condemned by %k's \c[Xover2D]Hellfire Cutter\c-.";
+
+TAG_TIMEBOMB = "\c[Xover2D]Time Bomb\c-";
+OB_TIMEBOMB = "%o got %p respawn cooldown reset by %k's \c[Xover2D]Time Bomb\c-.";
+
+TAG_WINGSPIRAL = "\c[Xover2D]Wing Spiral\c-";
+OB_WINGSPIRAL = "%k's \c[Xover2D]Wing Spiral\c- sent back %o to %p planet.";
+OB_WINGSPIRALCYCLONE = "%o had fun riding %k's \c[Xover2D]Wing Spiral\c- like there's no tomorrow.";
+
+TAG_VIRUSOUTBREAK = "\c[Xover2D]Virus Outbreak\c-";
+OB_VIRUSOUTBREAK = "Even Dr. Light couldn't cure %o from %k's \c[Xover2D]Virus Outbreak\c- contamination.";
+
+TAG_PHOTONFLARE = "\c[Xover2D]Photon Flare\c-";
+OB_PHOTONFLARE = "%k fried %o on all sides with the \c[Xover2D]Photon Flare\c-.";
+
+TAG_BRANDISHINGBLADE = "\c[Xover2D]Brandishing Blade\c-";
+OB_BRANDISHINGBLADE = "%k guillotined the %o with a \c[Xover2D]Brandishing Blade\c-.";
+OB_BRANDISHINGBLADEDANCE = "%o parts went flying everywhere from %k's \c[Xover2D]Brandishing Blade\c-.";
+
+TAG_DOPPLERATTACK = "\c[Xover2D]Doppler Attack\c-";
+OB_DOPPLERATTACK = "%k taught %o the \c[Xover2D]Doppler Attack\c-'s secret.";
+OB_DOPPLERATTACKJUTSU = "%k wa daibakuhatsu ni \c[Xover2D]Doppura Atakku\c- de %o wo nakunaraseta.";
+
+TAG_SPLASHLASER = "\c[Xover2D]Splash Laser\c-";
+OB_SPLASHLASER = "%k rinsed their \c[Xover2D]Splash Laser\c- off from the %o.";
+OB_SPLASHLASERBUBBLE = "%k waterboarded %o with the \c[Xover2D]Splash Laser\c-.";
+
+TAG_ICEJAVELIN = "\c[Xover2D]Ice Javelin\c-";
+OB_ICEJAVELIN = "%o's health deepened into negative through %k's \c[Xover2D]Ice Javelin\c-.";
+
+
+// ------------------ Tier 3 ------------------ //
+
+TAG_METGUARD2 = "\c[Xover3D]Met Guard 2\c-";
+OB_METGUARD2 = "%o was defense broken by %k's \c[Xover3D]Met Guard 2\c-.";
+
+TAG_THOUSANDSPEARV2 = "\c[Xover3D]Thousand Spear V2\c-";
+OB_THOUSANDSPEARV2 = "%o died with honor by %k's \c[Xover3D]Thousand Spear V2\c-.";
+
+TAG_COUNTERSHADINGTRACER = "\c[Xover3D]Countershading Tracer\c-";
+OB_COUNTERSHADINGTRACER = "%o trotted in %k's \c[Xover3D]Countershading Tracer\c-s till no more.";
+
+TAG_ICEGATLING = "\c[Xover3D]Ice Gatling\c-";
+OB_ICEGATLING = "%k forgot to take out their \c[Xover3D]Ice Gatling\c--frozen %o.";
+
+TAG_REDHOTKICK = "\c[Xover3D]Red Hot Kick\c-";
+OB_REDHOTKICK = "%k \c[Xover3D]Red Hot Kick\c-ed %o's ass with grace.";
+OB_REDHOTBURNINGKICK = "%k couldn't rescue %o from %k's \c[Xover3D]Red Hot Kick\c-.";
+OB_REDHOTBURN = "%o deceased off-screen by %k's \c[Xover3D]Red Hot Kick\c- afterburn.";
+
+TAG_BOOMERANGCUTTER = "\c[Xover3D]Boomerang Cutter\c-";
+OB_BOOMERANGCUTTER = "%o was a great obstacle for %k's \c[Xover3D]Boomerang Cutter\c-.";
+OB_ENERGYBOOMERANGCUTTER = "%k's \c[Xover3D]Boomerang Cutter\c- carved a new boundary inside %o.";
+
+TAG_JAWZHUNTERS = "\c[Xover3D]Jawz Hunters\c-";
+OB_JAWZHUNTERS = "Tonight %o is sleeping with the \c[Xover3D]Jawz Hunters\c- of %k.";
+OB_JAWZHUNTERSCOUNTER = "%o right here tried to outsmart %k's \c[Xover3D]Jawz Hunters\c-.";
+
+
+// ------------------ Tier 4 ------------------ //
+
+TAG_METGUARD3 = "\c[Xover4D]Met Guard 3\c-";
+OB_METGUARD3 = "%o was defense broken by %k's \c[Xover4D]Met Guard 3\c-.";
+
+TAG_THOUSANDSPEARV3 = "\c[Xover4D]Thousand Spear V3\c-";
+OB_THOUSANDSPEARV3 = "%o died with honor by %k's \c[Xover4D]Thousand Spear V3\c-.";
+
+TAG_THOUSANDKNIVES = "\c[Xover4D]Thousand Knives\c-";
+OB_THOUSANDKNIVES = "%o got %p timeline corrupted by %k's \c[Xover4D]Thousand Knives\c-.";
+OB_THOUSANDKNIVESKNIFE = "%o was dissected past %p bedtime by %k's \c[Xover4D]Thousand Knives\c-.";
+
+TAG_RAKUKOUJIN = "\c[Xover4D]Falling S. Sword\c-";
+OB_RAKUKOUJIN = "%k's \c[Xover4D]Falling S. Sword\c- successfully uninstalled %o from MM8BDM.";
+OB_RAKUKOUJINANCHOR = "%k's \c[Xover4D]Falling S. Sword\c- anchor struck %o down to unplayable.";
+
+
+
+
+// ------------------ Tier 5 ------------------ //
+
+TAG_METGUARD3EX = "\c[Xover5D]Met Guard 3 EX\c-";
+OB_METGUARD3EX = "%o was defense broken by %k's \c[Xover5D]Met Guard 3 EX\c-.";
+OB_METGUARD3EXPOISON = "%o was consumed by the dark power of %k's \c[Xover5D]Met Guard 3 EX\c-.";
+
+TAG_THOUSANDSPEARV5 = "\c[Xover5D]Thousand Spear V5\c-";
+OB_THOUSANDSPEARV5 = "%o died with honor by %k's \c[Xover5D]Thousand Spear V5\c-.";
+OB_THOUSANDSPEARV5SOLDIER = "%k's \c[Xover5D]Thousand Spear V5\c- Soldier back impaled %o without honor.";

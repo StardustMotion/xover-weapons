@@ -1,0 +1,5 @@
+
+#include "actor/weapon/_base"
+
+#include "actor/weapon/delayflame"
+#include "actor/weapon/glueshot"

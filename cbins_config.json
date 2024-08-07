@@ -1,0 +1,9 @@
+{
+	"folder": "src",
+	"libraries": [
+		"data.acs",
+		"server_core.acs", "client_core.acs"
+	],
+	"file_name": "xover-weapons",
+	"version": "2.2.0"
+}

@@ -1,0 +1,112 @@
+script "xover_spawnfuncs" OPEN
+{
+    AddSpawnFunc(DTADD_SFT_WEP, "xover_wepGiver");
+}
+
+script "xover_wepGiver" (void) {
+    str class = getactorclass(0);
+    while (timer() < 5) delay(1); 
+    if (timer()>>3)
+        SpawnForced(strparam(s:class,s:"XWDrop"),getactorx(0),getactory(0),getactorz(0),0,0);  
+    else if (!strcmp(class,getactorclass(0)))
+        SpawnForced(strparam(s:class,s:"XW"),getactorx(0),getactory(0),getactorz(0),0,0);  
+    else terminate; // weapon transformed by core_randomize_wep
+    thing_remove(0);
+}
+
+script "XW" (int type, int arg1, int arg2, int arg3) {
+    switch(type) {
+        case XW_WEP_PICKUP:
+            setresultvalue(false);
+        break;
+
+        /*
+        @arg1 respawn cooldown        
+        */
+        case XW_ARTIFICIAL_RESPAWN:
+            if ((timer()>8 && !GetUserVariable(0,"user_xw_respawn")) || !GetCVar("sv_itemrespawn"))  {
+                log(n:0, s:" no respawn");
+                terminate;
+            }
+            int x = GetActorX(0), y = GetActorY(0), z = GetActorZ(0);
+            type = getactorclass(0);
+            while(ClassifyActor(0) != ACTOR_WORLD) delay(1);
+            delay(arg1);
+            arg3 = uniquetid();
+            SpawnForced(type,x,y,z,arg3,0);
+            SetUserVariable(arg3,"user_xw_respawn", 1);
+            Thing_ChangeTid(arg3,0);
+        break;
+
+        /*
+        @arg1 true = give weapon and XWToken, false = ammo refill only
+        @arg2 static mod "weapon ID (from Xover perspective)"
+        */
+        case XW_MODS_PICKUP:
+            switch(arg2) {
+                case 0: arg2 = "DelayFlameWep"; arg3 = "DelayFlameAmmo"; break;
+                case 1: arg2 = "IceCircleWep"; arg3 = "IceCircleAmmo"; break;
+                case 2: arg2 = "ProtoChargeWep"; arg3 = "ProtoChargeAmmo"; break;
+                case 3: arg2 = "RisingSunWep"; arg3 = "RisingSunAmmo"; break;
+                case 4: arg2 = "RumblingBangWep"; arg3 = "RumblingBangAmmo"; break;
+                case 5: arg2 = "SpinWheelWep"; arg3 = "SpinWheelAmmo"; break;
+                case 6: arg2 = "WindSlicerWep"; arg3 = "WindSlicerAmmo"; break;
+                case 7: arg2 = "ZaWarudoWep"; arg3 = "ZaWarudoAmmo_RNC"; break;
+                
+                case 8: arg2 = "BlowTorchWep"; arg3 = "BlowTorchAmmo"; break;
+                case 9: arg2 = "BubbleBathWep"; arg3 = "BubbleBathAmmo"; break;
+                case 10: arg2 = "DrillPikeWep"; arg3 = "DrillPikeAmmo"; break;
+                case 11: arg2 = "DynamiteClusterWep"; arg3 = "DynamiteClusterAmmo"; break;
+                case 12: arg2 = "KnifeSpreadWep"; arg3 = "KnifeSpreadAmmo"; break;
+                case 13: arg2 = "PlasmaCutterWep"; arg3 = "PlasmaCutterAmmo"; break;
+                case 14: arg2 = "SharkAttackWep"; arg3 = "SharkAttackAmmo"; break;
+                case 15: arg2 = "SludgeBurstWep"; arg3 = "SludgeBurstAmmo"; break;
+                case 16: arg2 = "SonicPulseWep"; arg3 = "SonicPulseAmmo"; break;
+                
+                case 17: arg2 = "CometDashWep_J"; arg3 = "CometDashAmmo_J"; break;
+                case 18: arg2 = "GlueShotWep_J"; arg3 = "GlueShotAmmo_J"; break;
+                case 19: arg2 = "JetMissileWep_J"; arg3 = "JetMissileAmmo_J"; break;
+                case 20: arg2 = "NailShieldWep_J"; arg3 = "NailShieldAmmo_J"; break;
+                case 21: arg2 = "NitroBlastWep_J"; arg3 = "NitroBlastAmmo_J"; break;
+                case 22: arg2 = "RainbowBeamWep_J"; arg3 = "RainbowBeamAmmo_J"; break;
+                case 23: arg2 = "TankArsenalWep_J"; arg3 = "TankArsenalAmmo_J"; break;
+                case 24: arg2 = "WaterCannonWep_J"; arg3 = "WaterCannonAmmo_J"; break;
+                case 25: arg2 = "YokuAttackWep_J"; arg3 = "YokuAttackAmmo_J"; break;
+                case 26: arg2 = "YoyoCutterWep_J"; arg3 = "YoyoCutterAmmo_J"; break;
+                
+                case 27: arg2 = "CharadeCloneWep"; arg3 = "CharadeCloneAmmo"; break;
+                case 28: arg2 = "CircuitBreakerWep"; arg3 = "CircuitBreakerAmmo"; break;
+                case 29: arg2 = "CryptCloakWep"; arg3 = "CryptCloakAmmo"; break;
+                case 30: arg2 = "PhantomFuseWep"; arg3 = "PhantomFuseAmmo"; break;
+                case 31: arg2 = "PhotonFlareWep"; arg3 = "PhotonFlareAmmo"; break;
+                case 32: arg2 = "PulseStopperWep"; arg3 = "PulseStopperAmmo"; break;
+                case 33: arg2 = "ShockGauntletWep"; arg3 = "ShockGauntletAmmo"; break;
+                case 34: arg2 = "VirusOutbreakWep"; arg3 = "VirusOutbreakAmmo"; break;
+            }
+            if (arg1) {
+                GiveInventory(arg2,1); GiveInventory(strParam(s:arg2,s:"XWToken"),1);
+            }
+            else {
+                if (CheckInventory(arg3)==GetAmmoCapacity(arg3)) {
+                    SetResultValue(false);
+                    terminate;
+                }
+                GiveInventory(arg3,0xFFFF);
+            }
+            SetResultValue(true);
+        break;
+    }
+}
+
+
+script "XW Ammo Update" (void) {
+
+}
+script "XW Ammo Hide" (int player, int calcPlayerNumber, int forceHide) {	
+    
+}
+script "XW Ammo Check" (int amount) {
+    SetResultValue(true);
+}
+script "XW Ammo Use" (int amount) {
+}

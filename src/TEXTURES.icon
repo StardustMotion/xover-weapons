@@ -1,0 +1,174 @@
+
+/// checked
+
+sprite "XWAB[0", 16, 16 { offset 8,16 Patch "XWICON2D", 0, 0 patch "ICXWDEFL", 0, 0 }
+graphic DELYFLAM, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAB[0", 0, 0 }
+
+sprite "XWAI]0", 16, 16 { offset 8,16 Patch "XWICON2D", 0, 0  Patch "ICXWGLSH", 0, 0 }
+graphic GLUESHOT, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAI]0", 0, 0 }
+
+
+
+
+
+
+
+
+
+/// to be checked
+
+
+
+
+
+
+
+graphic RECIPMIX, 30, 30 { XScale 2.75 YScale 2.75 Patch XWAAL0, 0, 0 }
+
+// -------------------- 2D -------------------- //
+
+graphic ICXWMTG1, 16, 16 { patch ICXWMTG0, 0, 0 
+	{ translation "199:199=231:231", "245:245=234:234", "195:195=133:133", 
+				"192:192=129:129", "198:198=229:229", "176:176=229:229" }}
+sprite "XWAAH0", 16, 16 { offset 8,16 Patch "XWICON2D", 0, 0 patch "ICXWMTG1", 0, 0 }
+graphic METGARD1, 30, 30 { XScale 2.0 YScale 2.0 Patch XWAAH0, 0, 0 }
+
+graphic ICXWTSP1, 16, 16 { patch ICXWTSP0, 0, 0 
+	{ translation "192:192=69:69", "198:198=195:195" }}
+sprite "XWAD[0", 16, 16 { offset 8,16 Patch "XWICON2D", 0, 0 patch "ICXWTSP1", 0, 0 }
+graphic THSNSPR1, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAD[0", 0, 0 }
+
+sprite "XWAA[0", 16, 16 { offset 8,16 Patch "XWICON2D", 0, 0 patch "ICXWMECR", 0, 0 }
+graphic MELTCREP, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAA[0", 0, 0 }
+
+sprite "XWAA]0", 16, 16 { offset 8,16 Patch "XWICON2D", 0, 0 patch "ICXWAILA", 0, 0 }
+graphic AIMGLASR, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAA]0", 0, 0 }
+
+
+sprite "XWAB]0", 16, 16 { offset 8,16 Patch "XWICON2D", 0, 0 patch "ICXWREIN", 0, 0 }
+graphic RECLINLR, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAB]0", 0, 0 }
+
+sprite "XWAC[0", 16, 16 { offset 8,16 Patch "XWICON2D", 0, 0 patch "ICXWFOWH", 0, 0 }
+graphic FRSTWHIP, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAC[0", 0, 0 }
+
+sprite "XWAC]0", 16, 16 { offset 8,16 Patch "XWICON2D", 0, 0 patch "ICXWBLMI", 0, 0 }
+graphic BLSTMISL, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAC]0", 0, 0 }
+
+sprite "XWAF[0", 16, 16 { offset 8,16 Patch "XWICON2D", 0, 0 patch "ICXWWHRC", 0, 0 }
+graphic WHTROSCL, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAF[0", 0, 0 }
+
+sprite "XWAEZ0", 16, 16 { offset 8,16 Patch "XWICON2D", 0, 0 patch "ICXWLEBO", 0, 0 }
+graphic LEAFBOOM, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAEZ0", 0, 0 }
+
+sprite "XWAG[0", 16, 16 { offset 8,16 Patch "XWICON2D", 0, 0 patch "ICXWTRTH", 0, 0 }
+graphic TRIDTHDR, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAG[0", 0, 0 }
+
+sprite "XWAG]0", 16, 16 { offset 8,16 Patch "XWICON2D", 0, 0  Patch "ICXWSOSL", 0, 0 }
+graphic SNICSLCR, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAG]0", 0, 0 }
+
+sprite "XWAH[0", 16, 16 { offset 8,16 Patch "XWICON2D", 0, 0  Patch "ICXWSCRI", 0, 0 }
+graphic SCTRRING, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAH[0", 0, 0 }
+
+sprite "XWAH]0", 16, 16 { offset 8,16 Patch "XWICON2D", 0, 0  Patch "ICXWYOIN", 0, 0 }
+graphic YOGAIFNO, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAH]0", 0, 0 }
+
+
+sprite "XWAJ[0", 16, 16 { offset 8,16 Patch "XWICON2D", 0, 0  Patch "ICXWSUAR", 0, 0 }
+graphic SUPRAROW, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAJ[0", 0, 0 }
+
+sprite "XWAK[0", 16, 16 { offset 8,16 Patch "XWICON2D", 0, 0  Patch "ICXWGRDA", 0, 0 }
+graphic GRONDASH, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAK[0", 0, 0 }
+
+sprite "XWAK]0", 16, 16 { offset 8,16 Patch "XWICON2D", 0, 0  Patch "ICXWHECU", 0, 0 }
+graphic HELLCUTR, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAK]0", 0, 0 }
+
+sprite "XWAL[0", 16, 16 { offset 8,16 Patch "XWICON2D", 0, 0  Patch "ICXWTIBO", 0, 0 }
+graphic XWTMBOMB, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAL[0", 0, 0 }
+
+sprite "XWAL]0", 16, 16 { offset 8,16 Patch "XWICON2D", 0, 0  Patch "ICXWWISP", 0, 0 }
+graphic WINGSPRL, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAL]0", 0, 0 }
+
+sprite "XWAM[0", 16, 16 { offset 8,16 Patch "XWICON2D", 0, 0  Patch "ICXWVIOU", 0, 0 }
+graphic VIRSOBRK, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAM[0", 0, 0 }
+
+sprite "XWAM]0", 16, 16 { offset 8,16 Patch "XWICON2D", 0, 0  Patch "ICXWPHFL", 0, 0 }
+graphic PHTNFLAR, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAM]0", 0, 0 }
+
+sprite "XWAN[0", 16, 16 { offset 8,16 Patch "XWICON2D", 0, 0  Patch "ICXWBRBL", 0, 0 }
+graphic BRNDBLAD, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAN[0", 0, 0 }
+
+sprite "XWAO[0", 16, 16 { offset 8,16 Patch "XWICON2D", 0, 0  Patch "ICXWDOAT", 0, 0 }
+graphic DOPPATTK, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAO[0", 0, 0 }
+
+sprite "XWAP[0", 16, 16 { offset 8,16 Patch "XWICON2D", 0, 0  Patch "ICXWSPLA", 0, 0 }
+graphic SPLSLASR, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAP[0", 0, 0 }
+
+sprite "XWAP]0", 16, 16 { offset 8,16 Patch "XWICON2D", 0, 0  Patch "ICXWICJA", 0, 0 }
+graphic ICEJAVLN, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAP]0", 0, 0 }
+
+
+// -------------------- 3D -------------------- //
+
+graphic ICXWMTG2, 16, 16 { patch ICXWMTG0, 0, 0 
+	{ translation "199:199=43:43", "245:245=14:14", "195:195=243:243", 
+				"192:192=73:73", "198:198=41:41", "176:176=173:173" }}
+sprite "XWAAI0", 16, 16 { offset 8,16 patch "XWICON3D", 0, 0 patch "ICXWMTG2", 0, 0 }
+graphic METGARD2, 30, 30 { XScale 2.0 YScale 2.0 Patch XWAAI0, 0, 0 }
+
+graphic ICXWTSP2, 16, 16 { patch ICXWTSP0, 0, 0 
+	{ translation "192:192=103:103", "198:198=118:118" }} 
+sprite "XWAD]0", 16, 16 { offset 8,16 Patch "XWICON3D", 0, 0 patch "ICXWTSP2", 0, 0 }
+graphic THSNSPR2, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAD]0", 0, 0 }
+
+sprite "XWAI[0", 16, 16 { offset 8,16 Patch "XWICON3D", 0, 0  Patch "ICXWCOTR", 0, 0 }
+graphic CTSDTRCR, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAI[0", 0, 0 }
+
+sprite "XWAJ]0", 16, 16 { offset 8,16 Patch "XWICON3D", 0, 0  Patch "ICXWICGA", 0, 0 }
+graphic ICEGTLNG, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAJ]0", 0, 0 }
+
+sprite "XWAN]0", 16, 16 { offset 8,16 Patch "XWICON3D", 0, 0  Patch "ICXWREHK", 0, 0 }
+graphic REDHOTKK, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAN]0", 0, 0 }
+
+sprite "XWAO]0", 16, 16 { offset 8,16 Patch "XWICON3D", 0, 0  Patch "ICXWBOCU", 0, 0 }
+graphic BMRGCUTR, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAO]0", 0, 0 }
+
+sprite "XWAQ]0", 16, 16 { offset 8,16 Patch "XWICON3D", 0, 0  Patch "ICXWJAHU", 0, 0 }
+graphic JAWZHUNT, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAQ]0", 0, 0 }
+
+
+
+
+
+// -------------------- 4D -------------------- //
+
+graphic ICXWMTG3, 16, 16 { patch ICXWMTG0, 0, 0 
+	{ translation "199:199=249:249", "245:245=245:245", "195:195=166:166",
+				"192:192=229:229", "198:198=73:73", "176:176=72:72" }}
+sprite "XWAAJ0", 16, 16 { offset 8,16 patch "XWICON4D", 0, 0 patch "ICXWMTG3", 0, 0 }
+graphic METGARD3, 30, 30 { XScale 2.0 YScale 2.0 Patch XWAAJ0, 0, 0 }
+
+graphic ICXWTSP3, 16, 16 { patch ICXWTSP0, 0, 0 
+	{ translation "192:192=66:66", "198:198=249:249" }} 
+sprite "XWAE[0", 16, 16 { offset 8,16 Patch "XWICON4D", 0, 0 patch "ICXWTSP3", 0, 0 }
+graphic THSNSPR3, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAE[0", 0, 0 }
+
+sprite "XWAF]0", 16, 16 { offset 8,16 Patch "XWICON4D", 0, 0 patch "ICXWTHKN", 0, 0 }
+graphic THSNKNIV, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAF]0", 0, 0 }
+
+sprite "XWAQ[0", 16, 16 { offset 8,16 Patch "XWICON4D", 0, 0  Patch "ICXWRAKJ", 0, 0 }
+graphic RAKUKOJN, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAQ[0", 0, 0 }
+
+
+
+
+
+
+// -------------------- 5D -------------------- //
+
+sprite "XWAAK0", 16, 16 { offset 8,16 patch "XWICON5D", 0, 0 patch "ICXWMTGX", 0, 0 }
+graphic METGARDX, 30, 30 { XScale 2.0 YScale 2.0 Patch XWAAK0, 0, 0 }
+
+graphic ICXWTSP5, 16, 16 { patch ICXWTSP0, 0, 0 
+	{ translation "192:192=97:97", "198:198=119:119" }} 
+sprite "XWAE]0", 16, 16 { offset 8,16 Patch "XWICON5D", 0, 0 patch "ICXWTSP5", 0, 0 }
+graphic THSNSPR5, 30, 30 { XScale 2.0 YScale 2.0 Patch "XWAE]0", 0, 0 }

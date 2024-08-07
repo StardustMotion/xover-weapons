@@ -1,0 +1,11 @@
+// 'lets give essential actors long-ass names'
+actor proj : BasicProjectile { obituary "$8C_OBIT_DEFAULT" damagetype "normal" }
+actor watcher : BasicWatcher { scale 2.5 }
+actor gfx : BasicGraphicEffect {}
+actor item : CustomInventory {}
+actor var : Inventory { inventory.amount 1 inventory.maxamount 0xFFFFFFFF +INVENTORY.UNDROPPABLE }
+actor varBool : var { inventory.maxamount 1 }
+actor var16 : var { inventory.maxamount 0xFFFF }
+actor var8 : var { inventory.maxamount 0xFF }
+
+

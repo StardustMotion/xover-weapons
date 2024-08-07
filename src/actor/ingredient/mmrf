@@ -1,0 +1,49 @@
+actor CharadeCloneWepXW : XWBase { inventory.pickupmessage "$PU_CharadeClone" states { sprite: CHRD A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("CharadeCloneWepXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 27) stop}}
+actor CharadeCloneWepXWToken : Once {}
+actor CharadeCloneWepXWDrop : CharadeCloneWepXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 27) stop }}
+
+actor CircuitBreakerWepXW : XWBase { inventory.pickupmessage "$PU_CircuitBreaker" states { sprite: CBRK A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("CircuitBreakerWepXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 28) stop}}
+actor CircuitBreakerWepXWToken : Once {}
+actor CircuitBreakerWepXWDrop : CircuitBreakerWepXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 28) stop }}
+
+actor CryptCloakWepXW : XWBase { inventory.pickupmessage "$PU_CryptCloak" states { sprite: CRCL A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("CryptCloakWepXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 29) stop}}
+actor CryptCloakWepXWToken : Once {}
+actor CryptCloakWepXWDrop : CryptCloakWepXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 29) stop }}
+
+actor PhantomFuseWepXW : XWBase { inventory.pickupmessage "$PU_PhantomFuse" states { sprite: PHFU A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("PhantomFuseWepXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 30) stop}}
+actor PhantomFuseWepXWToken : Once {}
+actor PhantomFuseWepXWDrop : PhantomFuseWepXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 30) stop }}
+
+actor PhotonFlareWepXW : XWBase { inventory.pickupmessage "$PU_PhotonFlare" states { sprite: PHFL A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("PhotonFlareWepXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 31) stop}}
+actor PhotonFlareWepXWToken : Once {}
+actor PhotonFlareWepXWDrop : PhotonFlareWepXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 31) stop }}
+
+actor PulseStopperWepXW : XWBase { inventory.pickupmessage "$PU_PulseStopper" states { sprite: PSTP A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("PulseStopperWepXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 32) stop}}
+actor PulseStopperWepXWToken : Once {}
+actor PulseStopperWepXWDrop : PulseStopperWepXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 32) stop }}
+
+actor ShockGauntletWepXW : XWBase { inventory.pickupmessage "$PU_ShockGauntlet" states { sprite: SHCG A 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("ShockGauntletWepXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 33) stop}}
+actor ShockGauntletWepXWToken : Once {}
+actor ShockGauntletWepXWDrop : ShockGauntletWepXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 33) stop }}
+
+actor VirusOutbreakWepXW : XWBase { inventory.pickupmessage "$PU_VirusOutbreak" states { sprite: VIRU Z 0
+	goto idle
+pickup: "----" A 0 A_JumpIfInventory("VirusOutbreakWepXWToken",1,"no") "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, true, 34) stop}}
+actor VirusOutbreakWepXWToken : Once {}
+actor VirusOutbreakWepXWDrop : VirusOutbreakWepXW { states { no: "----" A 0 ACS_NamedExecuteWithResult("XW", XW_MODS_PICKUP, false, 34) stop }}
+
+
