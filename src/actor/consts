@@ -1,3 +1,26 @@
-const int XW_WEP_PICKUP = 1;
-const int XW_ARTIFICIAL_RESPAWN = 2;
-const int XW_MODS_PICKUP = 3;
+
+
+const int XW_APROP_Damage = 2;
+const int XW_APROP_TargetTID = 26; 
+const int XW_APROP_TracerTID = 27;
+const int XW_CAMERA_TID = 7800;
+
+
+const int XW_WARP_2_TID = 9;
+const int XW_DIST_TO_TARGET = 10;
+const int XW_HEALTH_TRIBUTE = 12;
+const int XW_IS_SPEC = 19;
+const int XW_GET_ACTOR_PROPERTY = 21;
+const int XW_ASYNC_STATE = 22;
+const int XW_IS_SAME_TEAM = 23;
+const int XW_BLIND = 29;
+const int XW_SET_ACTOR_PROPERTY = 30;
+const int XW_IS_PLAYER = 31;
+const int XW_IS_LIVING_BEING = 36;
+const int XW_PULL_TO_TID = 41;
+const int XW_EARTHQUAKE = 64;
+const int XW_LOCKER = 65;
+const int XW_ARTIFICIAL_RESPAWN = 66;
+const int XW_MODS_PICKUP = 67;
+
+const int XW_CS_POV = 0;

@@ -1,0 +1,17 @@
+
+actor "XW Mob" { 
+	health 5000 height 56 radius 16 scale 2.5 MONSTER +DONTBLAST +DROPOFF speed 8
+	states {
+		spawn: METT ABCB 3 a_wander
+			loop
+		see: METT F 0
+			goto spawn}}
+
+            
+			
+actor "XWRippers" : Watcher { -MISSILE scale 2.5 states {
+	spawn: METM F 15 A_SpawnItemEx("MetalBlade", 0, 0, 28, 20)
+		loop}}	
+actor "XWMegashots" : "XWRippers" { states {
+	spawn: MEGM F 10 A_SpawnItemEx("MegaShot", 0, 0, 28, 20)
+		loop}}	

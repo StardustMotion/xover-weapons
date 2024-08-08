@@ -7,8 +7,149 @@ PU_XOVER = "Picked up a Xover Weapon apparently";
 TAG_BASEXOVERWEAPON = "\ccBase Xover Weapon";
 OB_XOVERWEAPON = "%o was destroyed by %k's Base Xover Weapon.";
 
+// ------------------ 2D ------------------ //
 TAG_XWDELAYFLAME = "\c[Xover2D]Delay Flame\c-";
 OB_XWDELAYFLAME = "%k scorched %o repeatedly with \c[Xover2D]Delay Flame\c-.";
 
 TAG_XWGLUESHOT = "\c[Xover2D]Glue Shot\c-";
 OB_XWGLUESHOT = "%o was given a hand to fix %hself with %k's \c[Xover2D]Glue Shot\c-.";
+
+TAG_XWSCATTERRING = "\c[Xover2D]Scatter Ring\c-";
+OB_XWSCATTERRING = "%o was sent flying to a bottomless pit by %k's \c[Xover2D]Scatter Ring\c-.";
+
+TAG_XWYOGAINFERNO = "\c[Xover2D]Yoga Inferno\c-";
+OB_XWYOGAINFERNO = "%o was robot torched by %k's \c[Xover2D]Yoga Inferno\c-.";
+
+TAG_XWWHITEROSECLUSTER = "\c[Xover2D]White Rose Cluster\c-";
+OB_XWWHITEROSECLUSTER = "%o got snowballed on by %k's \c[Xover2D]White Rose Cluster\c-.";
+
+TAG_XWTIMEBOMB = "\c[Xover2D]Time Bomb\c-";
+OB_XWTIMEBOMB = "%o got %p respawn cooldown reset by %k's \c[Xover2D]Time Bomb\c-.";
+
+TAG_XWMETGUARD1 = "\c[Xover2D]Met Guard 1\c-";
+OB_XWMETGUARD1 = "%o was defense broken by %k's \c[Xover2D]Met Guard 1\c-.";
+
+TAG_XWMELTCREEPER = "\c[Xover2D]Melt Creeper\c-";
+OB_XWMELTCREEPER = "%o was calcinated by %k's \c[Xover2D]Melt Creeper\c-.";
+
+TAG_XWAIMINGLASER = "\c[Xover2D]Aiming Laser\c-";
+OB_XWAIMINGLASER = "%o was detected and deleted by %k's \c[Xover2D]Aiming Laser\c-.";
+OB_XWAIMINGLASERBEAM = "%k provided that \c[Xover2D]Aiming Laser\c- enlightenment to %o.";
+
+TAG_XWFORESTWHIP = "\c[Xover2D]Forest Whip\c-";
+OB_XWFORESTWHIP = "%k slapped and slammed %o with the \c[Xover2D]Forest Whip\c-.";
+OB_XWFORESTWHIPBRAMBLE = "%o was imprisoned by %k's \c[Xover2D]Forest Whip\c- bramble.";
+
+TAG_XWBLASTMISSILE = "\c[Xover2D]Blast Missile\c-";
+OB_XWBLASTMISSILE = "%o went out of control by %k's \c[Xover2D]Blast Missile\c- and %g is gonna crash, ahhh!";
+
+TAG_XWTHOUSANDSPEAR = "\c[Xover2D]Thousand Spear\c-";
+OB_XWTHOUSANDSPEAR = "%o died with honor by %k's \c[Xover2D]Thousand Spear\c-.";
+
+TAG_XWRECYCLEINHALER = "\c[Xover2D]Recycle Inhaler\c-";
+OB_XWRECYCLEINHALER = "%o was recycled into something more useful thanks to %k's \c[Xover2D]Recycle Inhaler\c-.";
+PU_XWRTANK = "\cvR-Tank!\c- Health restored!";
+
+TAG_XWLEAFBOOMERANG = "\c[Xover2D]Leaf Boomerang\c-";
+OB_XWLEAFBOOMERANG = "%o was prepared as an infusion with %k's \c[Xover2D]Leaf Boomerang\c-.";
+
+TAG_XWVIRUSOUTBREAK = "\c[Xover2D]Virus Outbreak\c-";
+OB_XWVIRUSOUTBREAK = "Even Dr. Light couldn't cure %o from %k's \c[Xover2D]Virus Outbreak\c- contamination.";
+
+TAG_XWPHOTONFLARE = "\c[Xover2D]Photon Flare\c-";
+OB_XWPHOTONFLARE = "%k fried %o on all sides with the \c[Xover2D]Photon Flare\c-.";
+
+TAG_XWHELLFIRECUTTER = "\c[Xover2D]Hellfire Cutter\c-";
+OB_XWHELLFIRECUTTER = "%o was condemned and lacerated by %k's \c[Xover2D]Hellfire Cutter\c-.";
+
+TAG_XWBRANDISHINGBLADE = "\c[Xover2D]Brandishing Blade\c-";
+OB_XWBRANDISHINGBLADE = "%k guillotined the %o with a \c[Xover2D]Brandishing Blade\c-.";
+OB_XWBRANDISHINGBLADEDANCE = "%o parts went flying everywhere from %k's \c[Xover2D]Brandishing Blade\c-.";
+
+TAG_XWSUPERARROW = "\c[Xover2D]Super Arrow\c-";
+OB_XWSUPERARROW = "%k crashed full speed ahead into the %o with a \c[Xover2D]Super Arrow\c-.";
+
+TAG_XWDOPPLERATTACK = "\c[Xover2D]Doppler Attack\c-";
+OB_XWDOPPLERATTACK = "%k taught %o the \c[Xover2D]Doppler Attack\c-'s secret.";
+OB_XWDOPPLERATTACKJUTSU = "%o wa %k no \c[Xover2D]Doppura Atakku\c- ni yoru daibakuhatsu de nakunatteta.";
+
+TAG_XWTRIADTHUNDER = "\c[Xover2D]Triad Thunder\c-";
+OB_XWTRIADTHUNDER = "%k zapped %o to the extreme with \c[Xover2D]Triad Thunder\c-.";
+OB_XWTRIADTHUNDERQUAKE = "%o was put in a state of shock by %k's \c[Xover2D]Triad Thunder\c-.";
+
+TAG_XWSONICSLICER = "\c[Xover2D]Sonic Slicer\c-";
+OB_XWSONICSLICER = "%o was omnislashed by %k's \c[Xover2D]Sonic Slicer\c-.";
+OB_XWSONICSLICERRAIN = "%o was airborne omnislashed by %k's \c[Xover2D]Sonic Slicer\c-.";
+
+TAG_XWGROUNDDASH = "\c[Xover2D]Ground Dash\c-";
+OB_XWGROUNDDASHROCK = "%o was buried alive under %k's \c[Xover2D]Ground Dash\c-.";
+OB_XWGROUNDDASHBOULDER = "%o was mangled in a dead end by %k's \c[Xover2D]Ground Dash\c-.";
+
+TAG_XWWINGSPIRAL = "\c[Xover2D]Wing Spiral\c-";
+OB_XWWINGSPIRAL = "%k's \c[Xover2D]Wing Spiral\c- sent back %o to %p planet.";
+OB_XWWINGSPIRALCYCLONE = "%o had fun riding %k's \c[Xover2D]Wing Spiral\c- like there's no tomorrow.";
+
+TAG_XWSPLASHLASER = "\c[Xover2D]Splash Laser\c-";
+OB_XWSPLASHLASER = "%k rinsed their \c[Xover2D]Splash Laser\c- off from the %o.";
+OB_XWSPLASHLASERBUBBLE = "%k waterboarded %o with the \c[Xover2D]Splash Laser\c-.";
+
+TAG_XWICEJAVELIN = "\c[Xover2D]Ice Javelin\c-";
+OB_XWICEJAVELIN = "%o's health deepened into negative through %k's \c[Xover2D]Ice Javelin\c-.";
+
+
+
+
+
+
+
+// ------------------ 3D ------------------ //
+TAG_XWMETGUARD2 = "\c[Xover3D]Met Guard 2\c-";
+OB_XWMETGUARD2 = "%o was defense broken by %k's \c[Xover3D]Met Guard 2\c-.";
+
+TAG_XWTHOUSANDSPEARV2 = "\c[Xover3D]Thousand Spear V2\c-";
+OB_XWTHOUSANDSPEARV2 = "%o died with honor by %k's \c[Xover3D]Thousand Spear V2\c-.";
+
+TAG_XWCOUNTERSHADINGTRACER = "\c[Xover3D]Countershading Tracer\c-";
+OB_XWCOUNTERSHADINGTRACER = "%o trotted in %k's \c[Xover3D]Countershading Tracer\c-s till no more.";
+
+TAG_XWICEGATLING = "\c[Xover3D]Ice Gatling\c-";
+OB_XWICEGATLING = "%k forgot to take out their \c[Xover3D]Ice Gatling\c--frozen %o.";
+
+TAG_XWREDHOTKICK = "\c[Xover3D]Red Hot Kick\c-";
+OB_XWREDHOTKICK = "%k \c[Xover3D]Red Hot Kick\c-ed %o's ass with grace.";
+OB_XWREDHOTBURNINGKICK = "%k couldn't rescue %o from %k's \c[Xover3D]Red Hot Kick\c-.";
+OB_XWREDHOTBURN = "%o deceased off-screen by %k's \c[Xover3D]Red Hot Kick\c- afterburn.";
+
+TAG_XWBOOMERANGCUTTER = "\c[Xover3D]Boomerang Cutter\c-";
+OB_XWBOOMERANGCUTTER = "%o was a great obstacle for %k's \c[Xover3D]Boomerang Cutter\c-.";
+OB_XWENERGYBOOMERANGCUTTER = "%k's \c[Xover3D]Boomerang Cutter\c- carved a new boundary inside %o.";
+
+TAG_XWJAWZHUNTERS = "\c[Xover3D]Jawz Hunters\c-";
+OB_XWJAWZHUNTERS = "Tonight %o is sleeping with the \c[Xover3D]Jawz Hunters\c- of %k.";
+OB_XWJAWZHUNTERSCOUNTER = "%o right here tried to outsmart %k's \c[Xover3D]Jawz Hunters\c-.";
+
+
+// ------------------ 4D ------------------ //
+TAG_XWMETGUARD3 = "\c[Xover4D]Met Guard 3\c-";
+OB_XWMETGUARD3 = "%o was defense broken by %k's \c[Xover4D]Met Guard 3\c-.";
+
+TAG_XWTHOUSANDSPEARV3 = "\c[Xover4D]Thousand Spear V3\c-";
+OB_XWTHOUSANDSPEARV3 = "%o died with honor by %k's \c[Xover4D]Thousand Spear V3\c-.";
+
+TAG_XWTHOUSANDKNIVES = "\c[Xover4D]Thousand Knives\c-";
+OB_XWTHOUSANDKNIVES = "%o's timeline became corrupted by %k's \c[Xover4D]Thousand Knives\c-.";
+OB_XWTHOUSANDKNIVESKNIFE = "%o could not graze %k's \c[Xover4D]Thousand Knives\c-.";
+
+TAG_XWRAKUKOUJIN = "\c[Xover4D]Falling S. Sword\c-";
+OB_XWRAKUKOUJIN = "%k's \c[Xover4D]Falling S. Sword\c- successfully uninstalled %o from MM8BDM.";
+OB_XWRAKUKOUJINANCHOR = "%o got hooked by a random \c[Xover4D]Falling S. Sword\c- scrap anchor.";
+
+
+// ------------------ 5D ------------------ //
+TAG_XWMETGUARD3EX = "\c[Xover5D]Met Guard 3 EX\c-";
+OB_XWMETGUARD3EX = "%o was defense broken by %k's \c[Xover5D]Met Guard 3 EX\c-.";
+OB_XWMETGUARD3EXPOISON = "%o was consumed by the dark power of %k's \c[Xover5D]Met Guard 3 EX\c-.";
+
+TAG_XWTHOUSANDSPEARV5 = "\c[Xover5D]Thousand Spear V5\c-";
+OB_XWTHOUSANDSPEARV5 = "%o died with honor by %k's \c[Xover5D]Thousand Spear V5\c-.";
+OB_XWTHOUSANDSPEARV5SOLDIER = "%k's \c[Xover5D]Thousand Spear V5\c- Soldier back impaled %o without honor.";

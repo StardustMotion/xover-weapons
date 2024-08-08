@@ -1,0 +1,193 @@
+const int XW_ICE_GATLING_AMMO = 1.25;//*XW_AMMOBAR_UNIT;
+const int XW_ICE_GATLING_SPD = 48;
+
+actor XWIceGatlingWep : BaseXoverWep { 
+	weapon.slotNumber 3 	
+	inventory.icon "ICEGTLNG" obituary "$OB_XWICEGATLING" tag "$TAG_XWICEGATLING"
+	states {
+		noAmmo: XWAK A 0
+			goto super::noAmmo
+		select: XWAK A 0 ACS_NamedExecuteWithResult("core_weaponcolor",6758)
+			goto super::select
+		deselect: "----" A 0 A_TakeInventory("var16", 999)
+			goto super::deselect			
+		ready: XWAK A 0
+			goto super::ready	
+	
+			
+		fire: altfire: 
+			XWAK A 0 A_JumpIfInventory("Ice Gatling Cooldown", 1, "ready")
+			XWAK A 0 A_JumpIfInventory("var16", 1, "shoot")
+			"----" A 0 A_JumpIf(!CallACS("XW Ammo Check", XW_ICE_GATLING_AMMO), "noAmmo")
+			XWAK A 2
+			goto toll
+		hold: althold:
+			XWAK A 0 A_JumpIfInventory("var16", 1, "shoot")
+			"----" A 0 A_JumpIf(!CallACS("XW Ammo Check", XW_ICE_GATLING_AMMO), "noAmmo")
+		toll:
+			XWAK A 0 ACS_NamedExecuteAlways("XW Ammo Use", 0, XW_ICE_GATLING_AMMO)
+			XWAK A 0 A_GiveInventory("var16", 2) // 18 tics of shooting per ammo cost
+			goto shoot+1
+		shoot: 
+			XWAK A 0 A_TakeInventory("var16", 1)
+			XWAK A 0 A_GiveInventory("Ice Gatling Shoot")
+			XWAK B 1 offset(32,48)
+			XWAK C 1 offset(16,40)
+			XWAK A 0 A_Refire(1) goto end
+			XWAK A 0 A_GiveInventory("Ice Gatling Shoot")
+			XWAK D 1 offset(32,48)
+			XWAK E 1 offset(16,40)
+			XWAK A 0 A_Refire(1) goto end
+			XWAK A 0 A_GiveInventory("Ice Gatling Shoot")
+			XWAK F 1 offset(32,48)
+			XWAK G 1 offset(16,40)
+			XWAK A 0 A_Refire("hold")
+		end:
+			XWAK A 3 A_ClearReFire
+			XWAK A 0 A_GiveInventory("Ice Gatling Cooldown")
+			goto ready}}
+	
+actor "Ice Gatling Shoot" : item { states { 
+		pickup:
+			XWAK A 0 A_PlaySoundEx("ICEGTLNG","Weapon")
+			XWAK A 0 A_SpawnItemEx("Ice Gatling Round", 0, 8, 28, XW_ICE_GATLING_SPD*cos(pitch), 0, XW_ICE_GATLING_SPD*sin(-pitch))
+			XWAC J 0 A_JumpIfInventory("PowerSpreadRune", 1, 1) stop
+			XWAK A 0 A_SpawnItemEx("Ice Gatling Round", 0, 8, 28, XW_ICE_GATLING_SPD*cos(pitch), 0, XW_ICE_GATLING_SPD*sin(-pitch),20)
+			XWAK A 0 A_SpawnItemEx("Ice Gatling Round", 0, 8, 28, XW_ICE_GATLING_SPD*cos(pitch), 0, XW_ICE_GATLING_SPD*sin(-pitch),-20)
+			stop}}
+	
+
+			
+	
+actor "Ice Gatling Cooldown" : Powerup { powerup.duration 17 } 
+actor "Ice Gatling Round" : proj { radius 8 height 12 damage (1) damagetype "IceGatling"
+	+FORCEXYBILLBOARD +HITTRACER speed 48
+	obituary "$OB_XWICEGATLING" 
+	states {
+		spawn: TNT1 A 3
+		idle:
+			XWAJ QRS 3
+			loop
+		xdeath: crash:
+			TNT1 A 0 A_JumpIf(CallACS("XW", XW_IS_LIVING_BEING, AAPTR_TRACER), 1)
+			stop
+			TNT1 A 0 A_JumpIf(CallACS("XW", XW_IS_SAME_TEAM), "end")
+			TNT1 A 0 ACS_NamedExecuteWithResult("XW", 18)
+			stop}}
+			
+actor "Ice Gatling Stack" : var8 { inventory.maxamount 15 }
+actor "Ice Gatling Stack Status" : var8 { inventory.maxamount 4 }
+
+actor "Ice Gatling Refresh" : powerup { powerup.duration 72 }
+
+actor "Ice Gatling Stack Icon 0" : gfx { 
+	+FORCEXYBILLBOARD scale 3.5 states { spawn: TNT1 A 0
+			XWAK K 0
+			goto sprite
+		sprite: "----" A 1
+			stop}}
+actor "Ice Gatling Stack Icon 1" : "Ice Gatling Stack Icon 0" { states { spawn: TNT1 A 0
+		XWAK L 0
+		goto sprite}}
+actor "Ice Gatling Stack Icon 2" : "Ice Gatling Stack Icon 0" { states { spawn: TNT1 A 0
+		XWAK M 0
+		goto sprite}}
+actor "Ice Gatling Stack Icon 3" : "Ice Gatling Stack Icon 0" { states { spawn: TNT1 A 0
+		XWAK N 0
+		goto sprite}}
+actor "Ice Gatling Stack Icon 4" : "Ice Gatling Stack Icon 0" { states { spawn: TNT1 A 0
+		XWAK O 0
+		goto sprite}}
+		
+actor "Ice Gatling New Stack" : item { states {
+	pickup: 
+		TNT1 A 0 A_PlaySoundEx("ICEGSTAC", "SoundSlot5")
+		TNT1 AA 0 A_SpawnItemEx("Ice Gatling Bit 1", 0, 0, 28, random(-4,4), random(-4,4), random(12, 20))
+		TNT1 A 0 A_SpawnItemEx("Ice Gatling Bit 2", 0, 0, 28, random(-4,4), random(-4,4), random(12, 20))
+		stop}}
+		
+actor "Ice Gatling Bit 1" : xwColliderGFX { +FORCEXYBILLBOARD scale 1.75 +CANBOUNCEWATER
+	states { 
+		spawn: XWAK J 0
+			goto sprite
+		sprite:
+			"----" AAAAAAAA 4 ThrustThingZ(0, 16, 1, 1)
+			"----" A 28
+		stop}}
+		
+actor "Ice Gatling Bit 2" : "Ice Gatling Bit 1" {
+	states { spawn: XWAK I 0
+		goto sprite}}
+		
+actor "Ice Gatling Prison" : gfx { +FORCEXYBILLBOARD scale 3.75
+	states { spawn: 
+				XWAK H 82 //nodelay A_SetScale((((angle*256)/360)*3.75)/56, 0)
+				TNT1 A 4
+				XWAK H 4
+				TNT1 A 3
+				XWAK H 3
+				TNT1 A 2
+				XWAK H 2
+				TNT1 A 2
+				XWAK H 2
+				stop}}
+		
+		
+actor "Ice Gatling Hot n Cold" : PowerProtection { powerup.duration 104
+
+	// fire
+	damagefactor "FireStorm", 1.5
+	damagefactor "FireSpin", 1.5
+	damagefactor "OilFlame", 1.5
+	damagefactor "AtomicFire1", 1.5
+	damagefactor "AtomicFire2", 1.5
+	damagefactor "AtomicFire3", 1.5
+	damagefactor "PharaohShot1", 1.5
+	damagefactor "PharaohShot2", 1.5
+	damagefactor "PharaohShot3", 1.5
+	damagefactor "PharaohHold", 1.5
+	damagefactor "FlameBlast", 1.5
+	damagefactor "ScorchWheel", 1.5
+	damagefactor "FlameSword", 1.5
+	damagefactor "FlameSwordSpark", 1.5
+	damagefactor "MagmaBazooka1", 1.5
+	damagefactor "MagmaBazooka2", 1.5
+	damagefactor "SolarBlaze", 1.5
+	damagefactor "WaveBurner", 1.5
+	damagefactor "WaveBurnerUW", 1.5
+	damagefactor "DelayFlame", 1.5
+	damagefactor "MeltCreeper", 1.5
+	damagefactor "YogaInferno", 1.5
+	damagefactor "HellfireMark", 1.5
+	damagefactor "HellfireCutter", 1.5
+	damagefactor "RedHotBurningKick", 1.5
+	damagefactor "RedHotBurn", 1.5
+	
+	damagefactor "Fire", 1.5
+	damagefactor "FirePillar", 1.5
+	damagefactor "FireTrap", 1.5
+	damagefactor "BurnWave", 1.5
+	damagefactor "FireSnakey", 1.5
+	damagefactor "SolarChangkey", 1.5
+	
+	// ice
+	damagefactor "IceSlasher", 0.0
+	damagefactor "BlizzardAttack", 0.0
+	damagefactor "FreezeCracker", 0.0
+	damagefactor "FreezeCrackerBit", 0.0
+	damagefactor "IceWave", 0.0
+	damagefactor "ChillShot", 0.0
+	damagefactor "ChillSpike", 0.0
+	damagefactor "IceWall", 0.0
+	damagefactor "WhiteRoseCluster", 0.0
+	damagefactor "WhiteRoseClusterMelee", 0.0
+	damagefactor "WhiteRoseClusterCharged", 0.0
+	damagefactor "IceJavelin", 0.0
+	damagefactor "IceGatling", 0.0
+	
+	damagefactor "Ice", 0.0
+	damagefactor "IceMachine", 0.0
+	damagefactor "ChillCubeRespawn", 1.0 // /!\	
+}
+actor "Ice Gatling Frozen" : Powerup { powerup.duration 0x7FFFFFFA
+		Powerup.Colormap 1.0, 1.0, 1.0,       0.054, 0.769, 0.715 }

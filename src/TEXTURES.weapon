@@ -1,0 +1,366 @@
+// For weapon HUDs/weapon-related actors
+
+// ------------------------- Delay Flame ------------------------- //
+sprite XWACJ0, 116, 96 {Offset -184, -94  Patch BUSTB0, 0, 0 {Translation "192:192=64:64", "198:198=61:61"}}
+sprite XWACK0, 124, 96 {Offset -184, -98  Patch BUSTC0, 0, 0 {Translation "192:192=64:64", "198:198=61:61"}}
+sprite XWACL0, 128, 92 {Offset -188, -102 Patch BUSTD0, 0, 0 {Translation "192:192=64:64", "198:198=61:61"}}
+
+// ------------------------- Glue Shot ------------------------- //
+sprite XWAJA0, 116, 96 {Offset -184, -94  Patch BUSTB0, 0, 0 {Translation "192:192=171:171", "198:198=199:199"}}
+sprite XWAJB0, 124, 96 {Offset -184, -98  Patch BUSTC0, 0, 0 {Translation "192:192=171:171", "198:198=199:199"}}
+sprite XWAJC0, 128, 92 {Offset -188, -102 Patch BUSTD0, 0, 0 {Translation "192:192=171:171", "198:198=199:199"}}
+
+// ------------------------- Scatter Ring ------------------------- //
+sprite XWAHW0, 148, 80 {Offset -202, -103 Patch HSPRE0, 0, 0 {Translation "192:192=70:70", "198:198=199:199"}}	
+sprite XWAHX0, 308, 204 {Offset -272, 46 Patch HSPRF0, 0, 0 {Translation "192:192=70:70", "198:198=199:199"}}	
+sprite XWAHY0, 308, 204 {Offset -126, -123 Patch HSPRI0, 0, 0 {Translation "192:192=70:70", "198:198=199:199"}}	
+
+// ------------------------- Yoga Inferno ------------------------- //
+sprite XWAII0, 116, 96 {Offset -184, -94  Patch BUSTB0, 0, 0 {Translation "192:192=228:228", "198:198=232:232"}}
+sprite XWAIJ0, 124, 96 {Offset -184, -98  Patch BUSTC0, 0, 0 {Translation "192:192=228:228", "198:198=232:232"}}
+sprite XWAIK0, 128, 92 {Offset -188, -102 Patch BUSTD0, 0, 0 {Translation "192:192=228:228", "198:198=232:232"}}
+
+texture YOGAIFN1, 8, 56{patch VRBLBAR1, 0, 0 {Translation "192:192=228:228", "198:198=232:232"}}
+texture YOGAIFN2, 8, 56{patch VRBLBAR2, 0, 0 {Translation "192:192=228:228", "198:198=232:232"}}
+texture YOGAIFN3, 8, 56{patch VRBLBAR3, 0, 0 {Translation "192:192=228:228", "198:198=232:232"}}
+texture YOGAIFN4, 8, 56{patch VRBLBAR4, 0, 0 {Translation "192:192=228:228", "198:198=232:232"}}
+texture YOGAIFN5, 56, 8{ patch YOGAIFN1, 0, 0 {rotate 90}}
+texture YOGAIFN6, 56, 8{ patch YOGAIFN2, 0, 0 {rotate 90}}
+texture YOGAIFN7, 56, 8{ patch YOGAIFN3, 0, 0 {rotate 90}}
+texture YOGAIFN8, 56, 8{ patch YOGAIFN4, 0, 0 {rotate 90}}
+texture YOGAIFNX, 1, 1 {}
+texture YOGAIFNY, 1, 1 {}
+
+// ------------------------- White Rose Cluster ------------------------- //
+sprite XWAFO0, 148, 80 {Offset -202, -103 Patch HSPRE0, 0, 0 {Translation "192:192=203:203", "198:198=73:73"}}	
+sprite XWAFP0, 140, 132 { XScale 0.25 YScale 0.25 Offset -55, -15 Patch XWAFF0, 0, 0 { Translation "192:192=203:203", "198:198=73:73}" }}
+texture WHRSCLB1, 8, 56{patch VRBLBAR1, 0, 0 {Translation "192:192=203:203", "198:198=73:73"}}
+texture WHRSCLB2, 8, 56{patch VRBLBAR2, 0, 0 {Translation "192:192=203:203", "198:198=73:73"}}
+texture WHRSCLB3, 8, 56{patch VRBLBAR3, 0, 0 {Translation "192:192=203:203", "198:198=73:73"}}
+texture WHRSCLB4, 8, 56{patch VRBLBAR4, 0, 0 {Translation "192:192=203:203", "198:198=73:73"}}
+texture WHRSCLB5, 56, 8{ patch WHRSCLB1, 0, 0 {rotate 90}}
+texture WHRSCLB6, 56, 8{ patch WHRSCLB2, 0, 0 {rotate 90}}
+texture WHRSCLB7, 56, 8{ patch WHRSCLB3, 0, 0 {rotate 90}}
+texture WHRSCLB8, 56, 8{ patch WHRSCLB4, 0, 0 {rotate 90}}
+texture WHRSCLBX, 1, 1 {}
+texture WHRSCLBY, 1, 1 {}
+
+
+// ------------------------- Time Bomb ------------------------- //
+// idle
+sprite XWAMY0, 148, 116 { XScale 0.25 YScale 0.25  Offset -49, -19 Patch XWAKV0, 0, 0 { translation "192:192=248:248", "198:198=202:202" }}
+// raise
+sprite XWAMZ0, 108, 123 { Offset -135, -48 Patch MELHQ0, 0, 0 { translation "192:192=248:248", "198:198=202:202" }}
+sprite XWANA0, 164, 232 { XScale 0.25 YScale 0.25 Offset -60, 9 
+	Patch XWAGL0, 0, 0 { translation "192:192=248:248", "198:198=202:202" }}
+// toss
+sprite XWANB0, 84, 150 { Offset -210, -18 Patch MELHR0, 0, 0 { translation "192:192=248:248", "198:198=202:202" }}
+sprite XWANC0, 308, 204 { Offset -272, 46  patch HSPRF0, 0, 0 { translation "192:192=248:248", "198:198=202:202" }}
+sprite XWAND0, 308, 204 {Offset -126, -123 patch HSPRI0, 0, 0  { translation "192:192=248:248", "198:198=202:202" }}
+// back to idle
+sprite XWANE0, 153, 96 { Offset 20, -135 Patch MELHN0, 0, 0 { translation "192:192=248:248", "198:198=202:202" }}
+
+
+
+// ------------------------- Forest Whip ------------------------- //
+sprite XWACP0, 116, 96 {Offset -184, -94  Patch BUSTB0, 0, 0 {Translation "192:192=105:105", "198:198=112:112"}}
+sprite XWACQ0, 124, 96 {Offset -184, -98  Patch BUSTC0, 0, 0 {Translation "192:192=105:105", "198:198=112:112"}}
+sprite XWACR0, 128, 92 {Offset -188, -102 Patch BUSTD0, 0, 0 {Translation "192:192=105:105", "198:198=112:112"}}
+
+// ------------------------- Blast Missile ------------------------- //
+sprite XWADJ0, 116, 96 {Offset -184, -94  Patch BUSTB0, 0, 0 {Translation "192:192=218:218", "198:198=154:154"}}
+sprite XWADK0, 124, 96 {Offset -184, -98  Patch BUSTC0, 0, 0 {Translation "192:192=218:218", "198:198=154:154"}}
+sprite XWADL0, 128, 92 {Offset -188, -102 Patch BUSTD0, 0, 0 {Translation "192:192=218:218", "198:198=154:154"}}
+
+
+// ------------------------- Thousand Knives ------------------------- //
+texture THSNKNF1, 8, 56{patch VRBLBAR1, 0, 0 {Translation "192:192=89:89", "198:198=249:249"}}
+texture THSNKNF2, 8, 56{patch VRBLBAR2, 0, 0 {Translation "192:192=89:89", "198:198=249:249"}}
+texture THSNKNF3, 8, 56{patch VRBLBAR3, 0, 0 {Translation "192:192=89:89", "198:198=249:249"}}
+texture THSNKNF4, 8, 56{patch VRBLBAR4, 0, 0 {Translation "192:192=89:89", "198:198=249:249"}}
+texture THSNKNF5, 56, 8{ patch THSNKNF1, 0, 0 {rotate 90}}
+texture THSNKNF6, 56, 8{ patch THSNKNF2, 0, 0 {rotate 90}}
+texture THSNKNF7, 56, 8{ patch THSNKNF3, 0, 0 {rotate 90}}
+texture THSNKNF8, 56, 8{ patch THSNKNF4, 0, 0 {rotate 90}}
+texture THSNKNFX, 1, 1 {}
+texture THSNKNFY, 1, 1 {}
+sprite XWAFR0, 148, 80 {Offset -202, -103 Patch HSPRE0, 0, 0 
+	{Translation "192:192=89:89", "198:198=249:249"}}	
+sprite XWAFS0, 140, 132 { XScale 0.25 YScale 0.25 Offset -55, -15 Patch XWAFF0, 0, 0 { Translation "192:192=89:89", "198:198=249:249" }}
+
+
+// ------------------------- Sonic Slicer ------------------------- //
+sprite XWAHD0, 116, 96 {Offset -184, -94  Patch BUSTB0, 0, 0 {Translation "192:192=229:229", "198:198=249:249"}}
+sprite XWAHE0, 124, 96 {Offset -184, -98  Patch BUSTC0, 0, 0 {Translation "192:192=229:229", "198:198=249:249"}}
+sprite XWAHF0, 128, 92 {Offset -188, -102 Patch BUSTD0, 0, 0 {Translation "192:192=229:229", "198:198=249:249"}}
+
+// upward
+sprite XWAHRERB, 7, 16 {Offset 3, 11 Patch XWAHRFRA, 0, 0 { FlipX }}
+sprite XWAHR6R4, 10, 16 {Offset 5, 11 Patch XWAHR8R2, 0, 0 { FlipX }}
+sprite XWAHRDRC, 14, 16 {Offset 7, 11 Patch XWAHRGR9, 0, 0 { FlipX }}	
+// downward
+sprite XWAHS5S1, 16, 16 {Offset 8, 11 Patch XWAHR5R1, 0, 0 { FlipY }}
+sprite XWAHSGS9, 14, 16 {Offset 7, 11 Patch XWAHRGR9, 0, 0 { FlipY }}
+sprite XWAHS8S2, 10, 16 {Offset 5, 11 Patch XWAHR8R2, 0, 0 { FlipY }}
+sprite XWAHSFSA, 7, 16 {Offset 3, 11 Patch XWAHRFRA, 0, 0 { FlipY }}
+sprite XWAHS7S3, 3, 16 {Offset 1, 11 Patch XWAHR7R3, 0, 0 { FlipY }}	
+sprite XWAHSESB, 7, 16 {Offset 3, 11 Patch XWAHRERB, 0, 0 { FlipY }}
+sprite XWAHS6S4, 10, 16 {Offset 5, 11 Patch XWAHR6R4, 0, 0 { FlipY }}
+sprite XWAHSDSC, 14, 16 {Offset 7, 11 Patch XWAHRDRC, 0, 0 { FlipY }}
+
+// ------------------------- Countershading Tracer ------------------------- //
+sprite XWAIU0, 116, 96 {Offset -184, -94  Patch BUSTB0, 0, 0 {Translation "192:192=176:176", "198:198=240:240"}}
+sprite XWAIV0, 124, 96 {Offset -184, -98  Patch BUSTC0, 0, 0 {Translation "192:192=176:176", "198:198=240:240"}}
+sprite XWAIW0, 128, 92 {Offset -188, -102 Patch BUSTD0, 0, 0 {Translation "192:192=176:176", "198:198=240:240"}}
+
+// ------------------------- Super Arrow (Mega Buster) ------------------------- //
+texture VRBLVAR1, 56, 8{ patch VRBLBAR1, 0, 0 {rotate 90}}
+texture VRBLVAR2, 56, 8{ patch VRBLBAR2, 0, 0 {rotate 90}}
+texture VRBLVAR3, 56, 8{ patch VRBLBAR3, 0, 0 {rotate 90}}
+texture VRBLVAR4, 56, 8{ patch VRBLBAR4, 0, 0 {rotate 90}}
+texture VRBLBARX, 1, 1 {}
+texture VRBLBARY, 1, 1 {}
+texture TRICBARX, 1, 1 {}
+texture TRICBARY, 1, 1 {}
+
+
+// ------------------------- Wing Spiral ------------------------- //
+sprite XWANR0, 148, 116 { XScale 0.25 YScale 0.25  Offset -49, -19 Patch XWAKV0, 0, 0 { translation "192:192=161:161", "198:198=68:68" }}
+	 
+sprite XWANS0, 79, 28 { XScale 0.25 YScale 0.25  Offset -49, -19 Patch XWANP0, 0, 0 { translation "192:192=161:161", "198:198=68:68" }}
+sprite XWANT0, 72, 49 { XScale 0.25 YScale 0.25  Offset -49, -19 Patch XWANQ0, 0, 0 { translation "192:192=161:161", "198:198=68:68" }}
+sprite XWANU0, 92, 200 { Offset -49, -19 Patch DBRHM0, 0, 0 { translation "196:196=161:161", "70:70=68:68" }}
+
+
+// ------------------------- Triad Thunder	------------------------- //
+sprite XWAGA0, 148, 80 {Offset -202, -103 Patch HSPRE0, 0, 0 	{Translation "192:192=107:107", "198:198=246:246"}}	
+sprite XWAGB0, 115, 96 {Offset -190, -82 Patch HSPRC0, 0, 0 	{Translation "192:192=107:107", "198:198=246:246"}}
+sprite XWAGM0, 164, 232 { XScale 0.25 YScale 0.25 Offset -60, 9 Patch XWAGL0, 0, 0 	{Translation "192:192=107:107", "198:198=246:246"}}
+texture TRIDTDR1, 8, 56{patch VRBLBAR1, 0, 0 {Translation "192:192=107:107", "198:198=246:246"}}
+texture TRIDTDR2, 8, 56{patch VRBLBAR2, 0, 0 {Translation "192:192=107:107", "198:198=246:246"}}
+texture TRIDTDR3, 8, 56{patch VRBLBAR3, 0, 0 {Translation "192:192=107:107", "198:198=246:246"}}
+texture TRIDTDR4, 8, 56{patch VRBLBAR4, 0, 0 {Translation "192:192=107:107", "198:198=246:246"}}
+texture TRIDTDR5, 56, 8{ patch TRIDTDR1, 0, 0 {rotate 90}}
+texture TRIDTDR6, 56, 8{ patch TRIDTDR2, 0, 0 {rotate 90}}
+texture TRIDTDR7, 56, 8{ patch TRIDTDR3, 0, 0 {rotate 90}}
+texture TRIDTDR8, 56, 8{ patch TRIDTDR4, 0, 0 {rotate 90}}
+texture TRIDTDRX, 1, 1 {}
+texture TRIDTDRY, 1, 1 {}
+
+// ------------------------- Ice Gatling ------------------------- //
+sprite XWAKA0, 240, 80 { XScale 0.25 YScale 0.25 Offset -38, -23 Patch XWAJT0, 0, 0 {}}
+sprite XWAKB0, 240, 80 { XScale 0.25 YScale 0.25 Offset -38, -23 Patch XWAJU0, 0, 0 {}}
+sprite XWAKC0, 240, 80 { XScale 0.25 YScale 0.25 Offset -38, -23 Patch XWAJV0, 0, 0 {}}
+sprite XWAKD0, 240, 80 { XScale 0.25 YScale 0.25 Offset -38, -23 Patch XWAJW0, 0, 0 {}}
+sprite XWAKE0, 240, 80 { XScale 0.25 YScale 0.25 Offset -38, -23 Patch XWAJX0, 0, 0 {}}
+sprite XWAKF0, 240, 80 { XScale 0.25 YScale 0.25 Offset -38, -23 Patch XWAJY0, 0, 0 {}}
+sprite XWAKG0, 240, 80 { XScale 0.25 YScale 0.25 Offset -38, -23 Patch XWAJZ0, 0, 0 {}}
+
+// ------------------------- Melt Creeper------------------------- //
+sprite XWABI0, 148, 80 {Offset -202, -103 Patch HSPRE0, 0, 0 	{Translation "192:192=226:226", "198:198=43:43"}}	
+sprite XWABJ0, 308, 204 {Offset -272, 46 Patch HSPRF0, 0, 0	{Translation "192:192=226:226", "198:198=43:43"}}
+sprite XWABK0, 308, 204 {Offset -126, -123 Patch HSPRI0, 0, 0 	{Translation "192:192=226:226", "198:198=43:43"}}
+
+
+// ------------------------- Met Guard ------------------------- //
+//MG1
+sprite XWAAV0, 416, 80 {Offset 50, -103 // hand standstill
+	Patch HSPRE0, 0, 0 {FlipX Translation "192:192=129:129", "198:198=229:229"}	Patch HSPRE0, 268, 0 { Translation "192:192=129:129", "198:198=229:229"}}
+sprite XWAAW0, 330, 96 {Offset 15, -115 // fist
+	Patch HSPRB0, 0, 0 {FlipX Translation "192:192=129:129", "198:198=229:229"}	Patch HSPRB0, 215, 0 { Translation "192:192=129:129", "198:198=229:229"}}
+sprite XWAAX0, 306, 128 {Offset 10, -128 // hand cast
+	Patch HSPRD0, 0, 0 {FlipX Translation "192:192=129:129", "198:198=229:229"}	Patch HSPRD0, 178, 0 { Translation "192:192=129:129", "198:198=229:229"}}
+//MG2
+SPRITE XWAAY0, 416, 80 { Offset 50, -103	Patch XWAAV0, 0, 0 { Translation "129:129=73:73", "229:229=41:41" }}
+SPRITE XWAAZ0, 330, 96 { Offset 15, -115	Patch XWAAW0, 0, 0 { Translation "129:129=73:73", "229:229=41:41" }}
+SPRITE XWABA0, 306, 128 { Offset 10, -128	Patch XWAAX0, 0, 0 { Translation "129:129=73:73", "229:229=41:41" }}
+//MG3
+SPRITE XWABB0, 416, 80 { Offset 50, -103	Patch XWAAV0, 0, 0 { Translation "129:129=229:229", "229:229=73:73" }}
+SPRITE XWABC0, 330, 96 { Offset 15, -115	Patch XWAAW0, 0, 0 { Translation "129:129=229:229", "229:229=73:73" }}
+SPRITE XWABD0, 306, 128 { Offset 10, -128	Patch XWAAX0, 0, 0 { Translation "129:129=229:229", "229:229=73:73" }}
+//MGX
+SPRITE XWABE0, 416, 80 { Offset 50, -103	Patch XWAAV0, 0, 0 { Translation "129:129=68:68", "229:229=95:95" }}
+SPRITE XWABF0, 330, 96 { Offset 15, -115	Patch XWAAW0, 0, 0 { Translation "129:129=68:68", "229:229=95:95" }}
+SPRITE XWABG0, 306, 128 { Offset 10, -128	Patch XWAAX0, 0, 0 { Translation "129:129=68:68", "229:229=95:95" }}
+	
+	
+// ------------------------- Aiming Laser ------------------------- //
+sprite XWABU0, 116, 96 {Offset -184, -94  Patch BUSTB0, 0, 0 {Translation "192:192=108:108", "198:198=58:58"}}
+sprite XWABV0, 124, 96 {Offset -184, -98  Patch BUSTC0, 0, 0 {Translation "192:192=108:108", "198:198=58:58"}}
+sprite XWABW0, 128, 92 {Offset -188, -102 Patch BUSTD0, 0, 0 {Translation "192:192=108:108", "198:198=58:58"}}
+
+texture AIMGLSR0, 50, 44 { XScale 2.0 YScale 2.0 patch XWACI0, 0, 0 { translation "4:4=0:0" }}
+texture AIMGLSR1, 50, 44 { XScale 2.0 YScale 2.0 patch XWACA0, 0, 0 { }}
+texture AIMGLSR2, 50, 44 { XScale 2.0 YScale 2.0 patch XWACI0, 0, 0 { translation "4:4=110:110" }}
+texture AIMGLSR3, 50, 44 { XScale 2.0 YScale 2.0 patch XWACI0, 0, 0 { translation "4:4=228:228" }}
+texture AIMGLSR4, 50, 44 { XScale 2.0 YScale 2.0 patch XWACI0, 0, 0 { translation "4:4=176:176" }}
+texture AIMGLSR5, 1, 1 {}
+texture AIMGLSR6, 1, 1 {}
+texture AIMGLSR7, 1, 1 {}
+
+
+// ------------------------- Leaf Boomerang ------------------------- //
+sprite XWAFT0, 116, 96 {Offset -184, -94  Patch BUSTB0, 0, 0 {Translation "192:192=101:101", "198:198=120:120"}}
+sprite XWAFU0, 124, 96 {Offset -184, -98  Patch BUSTC0, 0, 0 {Translation "192:192=101:101", "198:198=120:120"}}
+sprite XWAFV0, 128, 92 {Offset -188, -102 Patch BUSTD0, 0, 0 {Translation "192:192=101:101", "198:198=120:120"}}
+
+
+// ------------------------- Ice Javelin ------------------------- // 
+sprite XWATK0, 29, 34 { xscale 0.25 yscale 0.25 offset -46, -13 patch XWATI0, 0, 0 { 	translation "192:192=70:70", "198:198=200:200", "194:194=57:57", "195:195=60:60"}}
+sprite XWATL0, 29, 32 { xscale 0.25 yscale 0.25 offset -46, -15 patch XWATJ0, 0, 0 { 	translation "192:192=70:70", "198:198=200:200", "194:194=57:57", "195:195=60:60"}}
+sprite "XWAT\0", 13, 15 { offset 6, 14 patch XWATZ0, 0,0 { flipy }}
+texture ICEJAVB1, 8, 56{patch VRBLBAR1, 0, 0 {Translation "192:192=70:70", "198:198=200:200" }}
+texture ICEJAVB2, 8, 56{patch VRBLBAR2, 0, 0 {Translation "192:192=70:70", "198:198=200:200" }}
+texture ICEJAVB3, 8, 56{patch VRBLBAR3, 0, 0 {Translation "192:192=70:70", "198:198=200:200" }}
+texture ICEJAVB4, 8, 56{patch VRBLBAR4, 0, 0 {Translation "192:192=70:70", "198:198=200:200" }}
+texture ICEJAVB5, 56, 8{ patch ICEJAVB1, 0, 0 {rotate 90}}
+texture ICEJAVB6, 56, 8{ patch ICEJAVB2, 0, 0 {rotate 90}}
+texture ICEJAVB7, 56, 8{ patch ICEJAVB3, 0, 0 {rotate 90}}
+texture ICEJAVB8, 56, 8{ patch ICEJAVB4, 0, 0 {rotate 90}}
+texture ICEJAVBX, 1, 1 {}
+texture ICEJAVBY, 1, 1 {}
+
+
+// ------------------------- Virus Outbreak ------------------------- // 
+sprite XWAOI0, 116, 96 {Offset -184, -94  Patch BUSTB0, 0, 0 {Translation "192:192=208:208", "198:198=104:104"}}
+sprite XWAOJ0, 124, 96 {Offset -184, -98  Patch BUSTC0, 0, 0 {Translation "192:192=208:208", "198:198=104:104"}}
+sprite XWAOK0, 128, 92 {Offset -188, -102 Patch BUSTD0, 0, 0 {Translation "192:192=208:208", "198:198=104:104"}}
+
+sprite XWAOL0, 208, 80 {Offset 50, -118 Patch HSPRE0, 0, 0 {FlipX Translation "192:192=208:208", "198:198=104:104"}}
+sprite XWAOM0, 140, 132 { XScale 0.25 YScale 0.25 Offset 8, -18  Patch XWAFF0, 0, 0 { FlipX Translation "192:192=208:208", "198:198=104:104" }}
+
+
+// ------------------------- Photon Flare ------------------------- // 
+sprite XWAON0, 148, 80 {Offset -202, -103 Patch HSPRE0, 0, 0  {Translation "192:192=208:208", "198:198=215:215" }}
+sprite XWAOO0, 156, 148 {Offset -198, -84 Patch LIBOC0, 0, 0 {Translation "93:93=208:208", "229:229=215:215" }}
+sprite XWAOP0, 80, 200 {Offset -266, -13 Patch LIBOE0, 0, 0  {Translation "93:93=208:208", "229:229=215:215" }}	
+	
+texture "PHTNFLS0", 28, 28 { patch XWAOQ0, 8, 8 { translation "198:198=215:215", "192:192=4:4" }} // 12 16 28
+texture "PHTNFLS1", 28, 28 { patch XWAOR0, 6, 6 { translation "198:198=215:215", "192:192=4:4" }}
+texture "PHTNFLS2", 28, 28 { patch XWAOR0, 6, 6 { translation "198:198=38:38", "192:192=4:4" }}
+texture "PHTNFLS3", 28, 28 { patch XWAOS0, 0, 0 { translation "198:198=38:38", "192:192=4:4" }}
+texture "PHTNFLR[", 1, 1 {}
+texture "PHTNFLR]", 1, 1 {}
+
+// ------------------------- Hellfire Cutter ------------------------- //
+sprite XWAMD0, 153, 96 { Offset -214, -110 Patch MELHN0, 0, 0 { translation "192:192=94:94", "198:198=0:0" }}
+sprite XWAME0, 108, 93 { Offset -90, -95 Patch MELHP0, 0, 0 { translation "192:192=94:94", "198:198=0:0" }}
+sprite XWAMF0, 108, 123 { Offset -135, -48 Patch MELHQ0, 0, 0 { translation "192:192=94:94", "198:198=0:0" }}
+sprite XWAMH0, 96, 168 { Xscale 0.25 YScale 0.25 Offset -46, -12 Patch XWAMG0, 0, 0 { }}
+texture HELLCTR4, 18, 16 { XScale 0.5 YScale 0.5 offset 0, 0 patch HELLCTR1, 3, 0 { }}
+texture HELLCTR5, 26, 16 { XScale 0.5 YScale 0.5 offset 0, 0 patch HELLCTR2, 1, 0 { }}
+texture HELLCTR6, 30, 16 { XScale 0.5 YScale 0.5 offset 0, 0 patch HELLCTR3, 0, 0 { }}
+texture HELLCTR9, 22, 38 { XScale 0.9 YScale 0.9 offset 0, 0 patch BOSBRAIN, 0, 0 { }}
+texture HELLCTR7, 44, 47 { XScale 1.333 YScale 1.333 offset 0, 0 patch XWAML0, 0, 0 { }}
+texture HELLCTR8, 44, 46 { XScale 1.333 YScale 1.333 offset 0, 0 patch XWAMM0, 0, 0 { }}
+texture "HELLCTR[", 1, 1 {}
+texture "HELLCTR]", 1, 1 {}
+
+
+// ------------------------- Brandishing Blade ------------------------- // 
+sprite XWAPB0, 56, 82 {Offset -52, 15 XScale 0.25 yscale 0.25 Patch XWAPA0, 0, 0 { Translation "192:192=80:80", "198:198=180:180"}}
+sprite XWAPD0, 105, 35 {Offset 5, -22 XScale 0.25 yscale 0.25 Patch XWAPC0, 0, 0 { Translation "192:192=80:80", "198:198=180:180"}}
+sprite XWAPF0, 33, 78 { Offset -32, -8 XScale 0.25 yscale 0.25 Patch XWAPE0, 0, 0 { Translation "192:192=80:80", "198:198=180:180"}}
+texture BRNDBLA0, 8, 56{patch VRBLBAR1, 0, 0 {Translation "192:192=80:80", "198:198=180:180"}}
+texture BRNDBLA1, 8, 56{patch VRBLBAR2, 0, 0 {Translation "192:192=80:80", "198:198=180:180"}}
+texture BRNDBLA2, 8, 56{patch VRBLBAR3, 0, 0 {Translation "192:192=80:80", "198:198=180:180"}}
+texture BRNDBLA3, 8, 56{patch VRBLBAR4, 0, 0 {Translation "192:192=80:80", "198:198=180:180"}}
+texture BRNDBLA4, 56, 8{ patch BRNDBLA0, 0, 0 {rotate 90}}
+texture BRNDBLA5, 56, 8{ patch BRNDBLA1, 0, 0 {rotate 90}}
+texture BRNDBLA6, 56, 8{ patch BRNDBLA2, 0, 0 {rotate 90}}
+texture BRNDBLA7, 56, 8{ patch BRNDBLA3, 0, 0 {rotate 90}}
+texture BRNDBLAX, 1, 1 {}
+texture BRNDBLAY, 1, 1 {}
+texture BRNDBLT1, 8, 56{ patch TRICBAR1, 0, 0 { Translation "192:192=80:80", "198:198=180:180", "199:199=184:184" }}
+texture BRNDBLT2, 8, 56{ patch TRICBAR2, 0, 0 { Translation "192:192=80:80", "198:198=180:180", "199:199=184:184" }}
+texture BRNDBLT3, 8, 56{ patch TRICBAR3, 0, 0 { Translation "192:192=80:80", "198:198=180:180", "199:199=184:184" }}
+texture BRNDBLT4, 8, 56{ patch TRICBAR4, 0, 0 { Translation "192:192=80:80", "198:198=180:180", "199:199=184:184" }}
+texture BRNDBLT5, 8, 56{ patch TRICBAR5, 0, 0 { Translation "192:192=80:80", "198:198=180:180", "199:199=184:184" }}
+texture BRNDBLT6, 8, 56{ patch TRICBAR6, 0, 0 { Translation "192:192=80:80", "198:198=180:180", "199:199=184:184" }}
+texture BRNDBLTX, 1, 1 {}
+texture BRNDBLT7, 56, 8{ patch TRICVAR1, 0, 0 { Translation "192:192=80:80", "198:198=180:180", "199:199=184:184" }}
+texture BRNDBLT8, 56, 8{ patch TRICVAR2, 0, 0 { Translation "192:192=80:80", "198:198=180:180", "199:199=184:184" }}
+texture BRNDBLT9, 56, 8{ patch TRICVAR3, 0, 0 { Translation "192:192=80:80", "198:198=180:180", "199:199=184:184" }}
+texture BRNDBLTA, 56, 8{ patch TRICVAR4, 0, 0 { Translation "192:192=80:80", "198:198=180:180", "199:199=184:184" }}
+texture BRNDBLTB, 56, 8{ patch TRICVAR5, 0, 0 { Translation "192:192=80:80", "198:198=180:180", "199:199=184:184" }}
+texture BRNDBLTC, 56, 8{ patch TRICVAR6, 0, 0 { Translation "192:192=80:80", "198:198=180:180", "199:199=184:184" }}
+texture BRNDBLTY, 1, 1 {}
+sprite XWAPK0, 81, 94 { Offset -18, 5 XScale 0.25 yscale 0.25 Patch XWAPJ0, 0, 0 { Translation "192:192=80:80", "198:198=180:180"}}
+sprite XWAPL0, 105, 35 {Offset 20, -22 XScale 0.25 yscale 0.25 Patch XWAPD0, 0, 0 { FlipX }}
+sprite XWAPM0, 81, 94 { Offset 20, 5 XScale 0.25 yscale 0.25 Patch XWAPK0, 0, 0 { FlipX }}	
+sprite XWAPN0, 33, 78 { Offset 0, -8 XScale 0.25 yscale 0.25 Patch XWAPF0, 0, 0 { FlipX }}
+	
+
+	
+// ------------------------- Doppler Attack ------------------------- // 
+texture DOPPATK1, 8, 56{patch VRBLBAR1, 0, 0 {Translation "192:192=249:249", "198:198=93:93"}}
+texture DOPPATK2, 8, 56{patch VRBLBAR2, 0, 0 {Translation "192:192=249:249", "198:198=93:93"}}
+texture DOPPATK3, 8, 56{patch VRBLBAR3, 0, 0 {Translation "192:192=249:249", "198:198=93:93"}}
+texture DOPPATK4, 8, 56{patch VRBLBAR4, 0, 0 {Translation "192:192=249:249", "198:198=93:93"}}
+texture DOPPATK5, 56, 8{ patch DOPPATK1, 0, 0 {rotate 90}}
+texture DOPPATK6, 56, 8{ patch DOPPATK2, 0, 0 {rotate 90}}
+texture DOPPATK7, 56, 8{ patch DOPPATK3, 0, 0 {rotate 90}}
+texture DOPPATK8, 56, 8{ patch DOPPATK4, 0, 0 {rotate 90}}
+texture DOPPATKX, 1, 1 {}
+texture DOPPATKY, 1, 1 {}
+sprite XWARA0, 81, 53 { XScale 0.25 YScale 0.25  Offset 0, -4 Patch XWAQW0, 0, 0 { translation "192:192=249:249", "198:198=5:5" }}
+sprite XWARB0, 78, 37 { XScale 0.25 YScale 0.25  Offset -1, -12
+	Patch XWAQX0, 0, 0 { FlipX Translation "192:192=249:249", "198:198=5:5" }
+	Patch XWAQX0, 39, 0 { Translation "192:192=249:249", "198:198=5:5" }}
+sprite XWARC0, 90, 37 { XScale 0.25 YScale 0.25  Offset 4, -17
+	Patch XWAQX0, 0, 0 { FlipX Translation "192:192=249:249", "198:198=5:5" }
+	Patch XWAQX0, 51, 0 { Translation "192:192=249:249", "198:198=5:5" }}	
+sprite XWARD0, 100, 37 { XScale 0.25 YScale 0.25 Offset 8, -21
+	Patch XWAQX0, 0, 0 { FlipX Translation "192:192=249:249", "198:198=5:5" }
+	Patch XWAQX0, 61, 0 { Translation "192:192=249:249", "198:198=5:5" }}	
+sprite XWARE0, 96, 25 { XScale 0.25 YScale 0.25  Offset 0, -23
+	Patch XWAPS0, 0, 0 { FlipX Translation "192:192=249:249", "198:198=5:5" }
+	Patch XWAPS0, 48, 0 { Translation "192:192=249:249", "198:198=5:5" }}
+
+	// ------------------------- Thousand Spear ------------------------- //
+// it slightly moves on the screen.. should fix this later
+// TS
+sprite XWAED0, 124, 244 { XScale 0.25 YScale 0.25 Offset -55, 12 Patch XWAEA0, 0, 0 {Translation "192:192=69:69", "198:198=204:204"}}
+sprite XWAEE0, 124, 256 { XScale 0.25 YScale 0.25 Offset -55, 12 Patch XWAEB0, 0, 0 {Translation "192:192=69:69", "198:198=204:204"}}
+sprite XWAEF0, 124, 260 { XScale 0.25 YScale 0.25 Offset -55, 12 Patch XWAEC0, 0, 0 {Translation "192:192=69:69", "198:198=204:204"}}
+sprite XWAEI0, 124, 260 { XScale 0.25 YScale 0.25 Offset -30, -12 Patch XWAEG0, 0, 0 {Translation "192:192=69:69", "198:198=204:204"}}
+sprite XWAEJ0, 124, 260 { XScale 0.25 YScale 0.25 Offset -30, -12 Patch XWAEH0, 0, 0 {Translation "192:192=69:69", "198:198=204:204"}}
+// TSV2
+sprite XWAEK0, 124, 244 { XScale 0.25 YScale 0.25 Offset -55, 12 Patch XWAEA0, 0, 0 {Translation "192:192=103:103", "198:198=204:204"}}
+sprite XWAEL0, 124, 256 { XScale 0.25 YScale 0.25 Offset -55, 12 Patch XWAEB0, 0, 0 {Translation "192:192=103:103", "198:198=204:204"}}
+sprite XWAEM0, 124, 260 { XScale 0.25 YScale 0.25 Offset -55, 12 Patch XWAEC0, 0, 0 {Translation "192:192=103:103", "198:198=204:204"}}
+sprite XWAEN0, 124, 260 { XScale 0.25 YScale 0.25 Offset -30, -12 Patch XWAEG0, 0, 0 {Translation "192:192=103:103", "198:198=204:204"}}
+sprite XWAEO0, 124, 260 { XScale 0.25 YScale 0.25 Offset -30, -12 Patch XWAEH0, 0, 0 {Translation "192:192=103:103", "198:198=204:204"}}
+// TSV3
+sprite XWAEP0, 124, 244 { XScale 0.25 YScale 0.25 Offset -55, 12 Patch XWAEA0, 0, 0 {Translation "192:192=66:66", "198:198=204:204"}}
+sprite XWAEQ0, 124, 256 { XScale 0.25 YScale 0.25 Offset -55, 12 Patch XWAEB0, 0, 0 {Translation "192:192=66:66", "198:198=204:204"}}
+sprite XWAER0, 124, 260 { XScale 0.25 YScale 0.25 Offset -55, 12 Patch XWAEC0, 0, 0 {Translation "192:192=66:66", "198:198=204:204"}}
+sprite XWAES0, 124, 260 { XScale 0.25 YScale 0.25 Offset -30, -12 Patch XWAEG0, 0, 0 {Translation "192:192=66:66", "198:198=204:204"}}
+sprite XWAET0, 124, 260 { XScale 0.25 YScale 0.25 Offset -30, -12 Patch XWAEH0, 0, 0 {Translation "192:192=66:66", "198:198=204:204"}}
+// TSV5
+sprite XWAEU0, 124, 244 { XScale 0.25 YScale 0.25 Offset -55, 12 Patch XWAEA0, 0, 0 {Translation "192:192=97:97", "198:198=204:204"}}
+sprite XWAEV0, 124, 256 { XScale 0.25 YScale 0.25 Offset -55, 12 Patch XWAEB0, 0, 0 {Translation "192:192=97:97", "198:198=204:204"}}
+sprite XWAEW0, 124, 260 { XScale 0.25 YScale 0.25 Offset -55, 12 Patch XWAEC0, 0, 0 {Translation "192:192=97:97", "198:198=204:204"}}
+sprite XWAEX0, 124, 260 { XScale 0.25 YScale 0.25 Offset -30, -12 Patch XWAEG0, 0, 0 {Translation "192:192=97:97", "198:198=204:204"}}
+sprite XWAEY0, 124, 260 { XScale 0.25 YScale 0.25 Offset -30, -12 Patch XWAEH0, 0, 0 {Translation "192:192=97:97", "198:198=204:204"}}
+
+
+
+
+// ------------------------- Falling Steel Sword ------------------------- // 
+sprite XWAUF0, 32, 31 { offset 16,30 patch XWAUD0, 0, 0 { rotate 270 }}
+sprite XWAUG0, 30, 30 { offset 15,29 patch XWAUE0, 0, 0 { flipy }}
+sprite XWAUH0, 32, 32 { offset 16,30 patch XWAUD0, 0, 0 { rotate 90 }}
+sprite XWAUP0, 452, 140 { offset 90,-28
+	patch XWASO0, 300, 64 { flipx translation "192:192=88:88", "198:198=77:77" }
+	patch XWASL0, 0, 40 { translation "192:192=88:88", "198:198=77:77" }}	
+sprite XWAUQ0, 584, 132 { offset 132,-66
+	patch XWASN0, 0, 0 { translation "192:192=88:88", "198:198=77:77" }
+	patch XWASN0, 352, 0 { flipx translation "192:192=88:88", "198:198=77:77" }}	
+sprite XWAUR0, 520, 132 { offset 100,-66
+	patch XWASM0, 0, 0 { translation "192:192=88:88", "198:198=77:77" }
+	patch XWASM0, 288, 0 { flipx translation "192:192=88:88", "198:198=77:77" }}	
+sprite XWAUS0, 456, 132 { offset 68,-66
+	patch XWASM0, 0, 0 { translation "192:192=88:88", "198:198=77:77" }
+	patch XWASM0, 224, 0 { flipx translation "192:192=88:88", "198:198=77:77" }}
+	

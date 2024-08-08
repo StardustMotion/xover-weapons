@@ -1,0 +1,129 @@
+actor XWMetGuard3Wep : BaseXoverWep { 
+    weapon.slotNumber 7
+	inventory.icon "METGARD3" obituary "$OB_XWMETGUARD3" tag "$TAG_XWMETGUARD3"
+	states {
+		noAmmo:
+			XWAB B 0 offset(0,32) A_GiveInventory("StopShield", 1)
+			goto super::noAmmo
+		select: 
+			XWAB B 0 ACS_NamedExecuteWithResult("core_weaponcolor",6737)
+			goto super::select
+		ready: XWAB B 0
+			goto super::ready
+		deselect:
+			XWAB B 0 offset(0,32) A_TakeInventory("StopShield", 1)
+			goto super::deselect	
+			
+		altfire:
+			"----" A 0 A_GiveInventory("altfireToken")
+		fire:
+			"----" A 0 A_TakeInventory("StopShield", 1)
+			"----" A 0 A_JumpIf(!CallACS("XW Ammo Check", XW_METGUARD_AMMO), "noAmmo")	
+						
+			"----" A 0 A_GiveInventory("MetGuardRotatableShieldSetup", 1)		
+			"----" A 0 ACS_NamedExecuteAlways("XW Ammo Use", 0, XW_METGUARD_AMMO)
+			"----" A 0 A_PlaySoundEx("METSHELD", "Weapon")
+			//"----" A 0 ThrustThingZ(0, 12, 1, 1)
+			XWAB BB 1 Offset(0,32) //A_JumpIfInventory("varBool", 1, "stopShield")	
+			"----" A 0 A_GunFlash("shieldGFX", GFF_NOEXTCHANGE)	
+			XWAB C 1 Offset(0,18) A_JumpIfInventory("varBool", 1, "stopShield")
+			"----" A 1 Offset(0,4) A_JumpIfInventory("varBool", 1, "stopShield")
+			XWAB D 0 Offset(0,-50) ThrustThingZ(0, 12, 1, 1)
+		handsLifted:
+			"----" A 0 A_Refire(1)
+			"----" AAAA 1 A_JumpIfInventory("varBool", 1, "stopShield")
+			"----" A 0 ThrustThingZ(0, 12, 1, 1)
+			"----" A 0 A_Refire(1)
+			"----" AAAA 1 A_JumpIfInventory("varBool", 1, "stopShield")
+			"----" A 0 ThrustThingZ(0, 12, 1, 1)
+			"----" A 0 A_Refire(1)
+			"----" AAAA 1 A_JumpIfInventory("varBool", 1, "stopShield")
+			"----" A 0 ThrustThingZ(0, 12, 1, 1)
+			"----" A 0 A_Refire(1)
+			"----" AAAA 1 A_JumpIfInventory("varBool", 1, "stopShield")
+			"----" A 0 A_Refire("shield")
+			goto shield
+			
+		shield: hold:
+			"----" A 0 A_JumpIfInventory("var16", 11, "stopShield")
+			"----" A 0 ThrustThingZ(0, 12, 1, 1)
+			"----" A 0 A_GiveInventory("var16", 1)
+			"----" AAAA 1 A_JumpIfInventory("varBool", 1, "stopShield")
+			"----" A 0 A_JumpIfInventory("altfireToken", 1, "stopShield")
+			"----" A 0 A_ReFire
+			goto stopShield
+			
+		althold: stopShield:
+			XWAB D 0 A_GiveInventory("StopShield", 1)
+			"----" A 0 Offset(0,-50) A_JumpIfInventory("varBool", 1, "fullSynchro")
+			goto endQuick
+			
+		fullSynchro:
+			"----" A 0 A_SpawnItemEx("MetGuard3ShockWave")
+			"----" A 0 A_JumpIfInventory("PowerSpreadRune", 1, 1) goto fullSynchro2
+			"----" A 0 A_SpawnItemEx("MetGuard3ShockWave",0,0,0,0,0,0,20)
+			"----" A 0 A_SpawnItemEx("MetGuard3ShockWave",0,0,0,0,0,0,-20)
+		fullSynchro2:
+			"----" A 0 A_SpawnItemEx("Met Guard 3 GFX Active", 40)
+			goto end
+			
+		end:
+			"----" A 25
+		endQuick:
+			XWAB C 2 Offset(0,-3)
+			"----" A 2 Offset(0,9)
+			"----" A 2 Offset(0,20)
+		refresh:	
+			XWAB B 10 Offset(0,32)
+			"----" A 0 A_ClearReFire
+			"----" A 0 A_TakeInventory("altfireToken", 1)
+			"----" A 0 A_TakeInventory("var16", 0xFFFF)
+			"----" A 0 A_TakeInventory("varBool", 1)
+			"----" A 0 A_TakeInventory("StopShield", 1)
+			goto ready
+			
+		shieldGFX: TNT1 A 0 A_GiveInventory("MetGuard Medium Speed", 1)
+		shieldGFX2:
+			TNT1 A 0 A_SpawnItemEx("Met Guard 3 GFX", 40, 0, 0, velx, vely, 0, 0, SXF_ABSOLUTEVELOCITY)
+			TNT1 A 1 A_JumpIfInventory("StopShield", 1, "stopGFX")
+			TNT1 A 0 A_JumpIfHealthLower(1, "stopGFX")
+			loop
+		stopGFX: TNT1 A 0 A_TakeInventory("MetGuard Medium Speed", 1)
+			stop}}
+			
+actor "MetGuard Medium Speed" : PowerSpeed { +POWERSPEED.NOTRAIL powerup.duration 0x7FFFFFFA speed 0.75 }	
+	
+actor "Met Guard 3 GFX" : "Met Guard GFX" {
+	translation "199:199=249:249", "245:245=245:245", "195:195=166:166", "192:192=229:229", "198:198=73:73" }
+			
+actor "Met Guard 3 GFX Active" : "Met Guard GFX Active" {
+	translation "199:199=249:249", "245:245=245:245", "195:195=166:166", "192:192=229:229", "198:198=73:73" }
+	
+actor MetGuard3ShockWave : MetGuard1ShockWave { speed 28
+	states {			
+		Spawn:
+			TNT1 A 0 noDelay A_ChangeVelocity(28, 0, 0, CVF_REPLACE | CVF_RELATIVE)
+			TNT1 A 0 A_SetUserVar("user_waveCD", 3)
+			TNT1 A 0 A_Jump(256, "watchMeGo")
+			goto watchMeGo	
+		watchMeGo:
+			TNT1 A 1
+			goto super::watchMeGoCD
+		makeWave:
+			TNT1 A 0 A_SetUserVar("user_waveCD", 3)
+			TNT1 A 0 A_SpawnItemEx("MetGuard3ShockWavePart")
+			TNT1 A 0 A_Jump(256, "watchMeGo")
+			goto watchMeGo }}
+			
+	
+actor MetGuard3ShockWavePart : MetGuard1ShockWavePart {
+	states {
+		Spawn: TNT1 A 0
+			TNT1 A 0 A_SpawnItemEx("MetGuard3ShockWavePartGFX")
+			TNT1 A 0 A_SpawnItemEx("MetGuard3ShockWaveSubPart", 0)
+			goto super::splash}}			
+		
+actor MetGuard3ShockWaveSubPart : MetGuard1ShockWaveSubPart { obituary "$OB_XWMETGUARD3"
+	damage (23) damagetype "MetGuard3"}
+	
+actor MetGuard3ShockWavePartGFX : MetGuardShockWavePartGFX { translation "194:194=73:73", "192:192=72:72", "198:198=249:249" }

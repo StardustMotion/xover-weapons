@@ -1,0 +1,529 @@
+const int XW_HELLFIRE_CUTTER_AMMO = 5.0;//*XW_AMMOBAR_UNIT;
+const int XW_HELLFIRE_CUTTER_SPD = 66.6;
+const int XW_HELLFIRE_CUTTER_SPD_R = XW_HELLFIRE_CUTTER_SPD/5;
+const int XW_HELLFIRE_CURSE_TICS = 10*35;
+
+actor XWHellfireCutterWep : BaseXoverWep { 
+	weapon.slotNumber 4	-WEAPON.DONTBOB
+	tag "$TAG_XWHELLFIRECUTTER" obituary "$OB_XWHELLFIRECUTTER" inventory.icon "HELLCUTR"
+	states {
+		noAmmo: XWAM H 0 A_GunFlash("cutterHUD", GFF_NOEXTCHANGE)
+			goto super::noAmmo
+		select: XWAM D 0 ACS_NamedExecuteWithResult("core_weaponcolor",6760)
+			goto super::select
+		ready:
+			XWAM H 0 A_GunFlash("cutterHUD", GFF_NOEXTCHANGE)
+			goto super::ready
+		cutterHUD: XWAM D 2
+			wait
+					
+		
+		fire: altfire:
+			XWAM D 0 A_JumpIf(!CallACS("XW Ammo Check", 5), "noAmmo")
+			goto shoot
+		shoot: 
+			XWAF T 0 ACS_NamedExecuteAlways("XW Ammo Use", 0, 5)
+			XWAM F 0 A_SpawnItemEx("XW Hellfire Cutter", 18*cos(pitch), 8, 32+(18*sin(-pitch)), 0, 0, 0, 0, SXF_TRANSFERPITCH)
+			XWAC J 0 A_JumpIfInventory("PowerSpreadRune", 1, "spread") goto afterShot
+		spread:
+			XWAM F 0 A_SpawnItemEx("XW Hellfire Cutter", 18*cos(pitch), 8, 32+(18*sin(-pitch)), 0, 0, 0, 20, SXF_TRANSFERPITCH)
+			XWAM F 0 A_SpawnItemEx("XW Hellfire Cutter", 18*cos(pitch), 8, 32+(18*sin(-pitch)), 0, 0, 0, -20, SXF_TRANSFERPITCH)
+		afterShot:
+			XWAM F 0 A_GiveInventory("XW Hellfire Liveness")			
+			XWAM H 2
+			XWAM H 0 A_GunFlash("noflash", GFF_NOEXTCHANGE)
+			XWAM F 1 offset(108,50)
+			XWAM F 1 offset(78,66)
+			XWAM F 1 offset(56,82)			
+			XWAM E 1 offset(60,50)
+			XWAM E 1 offset(28,70)
+			XWAM D 1 offset(-140, 62)
+		waitingSlow:
+			TNT1 A 0 A_Refire("toFast")
+			TNT1 A 1
+			TNT1 A 0 A_JumpIfInventory("XW Hellfire Liveness",1,"waitingSlow")
+			goto catch
+		toFast:
+			TNT1 A 0 A_GiveInventory("varBool")
+			goto waitingFast+1
+		waitingFast:
+			TNT1 A 0 A_Refire(1)
+			goto toSlow
+			TNT1 A 1
+			TNT1 A 0 A_JumpIfInventory("XW Hellfire Liveness",1,"waitingFast")
+			goto catch
+		toSlow:
+			TNT1 A 0 A_TakeInventory("varBool")
+			goto waitingSlow+1
+			
+		catch:
+			XWAM E 1 offset(136,22)
+			XWAM F 3 offset(108,48)
+			XWAM F 2 offset(104,40) A_PlaySoundEx("misc/rathorthrow", "Weapon")
+			XWAM E 2 offset(140,14)
+			XWAM E 2 offset(136,22)
+			XWAM D 1 offset(9, 14)
+			XWAM D 1 offset(6, 20)
+			XWAM D 1 offset(3, 26)
+			TNT1 A 0 A_TakeInventory("varBool")
+			XWAM E 0 A_TakeInventory("CutterFlag", 0xFFFF)
+			XWAM E 0 A_TakeInventory("RollingCutterFlag", 1)
+			XWAM H 0 A_GunFlash("cutterHUD", GFF_NOEXTCHANGE)
+			XWAM H 15
+			XWAM H 1 A_WeaponReady(WRF_DISABLESWITCH)
+			goto super::ready}}
+			
+actor "XW Hellfire Liveness" : Powerup { powerup.duration 25 }
+			
+actor "XW Hellfire Cutter" : proj { 
+	+BOUNCEONFLOORS +USEBOUNCESTATE +SKYEXPLODE bouncecount 5 //security
+	+CANBOUNCEWATER +MOVEWITHSECTOR +STEPMISSILE maxstepheight 16 reactiontime 18
+	+RIPPER damage (0) radius 22 height 44 speed 66.6
+	args 0,0 // [speed, sfx]
+	translation "192:192=176:176", "198:198=184:184"
+	states {
+		spawn: TNT1 A 0
+			TNT1 A 0 A_PlaySoundEx("HELCUTER", "Weapon")
+			TNT1 A 0 A_ChangeVelocity(
+				XW_HELLFIRE_CUTTER_SPD*cos(pitch), 0, XW_HELLFIRE_CUTTER_SPD*-sin(pitch),
+				CVF_REPLACE | CVF_RELATIVE)
+			TNT1 A 0 A_SpawnItemEx("XW Hellfire Flame",
+				cos(pitch)*-80, 0, 16+sin(pitch)*XW_HELLFIRE_CUTTER_SPD,
+				velx,vely,velz,0,SXF_ABSOLUTEVELOCITY | SXF_TRANSFERTRANSLATION)
+			TNT1 A 1 A_Countdown
+		going:
+			TNT1 A 0 A_SpawnItemEx("OilPitIgnite", 0, 0, 8)
+			XWAM F 0 A_TakeFromTarget("XW Hellfire Liveness")
+			XWAM F 0 A_GiveToTarget("XW Hellfire Liveness")
+			TNT1 A 0 A_Countdown
+			XWAM A 1 A_SpawnItemEx("XW Hellfire Trail A1")
+			TNT1 A 0 A_Countdown
+			XWAM A 1 A_SpawnItemEx("XW Hellfire Trail A1")
+			TNT1 A 0 A_Countdown
+			XWAM B 1 A_SpawnItemEx("XW Hellfire Trail B1")
+			TNT1 A 0 A_Countdown
+			XWAM B 1 A_SpawnItemEx("XW Hellfire Trail B1")
+			TNT1 A 0 A_Countdown
+			XWAM C 1 A_SpawnItemEx("XW Hellfire Trail C1")
+			TNT1 A 0 A_Countdown
+			XWAM C 1 A_SpawnItemEx("XW Hellfire Trail C1")
+			loop
+		bounce.floor:
+			XWAM A 0 A_ChangeVelocity(XW_HELLFIRE_CUTTER_SPD, 0, 0, CVF_RELATIVE | CVF_REPLACE)
+			XWAM A 0 A_JumpIf(true, "going")
+			goto going
+		death: 
+			TNT1 A 0 A_JumpIf(!CallACS("core_targetexists"),"end")
+			TNT1 A 0 A_FaceTarget(0,0)
+			TNT1 A 0 A_JumpIfInTargetInventory("varBool", 1, "fastReturn")
+			goto recursive
+		fastReturn:
+			TNT1 A 0 A_SetArg(0, 1)
+			goto recursive
+			
+		recursive:
+			TNT1 A 0 A_SpawnItemEx("XW Hellfire Cutter Return",0,0,0,
+				(XW_HELLFIRE_CUTTER_SPD_R*cos(pitch))*(1+args[0]), 0, 
+				(XW_HELLFIRE_CUTTER_SPD_R*sin(pitch))*(1+args[0]))
+			stop}}
+			
+actor "XW Hellfire Cutter Return" : "XW Hellfire Cutter" {
+	+DONTBLAST  +NOINTERACTION
+	translation "192:192=183:183", "198:198=191:191" reactiontime 2
+	speed 10  states {
+		spawn: TNT1 A 0
+			TNT1 A 0 A_PlaySoundEx("HELCTRET", "Weapon")
+		sharpestToolInTheShed:
+			TNT1 A 0 A_SpawnItemEx("OilPitIgnite", 0, 0, 8)
+			XWAM F 0 A_TakeFromTarget("XW Hellfire Liveness")
+			XWAM F 0 A_GiveToTarget("XW Hellfire Liveness")
+			XWAM A 0 A_JumpIfCloser(100, "catch")
+			XWAM A 0 A_SpawnItemEx("XW Hellfire Trail X1")
+			XWAM C 1 A_SpawnItemEx("XW Hellfire Cutter Out Damager",0,0,0,velx,vely,velz,0,SXF_ABSOLUTEVELOCITY)
+			XWAM A 0 A_SpawnItemEx("XW Hellfire Trail X1")
+			XWAM C 1 A_SpawnItemEx("XW Hellfire Cutter Out Damager",0,0,0,velx,vely,velz,0,SXF_ABSOLUTEVELOCITY)
+			XWAM A 0 A_JumpIfCloser(100, "catch")
+			XWAM A 0 A_SpawnItemEx("XW Hellfire Trail Y1")
+			XWAM B 1 A_SpawnItemEx("XW Hellfire Cutter Out Damager",0,0,0,velx,vely,velz,0,SXF_ABSOLUTEVELOCITY)
+			XWAM A 0 A_SpawnItemEx("XW Hellfire Trail Y1")
+			XWAM B 1 A_SpawnItemEx("XW Hellfire Cutter Out Damager",0,0,0,velx,vely,velz,0,SXF_ABSOLUTEVELOCITY)
+			XWAM A 0 A_JumpIfCloser(100, "catch")
+			XWAM A 0 A_SpawnItemEx("XW Hellfire Trail Z1")
+			XWAM A 1 A_SpawnItemEx("XW Hellfire Cutter Out Damager",0,0,0,velx,vely,velz,0,SXF_ABSOLUTEVELOCITY)
+			XWAM A 0 A_SpawnItemEx("XW Hellfire Trail Z1")
+			XWAM A 1 A_SpawnItemEx("XW Hellfire Cutter Out Damager",0,0,0,velx,vely,velz,0,SXF_ABSOLUTEVELOCITY)
+			XWAM C 0 A_Countdown
+			loop
+		catch: XWAM F 0 A_TakeFromTarget("XW Hellfire Liveness")
+			TNT1 A 0 A_FaceTarget(0,0)
+			TNT1 A 0 A_ChangeVelocity(
+				XW_HELLFIRE_CUTTER_SPD_R*cos(pitch)/2, 0, XW_HELLFIRE_CUTTER_SPD_R*sin(pitch)/2,
+				CVF_RELATIVE | CVF_REPLACE)
+			XWAM A 0 A_SpawnItemEx("XW Hellfire Trail X1")
+			XWAM A 1 A_SpawnItemEx("XW Hellfire Cutter Out Damager",0,0,0,velx,vely,velz,0,SXF_ABSOLUTEVELOCITY)
+			XWAM A 0 A_SpawnItemEx("XW Hellfire Trail X1")
+			XWAM A 1 A_SpawnItemEx("XW Hellfire Cutter Out Damager",0,0,0,velx,vely,velz,0,SXF_ABSOLUTEVELOCITY)
+			XWAM A 0 A_SpawnItemEx("XW Hellfire Trail Y1")
+			XWAM B 1 A_SpawnItemEx("XW Hellfire Cutter Out Damager",0,0,0,velx,vely,velz,0,SXF_ABSOLUTEVELOCITY)
+			XWAM A 0 A_SpawnItemEx("XW Hellfire Trail Y1")
+			XWAM B 1 A_SpawnItemEx("XW Hellfire Cutter Out Damager",0,0,0,velx,vely,velz,0,SXF_ABSOLUTEVELOCITY)
+			XWAM A 0 A_SpawnItemEx("XW Hellfire Trail Z1")
+			XWAM C 1 A_SpawnItemEx("XW Hellfire Cutter Out Damager",0,0,0,velx,vely,velz,0,SXF_ABSOLUTEVELOCITY)
+			XWAM A 0 A_SpawnItemEx("XW Hellfire Trail Z1")
+			XWAM C 1 A_SpawnItemEx("XW Hellfire Cutter Out Damager",0,0,0,velx,vely,velz,0,SXF_ABSOLUTEVELOCITY)
+			stop}}
+
+actor "XW Hellfire Cutter In Damager" : proj { radius 36 height 72 damage (4) //6.66
+	+HITTRACER  +DONTSPLASH damagetype "HellfireMark" obituary "$OB_XWHELLFIRECUTTER" 
+	args 0
+	states {		
+		spawn: TNT1 A 0
+			TNT1 A 1
+			stop
+			
+		xdeath: crash:
+			TNT1 A 0 A_JumpIf(CallACS("XW", XW_IS_LIVING_BEING, AAPTR_TRACER), 1)
+			goto end
+			TNT1 A 0 A_JumpIf(CallACS("XW", XW_IS_SAME_TEAM), "end")
+			TNT1 A 0 A_JumpIf(!CallACS("XW", XW_IS_PLAYER, AAPTR_TRACER), "blood")
+			TNT1 A 0 A_JumpIf(args[0], "blood") // Out damager
+		deathMark: 
+			TNT1 A 0 A_RearrangePointers(AAPTR_TRACER, AAPTR_TARGET, AAPTR_DEFAULT)
+			TNT1 A 0 A_JumpIfInTargetInventory("XW Hellfire Death Mark", 1, "end")
+			TNT1 A 0 A_GiveToTarget("XW Hellfire Death Mark")
+			TNT1 A 0 A_ChangeFlag("NOINTERACTION", 1)
+			TNT1 A 0 A_ClearTarget
+			TNT1 A 0 A_SpawnItemEx("XW Hellfire Mark")
+		blood:
+			TNT1 A 0 A_RearrangePointers(AAPTR_TRACER, AAPTR_DEFAULT, AAPTR_DEFAULT)
+			TNT1 A 5 A_GiveToTarget("XW Hellfire Blood Spawn")
+			stop}}
+			
+actor "XW Hellfire Mark" : watcher {
+	scale 1.5 reactiontime 66 renderstyle "translucent" alpha 0.9
+	states {
+		spawn: TNT1 A 0	
+			TNT1 A 0 A_TransferPointer(AAPTR_TARGET, AAPTR_DEFAULT, AAPTR_TRACER, AAPTR_TRACER)		
+			TNT1 A 0 A_TransferPointer(AAPTR_TARGET, AAPTR_DEFAULT, AAPTR_MASTER, AAPTR_TARGET)
+		markIdle:
+			XWAM LLL 1 A_Warp(AAPTR_TRACER, 0, 0, 100, 0, WARPF_NOCHECKPOSITION)
+			XWAM L 0 A_JumpIfInTargetInventory("XW Hellfire Liveness", 1, 2)
+			XWAM L 0 A_JumpIf(true, "stopMark")
+			XWAM LLL 1 A_Warp(AAPTR_TRACER, 0, 0, 100, 0, WARPF_NOCHECKPOSITION)
+			XWAM L 0 A_JumpIfInTargetInventory("XW Hellfire Liveness", 1, 2)
+			XWAM L 0 A_JumpIf(true, "stopMark")
+			XWAM MMM 1 A_Warp(AAPTR_TRACER, 0, 0, 100, 0, WARPF_NOCHECKPOSITION)
+			XWAM L 0 A_JumpIfInTargetInventory("XW Hellfire Liveness", 1, 2)
+			XWAM L 0 A_JumpIf(true, "stopMark")
+			XWAM MMM 1 A_Warp(AAPTR_TRACER, 0, 0, 100, 0, WARPF_NOCHECKPOSITION)
+			XWAM M 0 A_Countdown
+			XWAM M 0 A_JumpIf(!CallACS("core_targetexists", 1), "stopMark")
+			XWAM M 0 A_JumpIfInTargetInventory("XW Hellfire Liveness", 1, "markIdle")
+			XWAM L 0 A_JumpIf(true, "stopMark")
+			loop
+		
+		stopMark: death:
+			TNT1 A 0 A_RearrangePointers(AAPTR_TRACER, AAPTR_DEFAULT, AAPTR_TARGET)
+			TNT1 A 0 A_TakeFromTarget("XW Hellfire Death Mark")
+			TNT1 A 0 A_FadeOut(0.18)
+			XWAM LLL 1 A_Warp(AAPTR_TARGET, 0, 0, 100, 0, WARPF_NOCHECKPOSITION)
+			TNT1 A 0 A_FadeOut(0.18)
+			XWAM LLL 1 A_Warp(AAPTR_TARGET, 0, 0, 100, 0, WARPF_NOCHECKPOSITION)
+			TNT1 A 0 A_FadeOut(0.18)
+			XWAM MMM 1 A_Warp(AAPTR_TARGET, 0, 0, 100, 0, WARPF_NOCHECKPOSITION)
+			TNT1 A 0 A_FadeOut(0.18)
+			XWAM MMM 1 A_Warp(AAPTR_TARGET, 0, 0, 100, 0, WARPF_NOCHECKPOSITION)
+			stop}}
+			
+actor "XW Hellfire Death Mark" : varBool {}
+			
+actor "XW Hellfire Cutter Out Damager" : "XW Hellfire Cutter In Damager" { damage (11)
+	args 1 damagetype "HellfireCutter" }
+
+actor "XW Hellfire Flame" : "XW Hellfire Cutter" {
+	+FORCEXYBILLBOARD renderstyle "translucent" alpha 0.85
+	scale 6.0 states { 
+		spawn: TNT1 A 0
+			TNT1 A 0 A_SpawnItemEx("XW Hellfire Cutter In Damager",0,0,0,
+				velx,vely,velz,0,SXF_ABSOLUTEVELOCITY)
+		going:
+			XWAL W 1 A_Countdown
+			XWAL W 0 A_Countdown
+			XWAL X 1 A_SpawnItemEx("XW Hellfire Cutter In Damager",0,0,0,
+				velx,vely,velz,0,SXF_ABSOLUTEVELOCITY)
+			XWAL W 0 A_Countdown
+			XWAL Y 1 A_SpawnItemEx("XW Hellfire Cutter In Damager",0,0,0,
+				velx,vely,velz,0,SXF_ABSOLUTEVELOCITY)
+			XWAL W 0 A_Countdown
+			XWAL Z 1 A_SpawnItemEx("XW Hellfire Cutter In Damager",0,0,0,
+				velx,vely,velz,0,SXF_ABSOLUTEVELOCITY)
+			TNT1 A 0 A_SpawnItemEx("XW Hellfire Cutter In Damager",0,0,0,
+				velx,vely,velz,0,SXF_ABSOLUTEVELOCITY)
+			loop
+		death: TNT1 A 0
+			stop}}		
+			
+			
+			
+			
+			
+	// ################################ //
+	// 	 	  Doom / curse effect 	    //
+	// ################################ //
+	
+	// ############# Curse ############### //
+	
+actor "XW Hellfire Curse Reset" : varBool {}
+
+actor "XW Hellfire Doom" : item {
+	states {
+		pickup: 
+			TNT1 A 0 A_GiveToTarget("XW Hellfire Doomer Check")
+			TNT1 A 0 A_JumpIfInventory("XWHellfireCurse", 1, "reset")
+			TNT1 A 0 A_JumpIfInventory("XWHellfireCurseEnd", 1, "reset")
+			TNT1 A 0 A_SpawnItemEx("XW Hellfire Curse Watcher")
+			stop
+		reset: TNT1 A 0 A_GiveInventory("XW Hellfire Curse Reset")
+			stop}}
+
+
+actor "XW Hellfire Curse Watcher" : watcher { args 0
+	states {
+		reset:
+			TNT1 A 0 A_TakeFromTarget("XW Hellfire Curse Reset")
+		spawn: 
+			TNT1 A 0 nodelay A_SetArg(0, XW_HELLFIRE_CURSE_TICS)
+		check:
+			TNT1 A 0 A_JumpIf(args[0] > 105, "long")
+		short:
+			TNT1 A 0 A_TakeFromTarget("XWHellfireCurse")
+			TNT1 A 0 A_JumpIfInTargetInventory("XWHellfireCurseEnd", 1, "waiting") // blink fix
+			TNT1 A 0 A_GiveToTarget("XWHellfireCurseEnd")
+			goto waiting
+		long:
+			TNT1 A 0 A_GiveToTarget("XWHellfireCurse")
+			goto waiting		
+		waiting:
+			TNT1 A 0 A_SetArg(0, args[0]-8)
+			TNT1 AA 4 A_GiveToTarget("XW Attack Down")
+			TNT1 A 0 A_JumpIfInTargetInventory("XW Hellfire Curse Reset", 1, "reset")
+			TNT1 A 0 A_JumpIf(CallACS("XW", XW_IS_SPEC), "end")
+			TNT1 A 0 A_JumpIf(args[0] <= 0, "purged")
+			goto check
+		purged: 
+			TNT1 A 0 A_TakeFromTarget("XWHellfireCurseEnd")
+			stop}}
+
+actor XWHellfireCurse : PowerDamage {
+	powerup.color "43 00 00", 0.2 powerup.duration 0x7FFFFFFA damagefactor "normal", 0.8 }
+	
+// blinking color
+actor XWHellfireCurseEnd : XWHellfireCurse { powerup.duration 105 }
+
+
+	// ############# Doom ############### //
+	
+actor "XW Hellfire Doom Reset" : varBool {}
+actor "XW Hellfire Doomer Check" : item  {
+	states {
+		pickup: 
+			TNT1 A 0 A_JumpIfInventory("XWHellfireDoom", 1, "okDoomer")
+			TNT1 A 0 A_JumpIfInventory("XWHellfireDoomEnd", 1, "okDoomer")
+			TNT1 A 0 A_SpawnItemEx("XW Hellfire Doom Watcher")
+			stop
+		okDoomer: TNT1 A 0 A_GiveInventory("XW Hellfire Doom Reset")
+			stop}}
+	
+	
+actor "XW Hellfire Doom Watcher" : watcher {
+	states {
+		reset:
+			TNT1 A 0 A_TakeFromTarget("XW Hellfire Doom Reset")
+		spawn: 
+			TNT1 A 0 nodelay A_SetArg(0, XW_HELLFIRE_CURSE_TICS)
+		check:
+			TNT1 A 0 A_JumpIf(args[0] > 105, "long")
+		short:
+			TNT1 A 0 A_TakeFromTarget("XWHellfireDoom")
+			TNT1 A 0 A_JumpIfInTargetInventory("XWHellfireDoomEnd", 1, "waiting") // blink fix
+			TNT1 A 0 A_GiveToTarget("XWHellfireDoomEnd")
+			goto waiting
+		long:
+			TNT1 A 0 A_GiveToTarget("XWHellfireDoom")
+			goto waiting		
+		waiting:
+			TNT1 A 0 A_SetArg(0, args[0]-8)
+			TNT1 AA 4 A_GiveToTarget("XW Attack Up")
+			TNT1 A 0 A_JumpIfInTargetInventory("XW Hellfire Doom Reset", 1, "reset")
+			TNT1 A 0 A_JumpIf(CallACS("XW Weapons", XW_IS_SPEC), "end")
+			TNT1 A 0 A_JumpIf(args[0] <= 0, "purged")
+			goto check
+		purged: 
+			TNT1 A 0 A_TakeFromTarget("XWHellfireDoomEnd")
+			stop}}
+
+actor XWHellfireDoom : PowerDamage {
+	powerup.color "FF 00 00", 0.12 powerup.duration 0x7FFFFFFA damagefactor "normal", 1.25 }
+actor XWHellfireDoomEnd : XWHellfireDoom { powerup.duration 105 }
+	
+
+
+	// ################################ //
+	// 				Effects 			//
+	// ################################ //
+	
+	
+	// ############# Trails ############### //
+
+actor "XW Hellfire Trail A1" : gfx { //renderstyle "translucent" 0.666
+	translation "192:192=176:176", "198:198=184:184" states { 
+				spawnFrame: TNT1 A 0
+					TNT1 A 1
+					XWAM A 1
+					TNT1 A 0 A_JumpIf(true, "next")
+				next: TNT1 A 0 A_SpawnItemEx("XW Hellfire Trail A2")
+					stop}}
+					
+actor "XW Hellfire Trail A2" : "XW Hellfire Trail A1" { translation "192:192=177:177", "198:198=185:185"
+	states { next: TNT1 A 0 A_SpawnItemEx("XW Hellfire Trail A3") stop}}
+					
+actor "XW Hellfire Trail A3" : "XW Hellfire Trail A1" { translation "192:192=178:178", "198:198=186:186"
+	states { spawnframe: TNT1 A 0
+					TNT1 A 1
+					XWAM B 1
+					TNT1 A 0 A_JumpIf(true, "next")
+			next: TNT1 A 0 A_SpawnItemEx("XW Hellfire Trail A4")
+					stop}}
+					
+actor "XW Hellfire Trail A4" : "XW Hellfire Trail A3" { translation "192:192=179:179", "198:198=187:187"
+	states { next: TNT1 A 0 A_SpawnItemEx("XW Hellfire Trail A5") stop}}
+					
+actor "XW Hellfire Trail A5" : "XW Hellfire Trail A1" { translation "192:192=180:180", "198:198=188:188"
+	states { spawnframe: TNT1 A 0
+					TNT1 A 1
+					XWAM C 1
+					TNT1 A 0 A_JumpIf(true, "next")
+			next: TNT1 A 0 A_SpawnItemEx("XW Hellfire Trail A6")
+					stop}}
+actor "XW Hellfire Trail A6" : "XW Hellfire Trail A5" { translation "192:192=181:181", "198:198=189:189"
+	states { next: TNT1 A 0 A_SpawnItemEx("XW Hellfire Trail A7") stop}}
+					
+actor "XW Hellfire Trail A7" : "XW Hellfire Trail A1" { translation "192:192=182:182", "198:198=190:190"
+	states { next: TNT1 A 0 A_SpawnItemEx("XW Hellfire Trail A8") stop}}
+actor "XW Hellfire Trail A8" : "XW Hellfire Trail A1" { translation "192:192=183:183", "198:198=191:191"
+	states { next: TNT1 A 0
+					stop}}
+					
+actor "XW Hellfire Trail B1" : "XW Hellfire Trail A3" { translation "192:192=176:176", "198:198=184:184"
+	states { next: TNT1 A 0 A_SpawnItemEx("XW Hellfire Trail B2") stop}}
+actor "XW Hellfire Trail B2" : "XW Hellfire Trail B1" { translation "192:192=177:177", "198:198=185:185"
+	states { next: TNT1 A 0 A_SpawnItemEx("XW Hellfire Trail B3") stop}}
+actor "XW Hellfire Trail B3" : "XW Hellfire Trail A5" { translation "192:192=178:178", "198:198=186:186"
+	states { next: TNT1 A 0 A_SpawnItemEx("XW Hellfire Trail B4") stop}}
+actor "XW Hellfire Trail B4" : "XW Hellfire Trail B3" { translation "192:192=179:179", "198:198=187:187"
+	states { next: TNT1 A 0 A_SpawnItemEx("XW Hellfire Trail B5") stop}}
+actor "XW Hellfire Trail B5" : "XW Hellfire Trail A1" { translation "192:192=180:180", "198:198=188:188"
+	states { next: TNT1 A 0 A_SpawnItemEx("XW Hellfire Trail B6") stop}}
+actor "XW Hellfire Trail B6" : "XW Hellfire Trail B5" { translation "192:192=181:181", "198:198=189:189"
+	states { next: TNT1 A 0 A_SpawnItemEx("XW Hellfire Trail B7") stop}}
+actor "XW Hellfire Trail B7" : "XW Hellfire Trail A3" { translation "192:192=182:182", "198:198=190:190"
+	states { next: TNT1 A 0 A_SpawnItemEx("XW Hellfire Trail B8") stop}}
+actor "XW Hellfire Trail B8" : "XW Hellfire Trail B7" { translation "192:192=183:183", "198:198=191:191"
+	states { next: TNT1 A 0
+					stop}}					
+					
+actor "XW Hellfire Trail C1" : "XW Hellfire Trail A5" { translation "192:192=176:176", "198:198=184:184"
+	states { next: TNT1 A 0 A_SpawnItemEx("XW Hellfire Trail C2") stop}}
+actor "XW Hellfire Trail C2" : "XW Hellfire Trail C1" { translation "192:192=177:177", "198:198=185:185"
+	states { next: TNT1 A 0 A_SpawnItemEx("XW Hellfire Trail C3") stop}}
+actor "XW Hellfire Trail C3" : "XW Hellfire Trail A1" { translation "192:192=178:178", "198:198=186:186"
+	states { next: TNT1 A 0 A_SpawnItemEx("XW Hellfire Trail C4") stop}}
+actor "XW Hellfire Trail C4" : "XW Hellfire Trail C3" { translation "192:192=179:179", "198:198=187:187"
+	states { next: TNT1 A 0 A_SpawnItemEx("XW Hellfire Trail C5") stop}}
+actor "XW Hellfire Trail C5" : "XW Hellfire Trail A3" { translation "192:192=180:180", "198:198=188:188"
+	states { next: TNT1 A 0 A_SpawnItemEx("XW Hellfire Trail C6") stop}}
+actor "XW Hellfire Trail C6" : "XW Hellfire Trail C5" { translation "192:192=181:181", "198:198=189:189"
+	states { next: TNT1 A 0 A_SpawnItemEx("XW Hellfire Trail C7") stop}}
+actor "XW Hellfire Trail C7" : "XW Hellfire Trail A5" { translation "192:192=182:182", "198:198=190:190"
+	states { next: TNT1 A 0 A_SpawnItemEx("XW Hellfire Trail C8") stop}}
+actor "XW Hellfire Trail C8" : "XW Hellfire Trail C7" { translation "192:192=183:183", "198:198=191:191"
+	states { next: TNT1 A 0
+					stop}}
+					
+actor "XW Hellfire Trail X1" : "XW Hellfire Trail A1" { 
+	translation "192:192=183:183", "198:198=191:191" states {
+		spawnframe: TNT1 A 0
+				TNT1 A 1
+					XWAM A 2
+					TNT1 A 0 A_JumpIf(true, "next")
+				next: TNT1 A 0 A_SpawnItemEx("XW Hellfire Trail X2")
+					stop}}
+actor "XW Hellfire Trail X2" : "XW Hellfire Trail A1" { 
+	translation "192:192=191:191", "198:198=0:0" states {
+				next: TNT1 A 0
+					stop}}
+					
+actor "XW Hellfire Trail Y1" : "XW Hellfire Trail X1" {  states {
+		spawnframe: TNT1 A 0
+				TNT1 A 1
+					XWAM B 2
+					TNT1 A 0 A_JumpIf(true, "next")
+				next: TNT1 A 0 A_SpawnItemEx("XW Hellfire Trail Y2")
+					stop}}
+actor "XW Hellfire Trail Y2" : "XW Hellfire Trail Y1" { 
+	translation "192:192=191:191", "198:198=0:0" states {
+				next: TNT1 A 0
+					stop}}
+					
+actor "XW Hellfire Trail Z1" : "XW Hellfire Trail X1" {  states {
+		spawnframe: TNT1 A 0
+				TNT1 A 1
+					XWAM C 2
+					TNT1 A 0 A_JumpIf(true, "next")
+				next: TNT1 A 0 A_SpawnItemEx("XW Hellfire Trail Z2")
+					stop}}
+actor "XW Hellfire Trail Z2" : "XW Hellfire Trail Z1" { 
+	translation "192:192=191:191", "198:198=0:0" states {
+				next: TNT1 A 0
+					stop}}
+					
+	// ############# Blood ############### //
+	
+		
+actor "XW Hellfire Blood Spawn" : item {
+	states {
+		pickup: 
+			TNT1 A 0 A_PlaySoundEx("HELFRHIT","SoundSlot5")
+			TNT1 AA 0 A_SpawnItemEx("__XW Hellfire Blood")
+			stop}}
+
+actor "__XW Hellfire Blood" : watcher { states {
+	spawn: TNT1 A 0 nodelay A_SpawnItemEx("XW Hellfire Blood", 
+				random(-12,12), random(-12,12), random(6,32), random(4,8), 0, random(2,5), random(0,359)) stop}}
+				
+actor "XW Hellfire Blood" : xwColliderGFX { -NOGRAVITY +ALLOWPARTICLES
+	+FORCEXYBILLBOARD
+	translation "192:192=176:176", "198:198=184:184", "199:199=190:190"
+	states { 	spawn: XWAM KJI 6
+						stop
+					death: XWAM I 6
+						stop}}
+						
+actor "XW Hellfire Death Blood Spawn" : item {
+	states { 
+		pickup: TNT1 AAAAAAAAAA 0 A_SpawnItemEx("XW Hellfire Blood", 
+				0,0, random(6,32), random(6,12), 0, random(6,15), random(0,359))
+			TNT1 A 0 A_SpawnItemEx("__XW Hellfire Corpse")
+			stop}}
+			
+actor "__XW Hellfire Corpse" : watcher { states {
+	spawn: TNT1 A 0 nodelay A_SpawnItemEx("XW Hellfire Corpse") 
+		TNT1 A 0 A_PlaySoundEx("HELFRDED","SoundSlot6") stop}}
+			
+actor "XW Hellfire Corpse" : "XW Hellfire Blood" { -ALLOWPARTICLES scale 3.75
+	states {
+		spawn: TNT1 A 0
+			TNT1 A 2
+			XWAM NOPQRST 4
+			XWAM TT 2 A_FadeOut(0.25)
+			stop}}

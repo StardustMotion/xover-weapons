@@ -1,5 +1,0 @@
-
-// ------------------------- Delay Flame ------------------------- //
-sprite XWACJ0, 116, 96 {Offset -184, -94  Patch BUSTB0, 0, 0 {Translation "192:192=64:64", "198:198=61:61"}}
-sprite XWACK0, 124, 96 {Offset -184, -98  Patch BUSTC0, 0, 0 {Translation "192:192=64:64", "198:198=61:61"}}
-sprite XWACL0, 128, 92 {Offset -188, -102 Patch BUSTD0, 0, 0 {Translation "192:192=64:64", "198:198=61:61"}}

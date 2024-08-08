@@ -1,0 +1,191 @@
+actor XWMetGuard3EXWep : BaseXoverWep { 
+    weapon.slotNumber 7
+	inventory.icon "METGARDX" obituary "$OB_XWMETGUARD3EX" tag "$TAG_XWMETGUARD3EX"
+	states {
+        noAmmo: XWAB E 0 offset(0,32) A_GiveInventory("StopShield", 1)
+			goto super::noAmmo
+		select: XWAB E 0  ACS_NamedExecuteWithResult("core_weaponcolor",6738)
+			goto super::select
+		ready: XWAB E 0
+			goto super::ready
+		deselect: XWAB E 0 offset(0,32) A_TakeInventory("StopShield", 1)
+			goto super::deselect		
+			
+		altfire:
+			"----" A 0 A_GiveInventory("altfireToken")
+		fire:
+			"----" A 0 A_TakeInventory("StopShield", 1)
+			"----" A 0 A_JumpIf(!CallACS("XW Ammo Check", XW_METGUARD_AMMO), "noAmmo")	
+						
+			"----" A 0 A_GiveInventory("MetGuardRotatableShieldSetup", 1)	
+			"----" A 0 ACS_NamedExecuteAlways("XW Ammo Use", 0, XW_METGUARD_AMMO)
+			"----" A 0 A_PlaySoundEx("METSHELD", "Weapon")
+			//"----" A 0 ThrustThingZ(0, 12, 1, 1)
+			XWAB EE 1 Offset(0,32) //A_JumpIfInventory("varBool", 1, "stopShield")	
+			"----" A 0 A_GunFlash("shieldGFX", GFF_NOEXTCHANGE)	
+			XWAB F 1 Offset(0,18) A_JumpIfInventory("varBool", 1, "stopShield")
+			"----" A 1 Offset(0,4) A_JumpIfInventory("varBool", 1, "stopShield")
+			XWAB G 0 Offset(0,-50) ThrustThingZ(0, 12, 1, 1)
+		handsLifted:
+			"----" A 0 A_Refire(1)
+			"----" AAAA 1 A_JumpIfInventory("varBool", 1, "stopShield")
+			"----" A 0 ThrustThingZ(0, 12, 1, 1)
+			"----" A 0 A_Refire(1)
+			"----" AAAA 1 A_JumpIfInventory("varBool", 1, "stopShield")
+			"----" A 0 ThrustThingZ(0, 12, 1, 1)
+			"----" A 0 A_Refire(1)
+			"----" AAAA 1 A_JumpIfInventory("varBool", 1, "stopShield")
+			"----" A 0 ThrustThingZ(0, 12, 1, 1)
+			"----" A 0 A_Refire(1)
+			"----" AAAA 1 A_JumpIfInventory("varBool", 1, "stopShield")
+			"----" A 0 A_Refire("shield")
+			goto shield
+			
+		shield: hold:
+			"----" A 0 A_JumpIfInventory("var16", 11, "stopShield")
+			"----" A 0 ThrustThingZ(0, 12, 1, 1)
+			"----" A 0 A_GiveInventory("var16", 1)
+			"----" AAAA 1 A_JumpIfInventory("varBool", 1, "stopShield")
+			"----" A 0 A_JumpIfInventory("altfireToken", 1, "stopShield")
+			"----" A 0 A_ReFire
+			goto stopShield
+			
+		althold: stopShield:
+			XWAB G 0 A_GiveInventory("StopShield", 1)
+			"----" A 0 Offset(0,-50) A_JumpIfInventory("varBool", 1, "fullSynchro")
+			goto endQuick
+            
+		fullSynchro:
+            "----" A 0 A_SpawnItemEx("MetGuardXShockWave")
+            "----" A 0 A_JumpIfInventory("PowerSpreadRune", 1, 1) goto fullSynchro2
+            "----" A 0 A_SpawnItemEx("MetGuardXShockWave",0,0,0,0,0,0,20)
+            "----" A 0 A_SpawnItemEx("MetGuardXShockWave",0,0,0,0,0,0,-20)
+        fullSynchro2:
+            "----" A 0 A_SpawnItemEx("Met Guard X GFX Active", 40)
+            goto end
+			
+		end:
+			"----" A 25
+		endQuick:
+			XWAB F 2 Offset(0,-3)
+			"----" A 2 Offset(0,9)
+			"----" A 2 Offset(0,20)
+		refresh:	
+			XWAB E 10 Offset(0,32)
+			"----" A 0 A_ClearReFire
+			"----" A 0 A_TakeInventory("altfireToken", 1)
+			"----" A 0 A_TakeInventory("var16", 0xFFFF)
+			"----" A 0 A_TakeInventory("varBool", 1)
+			"----" A 0 A_TakeInventory("StopShield", 1)
+			goto ready
+			
+		shieldGFX: TNT1 A 0 A_GiveInventory("MetGuard Medium Speed", 1)
+		shieldGFX2:
+			TNT1 A 0 A_SpawnItemEx("Met Guard X GFX", 40, 0, 0, velx, vely, 0, 0, SXF_ABSOLUTEVELOCITY)
+			TNT1 A 1 A_JumpIfInventory("StopShield", 1, "stopGFX")
+			TNT1 A 0 A_JumpIfHealthLower(1, "stopGFX")
+			loop
+		stopGFX: TNT1 A 0 A_TakeInventory("MetGuard Medium Speed", 1)
+			stop}}
+	
+actor "Met Guard X GFX" : "Met Guard GFX" {
+	translation "199:199=157:157", "245:245=9:9", "195:195=77:77", "192:192=68:68", "198:198=95:95" }
+			
+actor "Met Guard X GFX Active" : "Met Guard GFX Active" {
+	translation "199:199=157:157", "245:245=9:9", "195:195=77:77", "192:192=68:68", "198:198=95:95" }
+		
+actor MetGuardXShockWave : MetGuard3ShockWave { reactiontime 60
+	states {			
+		makeWave:
+			TNT1 A 0 A_Countdown
+			TNT1 A 0 A_SetUserVar("user_waveCD", 3)
+			TNT1 A 0 A_SpawnItemEx("MetGuardXShockWavePart")
+			TNT1 A 0 A_Jump(256, "watchMeGo")
+			goto watchMeGo }}
+					
+actor MetGuardXShockWavePart : MetGuard1ShockWavePart {
+	states {
+		Spawn: TNT1 A 0
+			TNT1 A 0 A_SpawnItemEx("MetGuardXShockWavePartGFX")
+			TNT1 A 0 A_SpawnItemEx("MetGuardXShockWaveSubPart")
+			TNT1 A 0 A_SpawnItemEx("MetGuardXPoisonPanel")
+			goto super::splash}}
+		
+				
+actor MetGuardXShockWavePartGFX : MetGuardShockWavePartGFX {	
+	translation "194:194=95:95", "192:192=93:93", "198:198=157:157" }					
+
+actor MetGuardXShockWaveSubPart : MetGuard3ShockWaveSubPart { 
+	obituary "$OB_XWMETGUARD3EX" damagetype "MetGuardX" }
+	
+	
+	
+// ------------------------ Poison Panel ------------------------ //
+
+actor MetGuardXPoisonPanel : watcher {
+	states {
+		Spawn: 
+			TNT1 A 0 nodelay A_SpawnItemEx("MetGuardXPoisonPanelGFXPanel")
+			TNT1 A 0 A_SpawnItemEx("MetGuardXPoisonPanelGFXParticles")
+			TNT1 A 0 A_SpawnItemEx("MetGuardXPoisonPanelDmg")
+			stop}}
+			
+actor MetGuardXPoisonPanelGFXPanel : gfx { 
+    +FORCEXYBILLBOARD +MOVEWITHSECTOR yscale 0.85 xscale 2.5 reactiontime 3 // renderstyle "translucent" alpha 0.2
+	states {
+		spawnframe:
+			TNT1 A 0 A_Jump(128, "alt")
+		main:
+			//XWAA QQQQQQQQ 1 A_FadeIn(0.1)
+		mainLoop:
+			XWAA RSSRQQQQ 6
+			XWAA Q 0 A_Countdown
+			loop
+		alt:
+			//XWAA VVVVVVVV 1 A_FadeIn(0.1)
+		altLoop:
+			XWAA TTTTU 6
+			XWAB HH 6
+			XWAA U 6
+			XWAA T 0 A_Countdown
+			loop
+		Death: "----" AAAAAAAA 1 A_FadeOut(0.1)
+			stop}}
+			
+actor MetGuardXPoisonPanelGFXParticles : gfx { reactiontime 4 +MOVEWITHSECTOR
+	states {
+		spawn:
+			TNT1 A 0 nodelay A_SpawnItemEx("PoisonPanelSkullParticle", 0, 0, 4, 0, 0, random(1,2))
+		idling:
+			TNT1 A 36 A_SpawnItemEx("PoisonPanelParticle", random(-20, 20), random(-20, 20), 4, 0, 0, random(1,2))
+			TNT1 A 0 A_Countdown
+			loop}}
+			
+actor PoisonPanelParticle : gfx { 
+    +FORCEXYBILLBOARD var int user_count; +DONTSPLASH scale 1.4 renderstyle "translucent" alpha 0.85 reactiontime 8
+	states {
+		spawnframe: 
+			SHAB R 2 A_SetUserVar("user_count", user_count+1)
+			TNT1 A 1
+			TNT1 A 0 A_JumpIf(user_count > 8, "vanish")
+			loop
+		vanish:
+			SHAB R 1 A_FadeOut(0.12)
+			TNT1 A 1
+			loop}}
+			
+actor PoisonPanelSkullParticle : PoisonPanelParticle {
+	states {
+		spawnframe: 
+			SHAB RSSTTT 4
+		vanish:
+			SHAB T 1 A_FadeOut(0.12)
+			TNT1 A 1 
+			loop}}
+			
+actor MetGuardXPoisonPanelDmg : watcher { 
+    +MOVEWITHSECTOR +DONTSPLASH reactiontime 18 damagetype "PoisonPanel" obituary "$OB_XWMETGUARD3EXPOISON" +DONTBLAST
+	states {
+		Spawn: TNT1 A 8 nodelay A_Explode(10, 100, 0) 
+			TNT1 A 0 A_Countdown
+			loop}}

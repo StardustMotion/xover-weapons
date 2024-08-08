@@ -1,23 +1,611 @@
-script "xover_spawnfuncs" OPEN
-{
-    AddSpawnFunc(DTADD_SFT_WEP, "xover_wepGiver");
-}
-
 script "xover_wepGiver" (void) {
     str class = getactorclass(0);
-    while (timer() < 5) delay(1); 
+    while (timer() < 5) delay(1);
+    int tid = uniquetid(); 
     if (timer()>>3)
-        SpawnForced(strparam(s:class,s:"XWDrop"),getactorx(0),getactory(0),getactorz(0),0,0);  
+        SpawnForced(strparam(s:class,s:"XWDrop"),getactorx(0),getactory(0),getactorz(0),tid,0);  
     else if (!strcmp(class,getactorclass(0)))
-        SpawnForced(strparam(s:class,s:"XW"),getactorx(0),getactory(0),getactorz(0),0,0);  
+        SpawnForced(strparam(s:class,s:"XW"),getactorx(0),getactory(0),getactorz(0),tid,0);  
     else terminate; // weapon transformed by core_randomize_wep
+    SetActorVelocity(tid,GetActorVelX(0),GetActorVelY(0),GetActorVelY(0),0,0);
+    Thing_ChangeTid(tid,0);
     thing_remove(0);
 }
 
+bool isTeamGameRound = false;
+script "XW OPEN" OPEN {
+    isTeamGameRound = GetCvar("teamplay")|GetCvar("TeamPossession")|GetCvar("teamlms")|GetCvar("ctf")|
+        GetCvar("oneflagctf")|GetCVar("cooperative");
+    AddSpawnFunc(DTADD_SFT_WEP, "xover_wepGiver");
+    DefinePowerAprop("Rakukoujin Underground Giver", "Rakukoujin Underground", APROP_JumpZ, 0.0, NO);
+}
+
 script "XW" (int type, int arg1, int arg2, int arg3) {
+    int speed, tmp, victim, i, j, var, dist, user, angle, health; // some generic variable names
     switch(type) {
-        case XW_WEP_PICKUP:
-            setresultvalue(false);
+
+        
+		case 7: // Forest Whip slam lock
+            i = CheckInventory("Forest Whip Lock Duration");
+            // perform quake if a certain minimal dunk height is reached
+            if (i >= arg1) {
+                ACS_NamedExecuteWithResult("XW", XW_EARTHQUAKE, 1+(i/25), 14, 384);
+                // rock propulsion if on the map ground
+                if (GetActorZ(0) == GetActorFloorZ(0))
+                    SpawnForced("Forest Whip Rock Smash", GetActorX(0),GetActorY(0),GetActorZ(0),6770+i,0);
+                PlaySound(0, "FRSTWHIPX", CHAN_VOICE);
+            }
+            ACS_NamedExecuteWithResult("XW", XW_LOCKER, i);
+        break;
+
+        /*
+        @arg1 tid
+        @arg2 warp tid to caller instead?
+        */
+        case XW_WARP_2_TID:
+            tmp = Warp(arg1,0,0,0,0,WARPF_NOCHECKPOSITION | (WARPF_MOVEPTR*arg2));//);
+        break;
+
+        case 11: // Scatter Ring knockback
+			i = GetActorAngle(0);
+			SetActivator(0, AAPTR_TRACER);
+			victim = GetActorProperty(0, APROP_TracerTID);
+			if (arg2 >= 130) 
+                PlaySound(0, "RINGTHOK", CHAN_6);  //XW_SCATTER_RING_MAX_THOK
+			SetActorVelocity(victim, arg2*cos(i), arg2*sin(i), (8 << 16), false, true);
+		break;
+
+        
+        
+		case XW_DIST_TO_TARGET:
+            SetResultValue(xyzDistance(0,  ACS_NamedExecuteWithResult("core_gettarget")));
+        break;
+
+        /*
+        @arg1 hp to pay
+        @arg2 pay even if it kills?
+        */
+		case XW_HEALTH_TRIBUTE:
+			var = GetActorProperty(0, APROP_HEALTH);
+			if (!arg2 &&(var-arg1 <= 0)) { 
+                SetResultValue(false); terminate; 
+            }
+			else { 
+                SetActorProperty(0, APROP_HEALTH, var-arg1);
+				SetResultValue(true); terminate; 
+            }
+		break;
+
+		case 13: // Glue Shot status
+			type = glueShotStrength(CheckInventory("Glue Shot Stack"));
+			SetActorVelocity(0, 
+					FixedMul(GetActorVelX(0), type), FixedMul(GetActorVelY(0), type), 
+					GetActorVelZ(0), false, false);
+		break;
+
+        case 14: // Super Arrow
+            victim = arg1; // the player riding it
+            i = GetActorZ(0)+20.0; // platform Z
+            speed = GetActorVelZ(0);
+            
+            tmp = GetPlayerInput(victim-1000, INPUT_BUTTONS) & BT_JUMP; // wants to leave?
+            //SetResultValue(tmp || (speed >= 0));
+            var = GetActorZ(victim);
+            
+            if (tmp && CheckActorInventory(victim,"Super Arrow Speed")) {
+                TakeActorInventory(victim,"Super Arrow Speed", 1);
+                ThrustThingZ(victim,
+                    (GetActorProperty(victim, APROP_JumpZ)<<2) >> 16,0,0); // fake jump
+                terminate;
+            }
+            arg2 = (var >= i-4.0) && (var <= i+8.0); // bobbing player	
+            
+            if (arg2 && !tmp) {
+                arg3 = xyDistance(victim, 0);
+                if ((arg3 < 29) || // (14+platform radius)
+                        CheckInventory("Super Arrow SuperSonic")) {
+                    if (!CheckActorInventory(victim, "Super Arrow Frozen"))
+                        GiveActorInventory(victim, "Super Arrow Frozen Watcher Summon", 1);
+                    TakeActorInventory(victim, "Super Arrow Speed", 1);
+                    GiveActorInventory(victim, "Super Arrow Speed", 1);
+                    SetActorVelocity(victim, GetActorVelX(0), GetActorVelY(0), GetActorVelZ(0), false, false);
+                    terminate;
+                }
+            }
+
+        break;
+
+        case 15: // Super Arrow angle manager
+            type = GetActorProperty(0, APROP_TargetTID);
+            speed = GetActorAngle(type);
+            arg3 = speed >> 8;
+            victim = GetUserVariable(0, "user_angle");
+
+            i = victim+arg1;
+            j = victim-arg1;
+            
+            tmp = (arg3 >= j && arg3 <= i);
+            if (!tmp) {
+                if (i >= 256) 
+                    tmp = (arg3 <= (i-256));
+                else if (j < 0) 
+                    tmp = (arg3 >= (j+256));
+            }
+                
+            if (tmp) 
+                SetActorAngle(0, speed);
+            else {
+                tmp = victim+127; 
+                var = tmp&0xFF;
+                // left cap
+                if ( (arg3 >= victim && arg3 <= tmp) || (arg3 <= var && arg3 >= var-127))
+                    SetActorAngle(0, (i&0xFF) << 8);
+                // right cap
+                else
+                    SetActorAngle(0, (j&0xFF) << 8);
+            }
+            
+            // pitch initial setting
+            tmp = GetActorPitch(type);
+            // sliding on the floor
+            if (arg2 == 0 && tmp > 0) { 
+                SetActorPitch(0, 0); SetResultValue(1); }
+            else { 
+                SetResultValue(0); SetActorPitch(0, tmp); }
+        break;
+
+        case 17: // Super Arrow wall position fix
+			victim = GetActorProperty(0, APROP_TargetTID);
+			SetActorVelocity(victim,
+				-(GetActorX(victim)-GetActorX(0)),
+				-(GetActorY(victim)-GetActorY(0)),
+				GetActorVelZ(victim),
+				false, false);
+			delay(1);
+			SetActorVelocity(victim, 0, 0, 0, false, false);
+        break;
+        
+		case 18: // Ice Gatling Braum passive
+            if (SetActivator(0, AAPTR_TRACER)) {
+                arg1 = CheckInventory("Ice Gatling Stack");
+                if (arg1 > 12) terminate;
+                GiveInventory("Ice Gatling Stack", 1);
+                arg2 = arg1+1;
+                i = arg2 % 3;
+                SetInventory("Ice Gatling Stack Status", arg1/3);
+                if (i == 1)
+                    GiveInventory("Ice Gatling New Stack", 1);
+                
+                victim = CheckInventory("Ice Gatling Refresh");
+                TakeInventory("Ice Gatling Refresh", 1);
+                GiveInventory("Ice Gatling Refresh", 1);
+                
+                FadeTo(255, 255, 255, (0.3*arg2)/9, 0);	
+                arg3 = GetActorProperty(0, APROP_Height);	
+                // max stack
+                if(arg2 > 12) { 
+                    ACS_NamedExecuteAlways("XW", 0, XW_LOCKER, 104);
+                        
+                    SetActorVelocity(0, 0, 0, 0, false, false);
+                    GiveInventory("Ice Gatling Hot n Cold", 1);
+                    GiveInventory("Ice Gatling Frozen", 1);
+                    SpawnForced("Ice Gatling Prison", GetActorX(0), GetActorY(0), GetActorZ(0));//, 0, i >> 16);
+                    
+                    tmp = (ClassifyActor(0) & ACTOR_MONSTER);
+                    
+                    if (!tmp) 
+                        ACS_NamedExecuteWithResult("core_freezeplayer", 0, 1);
+                    for (i = 0; i < 8; i++) {
+                        delay(13);
+                        if (!(ClassifyActor(0) & ACTOR_ALIVE)) terminate;
+                    }
+                    if (!tmp) 
+                        ACS_NamedExecuteWithResult("core_freezeplayer", 0, 0);
+                    
+                    TakeInventory("Ice Gatling Frozen", 1);
+                    GiveInventory("Ice Gatling New Stack", 1);
+                    FadeTo(255, 255, 255, 0.0, 0);	
+                    delay(15);
+                    TakeInventory("Ice Gatling Stack", 999);
+                    terminate;
+                }
+                if(victim)
+                    terminate;	
+                
+                while (CheckInventory("Ice Gatling Refresh") && (GetActorProperty(0, APROP_Health) > 0) ) {
+                    SpawnForced(
+                            StrParam(s:"Ice Gatling Stack Icon ", d:CheckInventory("Ice Gatling Stack Status")),
+                            GetActorX(0), GetActorY(0),GetActorZ(0)+arg3+35.0);
+                    delay(1);					
+                }
+                if (!CheckInventory("Ice Gatling Hot n Cold")) {
+                    TakeInventory("Ice Gatling Stack", 999);
+                    FadeTo(255, 255, 255, 0.0, 0);	
+                }
+            }
+        break;
+    
+
+		case XW_IS_SPEC:
+            SetResultValue(PlayerIsSpectator(arg1 ? arg1 : GetActorProperty(0, APROP_TargetTID)));                
+		break;
+
+        /*
+        a better core_getactorproperty which supports pointers
+        @arg1 TID (keep 0 if using arg3 = 0 (default pointer))
+        @arg2 prop
+        @arg3 pointer
+        */
+		case XW_GET_ACTOR_PROPERTY:
+            if (arg3) SetActivator(0, arg3);
+            SetResultValue(GetActorProperty(arg1,arg2));
+        break;
+    
+        
+		case XW_ASYNC_STATE:
+            if (arg2) {
+                for (i = 0; i < arg1; i++) {
+                    if (ClassifyActor(0) & ACTOR_WORLD) terminate;
+                    SetUserVariable(0, "user_timer", GetUserVariable(0, "user_timer")+1); delay(1);  }}
+            else delay(arg1);
+            if (ClassifyActor(0) & ACTOR_WORLD) terminate;
+            SetActorState(0, "promiseThen");
+        break;
+
+        /*
+        check if current TARGET and current TRACER share the same team
+        @arg1 = true for A_RadiusGive-like same team checks
+        */
+        case XW_IS_SAME_TEAM:
+			if (arg1)
+				SetResultValue(isSameTeam(ActivatorTID(), CheckInventory("XW TID Data")));
+			else
+				SetResultValue(isSameTeam(GetActorProperty(0, APROP_TargetTID), GetActorProperty(0, APROP_TracerTID)));
+        break;
+
+        
+
+        case 27: // Virus Outbreak manager
+			arg2 = GetActorProperty(0, APROP_TargetTID);
+			SetActivator(0,AAPTR_TRACER);
+			i = CheckInventory("Virus Outbreak Infection");
+			TakeInventory("Virus Outbreak Ticker", 1);
+			GiveInventory("Virus Outbreak Ticker", 1);
+			GiveInventory("Virus Outbreak Infection", 1);
+			// only proceed with the script if it's not the first stack
+			if (CheckInventory("Virus Outbreak Infection") > 1) 
+                terminate;
+			tmp = false;
+			i = 3;
+			do  {
+				if (!tmp) {
+					if (CheckInventory("Virus Outbreak Infection") >= arg1) {
+						tmp = true; 
+                        GiveInventory("Virus Outbreak CC",1);
+						if (ClassifyActor(0) & ACTOR_MONSTER)
+							ACS_NamedExecuteWithResult("XW", XW_MONSTER_SPEED);
+						PlaySound(0, "VIRSDIZY", CHAN_5); 
+                    }
+                }
+				i--;
+				var = GetActorProperty(0, APROP_Health);
+				if (!i) {
+					// compute damage amount to drain
+					j = CheckInventory("Virus Outbreak Infection");					
+					if (var <= j) // the finisher (to display obit)
+						SpawnForced("Virus Outbreak Drain", GetActorX(0), GetActorY(0), GetActorZ(0), 5736+arg2, j);
+					else 
+                        SetActorProperty(0, APROP_Health, var-j);
+					// generate health gain
+					SetActorProperty(arg2, APROP_Health, 
+						min(GetActorProperty(arg2, APROP_SpawnHealth), 
+                            GetActorProperty(arg2, APROP_Health)+min(j,var)));
+					i = 3; 
+                }
+				delay(8);
+				victim = ClassifyActor(0);
+			} while (
+				(!((victim & ACTOR_WORLD) || var <= 0)) && CheckInventory("Virus Outbreak Ticker"));
+			TakeInventory("Virus Outbreak Infection", 99);
+			TakeInventory("Virus Outbreak CC", 1);
+			terminate;
+		break;
+        
+		case 28: // Virus Outbreak check
+            i = GetActorProperty(0, APROP_TracerTID);
+            do delay(5);
+            while (CheckActorInventory(i, "ShieldCheck") && !(ClassifyActor(i) & ACTOR_DEAD));
+            SetActorState(0, "end");
+        break;
+
+
+        /*
+        @arg1 [%RedAmount * /Green]
+        @arg2 [%Blue * /BrightCount]
+        @arg3 activator must be looking toward TID ?
+        => return: 0 =>  blind manager started /w stacks
+		 * 		   1 =>  refilled stacks
+		 *  	   2 =>  activator was not facing
+		 *		   3 =>  activator is in the same team
+        */
+		case XW_BLIND:
+			if (isSameTeam(ActivatorTID(), CheckInventory("XW TID Data"))) { // the blind originator
+				SetResultValue(3);
+				terminate;
+			}
+			
+			if (arg3) { // check if victim is facing the script caller ?
+				i = CheckInventory("XW X Data");
+				j = CheckInventory("XW Y Data");
+				if (!isFacingXY(
+					(i%32768)*(1+(-2*(i/32768))),
+					(j%32768)*(1+(-2*(j/32768))) )) {
+					SetResultValue(2); 
+					terminate;
+				}
+			}
+			var = arg2>>8;
+			if (CheckInventory("BrightBlind")) { // already blind? reset the effect
+				GiveInventory("BrightBlind", var);
+				SetResultValue(1);
+				terminate;
+			}
+			else {
+				SetResultValue(0);
+				GiveInventory("BrightBlind", var);
+			}
+			
+			// MONSTER BLIND
+			// monsters mimic a disorientation instead
+			// Would apply the same to bots, but their angle can't be modified :/
+			if (ClassifyActor(0) & ACTOR_MONSTER) { 
+				j = 0.0; i = 0;
+				do {
+					delay(1);
+					i = CheckInventory("BrightBlind");
+					TakeInventory("BrightBlind",1);
+					if ((i <= 1) || (ClassifyActor(0) & ACTOR_DEAD)) { 
+						TakeInventory("BrightBlind", 0xFFFF);
+						terminate; 
+                    }
+					type = 110-((i*80)/175); //GetMaxInventory("BrightBlind")
+					SetActorAngle(0, GetActorAngle(0)+(sin(j)/type));
+					j+=0.015;
+				} while (true);
+			}
+			
+			// PLAYER BLIND
+			else {			
+				i = arg1&0xFF; // R
+				j = arg1>>8; // G
+				tmp = arg2&0xFF; // B
+				// total blinds have a slight transition
+				if (var > 90) { 
+					FadeTo(i,j,tmp,1.0,0.11); delay(4); 
+                }
+				do { 
+					delay(1); 
+					TakeInventory("BrightBlind",1); 
+					arg2 = CheckInventory("BrightBlind");
+					FadeTo(i,j,tmp, (arg2 << 16)/100, 0.0);
+				} while (arg2);
+				terminate;
+			}	
+		break;
+
+        /*
+        @arg1 pointer (if positive), TID (if negative)
+        @arg2 prop
+        @arg3 value
+        */
+		case XW_SET_ACTOR_PROPERTY:
+			if (arg1 <= 0) arg1 *= -1;
+			else { SetActivator(0, arg1); arg1 = 0; }
+			SetActorProperty(arg1, arg2, arg3);
+		break;
+        
+		case XW_IS_PLAYER:
+            SetActivator(0,arg1);
+            SetResultValue(ClassifyActor(0) & ACTOR_PLAYER);
+        break;
+
+        
+		case 34:
+            var = arg1; // ammo cost
+            speed = arg2; // duration per ammo toll
+            tmp = ActivatorTID();
+            SetActivatorToTarget(0);
+            victim = PlayerIsBot(PlayerNumber());
+            GiveInventory("Doppler Attack On", 1);				
+            arg1 = 165, arg3 = 150, angle = 1;
+            dist = 0, i = 0, j = 0;
+            do {
+                ChangeCamera(tmp,0,0);
+                SetActorPitch(tmp, GetActorPitch(0));	
+                type = ((arg1&0x1)<<1)-1;
+                arg2 = ((arg3&0x1)<<1)-1;				
+                health = Warp(tmp, 
+                    (type*XW_DOPPLER_DELTA) + i, 
+                    (arg2*XW_DOPPLER_DELTA), 
+                    (angle*XW_DOPPLER_DELTA) - j, 0, 0); // move player
+                    
+                // bots raise an error when warping outside the map
+                if (!victim) {
+                    if (!health) {
+                        GiveInventory("noInteractionOn",1);
+                        health = Warp(tmp, 
+                            (type*XW_DOPPLER_DELTA) + i, 
+                            (arg2*XW_DOPPLER_DELTA), 
+                            (angle*XW_DOPPLER_DELTA) - j, 0, WARPF_NOCHECKPOSITION); 
+                    }
+                    else if (CheckFlag(0,"NOINTERACTION"))
+                        GiveInventory("noInteractionOff",1); 
+                }
+                        
+                delay(1);						
+                
+                SetActorVelocity(tmp,
+                    GetActorVelX(0),
+                    GetActorVelY(0),
+                    GetActorVelZ(0), FALSE, FALSE);	
+                j = GetActorPitch(0);				
+                i = (cos(j)*dist);
+                j = (sin(j)*dist);//+28.0;
+                Warp(tmp, 
+                    -(type*XW_DOPPLER_DELTA) - i, 
+                    -(arg2*XW_DOPPLER_DELTA), 
+                    -(angle*XW_DOPPLER_DELTA) + j, 0, WARPF_MOVEPTR | WARPF_NOCHECKPOSITION); // move camera
+                dist = min(dist+18*((!CheckInventory("varBool")*2)-1), 144);
+                arg1 = arg1>>1;
+                user = speed-CheckInventory("DopplerAttackEnergy");
+                if (!(user&0x3))	
+                    GiveInventory(StrParam(s:"Doppler Attack Damager ", d:((user&0x7)>>2)), 1);
+                if (!arg1) { 
+                    arg1 = 165; arg3 = 150;
+                    if (user == speed) {
+                        if (ACS_NamedExecuteWithResult("XW Ammo Check", var)) {
+                            GiveInventory("DopplerAttackEnergy", speed);
+                            ACS_NamedExecuteAlways("XW Ammo Use", 0, var); 
+                        }
+                        else 
+                            GiveInventory("varBool", 1); 
+                    }
+                }
+                else
+                    arg3 = arg3/2;
+                angle *= -1;
+            } while (dist && !(ClassifyActor(0) & ACTOR_DEAD) );
+            GiveInventory("Doppler Attack Off", 1);
+            Thing_Remove(tmp);	
+        break;
+        
+        // a player or a monster
+        case XW_IS_LIVING_BEING:
+            SetActivator(0,arg1);
+            arg2 = ClassifyActor(0);
+            SetResultValue(arg2 & ACTOR_PLAYER || arg2 & ACTOR_MONSTER);
+        break;
+
+
+        // handle Xover-related monster speed alteration
+		// conflict with other factors modifying monster speed c: until vanilla standardizes PvM
+        case XW_MONSTER_SPEED:
+            if (!(ClassifyActor(0) & ACTOR_MONSTER) || CheckInventory("XW Mob Speed")) 
+                terminate;
+            GiveInventory("XW Mob Speed", 1);
+            arg1 = GetActorProperty(0,APROP_Speed);
+            speed = 0; // acc
+            do {
+                arg2 = arg1;
+                
+                if (!(CheckInventory("Glue Shot Status") || CheckInventory("XW Time Bomb Slow Stack") 
+                || CheckInventory("Virus Outbreak CC") || CheckInventory("TotalLockCount")) || 
+                    (ClassifyActor(0) & ACTOR_DEAD))
+                        break;
+
+                // Ice Gatling freeze, Forest Whip lock, etc. Setvelocity=0 is done in Locker script
+                if (CheckInventory("TotalLockCount")) { 
+                    arg2 = 0;
+                    if (CheckInventory("Ice Gatling Hot n Cold") || CheckInventory("TimeStoppedCounter"))
+                        SetActorState(0, "See"); 
+                }
+                else {
+                    // Glue Shot slow
+                    if (CheckInventory("Glue Shot Status")) 
+                        arg2 = FixedMul(arg2, glueShotStrength(CheckInventory("Glue Shot Stack")));
+                    // Time Bomb slow
+                    if (CheckInventory("XW Time Bomb Slow Stack")) { 
+                        arg2 = FixedMul(arg2, 0.31);
+                        if (!(speed % 3))
+                            GiveInventory("XW Time Bomb Monster SlowVelocity", 1);
+                    }
+                    // Virus Outbreak confusion
+                    if (CheckInventory("Virus Outbreak CC")) {
+                        tmp = (!(speed % 32) ? -1 : 1);                        
+                        // /!\ Erases monster's frightening initial status!! /!\
+                        GiveInventory((speed % 64) < 32 ? "flagFrightenedOn" : "flagFrightenedOff", 1);
+                        SetActorVelocity(0,
+                            GetActorVelX(0)*tmp, GetActorVelY(0)*tmp, GetActorVelZ(0),  false, false); 
+                    }				
+                }
+                SetActorProperty(0, APROP_Speed, arg2);
+                speed++;
+                delay(1);
+            } while (true);
+            SetActorProperty(0, APROP_Speed, arg1);
+            GiveInventory("flagFrightenedOff",1);
+            TakeInventory("XW Mob Speed", 1);
+        break;
+
+        
+        /*
+        pull caller toward ("XW TID Data")
+        @arg1 XY pull strength
+        @arg2 Z pull strength
+        @arg3 can pull allies?
+        */
+		case XW_PULL_TO_TID:
+            type = CheckInventory("XW TID Data")+999;
+            if (!arg3) { 
+                if (isSameTeam(ActivatorTID(), type)) 
+                terminate;
+            }
+            else if (ActivatorTID() == type)
+                terminate;
+            if (!arg2)
+                arg2 = arg1;
+            pullActivatorToTID(type, arg1, arg2);
+        break;
+
+		case 42: // Ice Javelin handler, arg1 = fwdSpeed
+			arg1 <<= 16;
+			arg2 = GetActorProperty(0, APROP_TargetTID); 
+			i = GetActorX(0); j = GetActorY(0); 
+            tmp = 0;
+			while (CheckActorInventory(arg2, "Ice Javelin Timer")) {
+				tmp++;
+				speed = VectorAngle(i-GetActorX(arg2), j-GetActorY(arg2));
+				SetActorAngle(0, speed);
+				type = arg1*tmp;
+				Warp(0, i+FixedMul(type,cos(speed)), j+FixedMul(type,sin(speed)), 
+					GetActorZ(0), 0, WARPF_ABSOLUTEPOSITION | WARPF_NOCHECKPOSITION); 
+				delay(1);
+			}
+			SetActorState(0,"free");
+			terminate;
+		break;
+        
+		case 43: // Falling Steel Sword
+            i = GetActorProperty(0, APROP_ViewHeight);            
+            SetActorProperty(0, APROP_ViewHeight, 0);
+            //j = GetActorProperty(0, APROP_MaxStepHeight); // doesnt work for some reasons
+            //SetActorProperty(0, APROP_MaxStepHeight, j*3);
+            do {
+                delay(3);
+            } while (CheckInventory("Rakukoujin Underground"));
+            SetActorProperty(0, APROP_ViewHeight, i);
+            //SetActorProperty(0, APROP_MaxStepHeight, j);
+        break;
+
+        case 44: // Recycle Inhaler random high tier reward
+            arg1 = random(0,2);
+            if (!arg1) {
+                arg1 = random(0,4);
+                switch(arg1) {
+                    case 0: arg1 = DTADD_GRP_DASH; break;
+                    case 1: arg1 = DTADD_GRP_JUMP; break;
+                    case 2: arg1 = DTADD_GRP_WEAPON; break;
+                    case 3: arg1 = DTADD_GRP_ATTACK; break;
+                    case 4: arg1 = DTADD_GRP_ESCAPE; break;
+                }
+                arg1 = getAssistItemActor(randomAssistItemGroup(arg1));
+            }
+            else
+                arg1 = getWeaponActor(randomWeapon());
+            arg2 = uniquetid();
+            SpawnForced(arg1,getactorx(0),getactory(0),getactorz(0),arg2,0);
+            SetActorVelocity(arg2,GetActorVelX(0),GetActorVelY(0),GetActorVelZ(0),0,0);
+            Thing_ChangeTid(arg2,0);
         break;
 
         /*
@@ -95,7 +683,70 @@ script "XW" (int type, int arg1, int arg2, int arg3) {
             }
             SetResultValue(true);
         break;
+
+        /*
+        @arg1 strength
+        @arg2 duration
+        @arg3 range
+        */
+        case XW_EARTHQUAKE:
+            Radius_Quake(arg1, arg2, 0, arg3/64, 0);
+        break;
+
+        /*
+            Completely prevents movement from the activator for <arg1> tics
+            If activator was already movement-locked for more or equal than <arg1>, ignore.
+            If activator was already movement-locked for less or equal than <arg1>, extend by the difference
+            else, sets up the movement-locking procedure for <arg1>
+        @arg1 duration
+        */
+        case XW_LOCKER:
+            arg2 = (ClassifyActor(0) & ACTOR_PLAYER);
+            if (!arg2 && !(ClassifyActor(0) & ACTOR_MONSTER)) terminate; // security
+            i = CheckInventory("TotalLockCount");
+            if (i >= arg1) 
+                terminate;
+            else if (i) {
+                GiveInventory("TotalLockCount", arg1-i); 
+                terminate;
+            }
+            GiveInventory("TotalLockCount", arg1);
+            if (arg2) {
+                ACS_NamedExecuteWithResult("core_stopplayer", 0, true);
+                ACS_NamedExecuteWithResult("core_nogravityplayer", 0, true);
+                arg3 = GetActorProperty(0, APROP_JumpZ);
+                SetActorProperty(0, APROP_JumpZ, 0);
+            }
+            else 
+                GiveInventory("Xover Monster Speed", 1);
+            
+            while (CheckInventory("TotalLockCount")) { 
+                delay(1); 
+                SetActorVelocity(0, 0, 0, 0, false, false);
+                TakeInventory("TotalLockCount", 1); 
+            }
+            if (arg2) {
+                ACS_NamedExecuteWithResult("core_stopplayer", 0, false);
+                ACS_NamedExecuteWithResult("core_nogravityplayer", 0, false);
+                SetActorProperty(0, APROP_JumpZ, arg3); 
+            }
+        break;
+        
+        
     }
+}
+
+function int glueShotStrength(int stacks) {
+	int i;
+	// some clemency toward monsters being ground glued, capped at 35% original speed
+    i = (ClassifyActor(0) & ACTOR_MONSTER ? 393.8 : 256.0); // 256/0.65
+	return 1.0 - FixedDiv(stacks << 16, i);
+}
+
+function bool isSameTeam(int TID1, int TID2) {
+	if (isTeamGameRound)
+		return GetPlayerInfo(TID1-1000,PLAYERINFO_TEAM) == GetPlayerInfo(TID2-1000,PLAYERINFO_TEAM);
+	return (TID1 == TID2);
 }
 
 
@@ -109,4 +760,34 @@ script "XW Ammo Check" (int amount) {
     SetResultValue(true);
 }
 script "XW Ammo Use" (int amount) {
+}
+
+script "XW Ammo Give" (int amount) {
+    
+}
+
+
+/*
+thrust caller toward the XYZ point, pit protection included
+*/
+function void pullActivatorToward(int x, int y, int z, int xyStrength, int zStrength) {
+	GiveInventory("XW Pit Protection", 1);
+	ThrustThing(VectorAngle(x - GetActorX(0), y - GetActorY(0)) >> 8, xyStrength, (xyStrength > 30), 0); 
+	ThrustThingZ(0, zStrength*4, (z - GetActorZ(0)) < 0, 0);
+}
+
+function void pullActivatorToTID(int tid, int xyStrength, int zStrength) {
+	pullActivatorToward(GetActorX(tid), GetActorY(tid), GetActorZ(tid), xyStrength, zStrength);
+}
+
+
+function bool isFacingXY(int x, int y) {
+	int angle = VectorAngle((x<<16)-GetActorX(0), (y<<16)-GetActorY(0));
+	return (angleDifference(angle, GetActorAngle(0)) < 0.15);
+}
+
+// takes two FIXED angle points, return their ABS difference ([0.0,0.5[)
+function int angleDifference(int a1, int a2) {
+	int diff = ((a1-a2+1.5)%1.0)-0.5;
+	return abs(diff);
 }

@@ -1,0 +1,428 @@
+// "you missed the opportunity to name 
+// the Bomb x Time weapon "Time Bomb"" - Xover Weapons 2014
+
+const int XW_TIME_BOMB_SPD = 22;
+const int XW_TIME_BOMB_STEP_SPD = 4;
+const int XW_TIME_BOMB_TICS = 105;
+const int XW_TIME_BOMB_BLAST = 256;
+const int XW_TIME_BOMB_BLAST_FULL = XW_TIME_BOMB_BLAST/2;
+
+actor XWTimeBombWep : BaseXoverWep { 
+	weapon.slotNumber 4
+	inventory.icon "XWTMBOMB"	obituary "$OB_XWTIMEBOMB"	tag "$TAG_XWTIMEBOMB"	
+	states {
+		noAmmo:
+			XWAM Y 0 offset(0,32)
+			goto super::noAmmo
+		select:
+			XWAM Y 0 ACS_NamedExecuteWithResult("core_weaponcolor",6761)
+			goto super::select
+		ready:
+			XWAM Y 0
+			goto super::ready	
+		fire: altfire:
+			XWAM Y 0 A_JumpIf(!CallACS("XW Ammo Check", 2), "noAmmo")
+			XWAM Y 1
+			XWAM Z 1 offset(88,48)
+			XWAM Z 1 offset(104,33)
+			XWAN A 1 offset(-54,64)
+			XWAN A 2 offset(-14,32)			
+			XWAN B 0 ACS_NamedExecuteAlways("XW Ammo Use", 0, 2)
+			XWAN B 0 A_SpawnItemEx("XW Time Bomb", 0, 8, 32, XW_TIME_BOMB_SPD*cos(pitch), 0, XW_TIME_BOMB_SPD*-sin(pitch))
+			XWAC J 0 A_JumpIfInventory("PowerSpreadRune", 1, "spread") goto end
+		spread:
+			XWAN B 0 A_SpawnItemEx("XW Time Bomb", 0, 8, 32, XW_TIME_BOMB_SPD*cos(pitch), 0, XW_TIME_BOMB_SPD*-sin(pitch),20)
+			XWAN B 0 A_SpawnItemEx("XW Time Bomb", 0, 8, 32, XW_TIME_BOMB_SPD*cos(pitch), 0, XW_TIME_BOMB_SPD*-sin(pitch),-20)
+			
+		end:
+			XWAN B 1 offset(-8,32) A_PlaySoundEx("TMBMBTHR", "Weapon")
+			
+			XWAN C 1 offset(-112,130)
+			XWAN C 1 offset(-144,150)
+			XWAN C 1 offset(-176,170)
+			
+			XWAN D 1 offset(-52,32)
+			XWAN D 1 offset(-100,56)
+			XWAN D 1 offset(-138,76)
+
+			TNT1 A 10
+			XWAN E 1 offset (156, 48)
+			XWAN E 1 offset (176, 18)
+			XWAN E 1 offset (196, -12)
+			XWAM Y 9 A_WeaponReady(WRF_NOFIRE | WRF_NOSWITCH)
+			goto ready}}
+		
+DamageType XWTimeBombLatch { Factor 0 }
+			
+actor "XW Time Bomb" : proj { +MOVEWITHSECTOR +FIXMAPTHINGPOS
+	translation "216:216=248:248", "75:75=202:202" damage (1) damagetype "XWTimeBombLatch"
+	-NOGRAVITY +BOUNCEONCEILINGS +NOEXPLODEFLOOR +BOUNCEONFLOORS +CANBOUNCEWATER
+	wallbouncefactor 0.21 +USEBOUNCESTATE +BOUNCEONACTORS +ALLOWBOUNCEONACTORS
+	radius 32 height 48 +HITTRACER speed 0 +LOOKALLAROUND +SCREENSEEKER +NOINTERACTION
+	var int user_timer; var int user_unitHeight; speed 4 +STEPMISSILE maxstepheight 12
+	states {
+		spawn: TNT1 A 0
+			TNT1 A 0 A_RearrangePointers(AAPTR_DEFAULT, AAPTR_TARGET, AAPTR_DEFAULT)
+			TNT1 A 1 A_ChangeFlag("NOINTERACTION", 0)
+			TNT1 A 1 A_ChangeFlag("BOUNCEONWALLS", 1)
+			TNT1 A 0 A_SpawnItemEx("XW Time Bomb 2", 0, 0, 0, velx, vely, velz, 0, SXF_ABSOLUTEVELOCITY)
+			stop
+		thrown:
+			XWAM U 18
+			XWAM U 0 A_RearrangePointers(AAPTR_NULL, AAPTR_DEFAULT, AAPTR_DEFAULT)
+			XWAM UU 90
+			stop
+		bounce.floor: bounce.ceiling: setUp:
+			XWAM U 0 A_ChangeFlag("USEBOUNCESTATE", 0)
+			XWAM U 2 A_Stop
+			XWAM U 0 A_RearrangePointers(AAPTR_NULL, AAPTR_DEFAULT, AAPTR_DEFAULT)
+			// strange bounce floor/actor on same tic behavior fix
+			XWAM U 0 A_JumpIf(CallACS("core_targetexists", 1), "end") 
+			TNT1 A 0 A_ChangeFlag("NOINTERACTION", 0)
+			TNT1 A 0 A_GiveInventory("varBool")
+			XWAM U 2 A_SpawnItemEx("XW Time Bomb Summoned",0,0,0,0,0,0,0,SXF_TRANSFERTRANSLATION)
+			XWAM U 0 A_JumpIf(true, "end")
+			stop
+			
+		bounce.actor: xdeath: crash: //death:
+			TNT1 A 0 A_JumpIf(true, 1)
+			TNT1 A 0 A_RearrangePointers(AAPTR_NULL, AAPTR_DEFAULT, AAPTR_DEFAULT)
+			TNT1 A 0 A_GiveInventory("varBool") // prevent async script from triggerign bomb
+			// not allowed on dead actors (bomb would explode instantly)
+			"----" A 0 A_JumpIf(!CallACS("core_targetexists", 1), "end") 
+			TNT1 A 0 A_ChangeFlag("NOINTERACTION", 1)
+			XWAM V 0 A_JumpIf(user_timer, 2)
+			XWAM V 0 A_PlaySoundEx("TMBMBTIC", "Weapon")
+			//TNT1 A 0 A_RearrangePointers(AAPTR_NULL, AAPTR_TARGET, AAPTR_DEFAULT)
+			TNT1 A 4 A_SpawnItemEx("XW Time Bomb Latched",0,0,0,0,0,0, user_timer,SXF_ABSOLUTEANGLE|SXF_TRANSFERTRANSLATION)
+			stop
+			
+		promiseThen:
+			//TNT1 A 0 A_RearrangePointers(AAPTR_MASTER, AAPTR_NULL, AAPTR_DEFAULT)
+		//promiseThenNoPointers:
+			TNT1 A 0 A_JumpIfInventory("varBool", 1, "end") 
+			TNT1 A 0 A_SpawnItemEx("XW Time Bomb Blast", 0,0,-user_unitHeight + 32)
+			stop}}
+			
+actor "XW Time Bomb 2" : "XW Time Bomb" {
+	+BOUNCEONWALLS states {
+		spawn: TNT1 A 0
+			TNT1 A 0 A_RearrangePointers(AAPTR_DEFAULT, AAPTR_TARGET, AAPTR_DEFAULT)
+			TNT1 A 0 A_ChangeFlag("NOINTERACTION", 0)
+		goto super::thrown}}			
+			
+actor "XW Time Bomb Summoned" : "XW Time Bomb" { bouncecount 0
+	-BOUNCEONFLOORS -BOUNCEONCEILINGS +BOUNCEONWALLS
+	states {
+		bounce.floor: bounce.ceiling: setUp: // just in case
+			XWAM U 0
+			stop			
+		spawn: TNT1 A 0
+			TNT1 A 0 A_TransferPointer(AAPTR_TARGET, AAPTR_DEFAULT, AAPTR_MASTER, AAPTR_TARGET)
+			TNT1 A 0 A_RearrangePointers(AAPTR_DEFAULT, AAPTR_TARGET, AAPTR_DEFAULT)
+			TNT1 A 0 A_ChangeFlag("NOINTERACTION", 0)
+			XWAM UU 2 A_JumpIfCloser(32, "selfLatch")
+			XWAM VVWWXX 2 A_JumpIfCloser(32, "selfLatch")
+			XWAM X 0 ACS_NamedExecuteWithResult("XW", XW_ASYNC_STATE, XW_TIME_BOMB_TICS, true)
+			XWAM X 0 A_ChangeFlag("SEEKERMISSILE", 1)
+			
+		camping3SFX:
+			"----" A 0 A_PlaySoundEx("TMBMBTIC", "Weapon")
+		camping3:
+			ALAB N 0 A_SeekerMissile(20, 90, SMF_LOOK, 256, 3)
+			"----" A 0 A_JumpIf(CallACS("core_targetexists", 1), "walking3")
+			"----" A 0 A_JumpIfCloser(32, "selfLatch")
+			"----" AA 1 A_JumpIf(user_timer >= 35, "camping2SFX")
+			"----" A 0 A_JumpIfCloser(32, "selfLatch")
+			"----" AA 1 A_JumpIf(user_timer >= 35, "camping2SFX")
+			loop
+		camping2SFX:
+			"----" A 0 A_PlaySoundEx("TMBMBTIC", "Weapon")
+		camping2:
+			ALAB Q 0 A_SeekerMissile(20, 90, SMF_LOOK, 256, 3)
+			"----" A 0 A_JumpIf(CallACS("core_targetexists", 1), "walking2A")
+			"----" A 0 A_JumpIfCloser(32, "selfLatch")
+			"----" AA 1 A_JumpIf(user_timer >= 70, "camping1SFX")
+			"----" A 0 A_JumpIfCloser(32, "selfLatch")
+			"----" AA 1 A_JumpIf(user_timer >= 70, "camping1SFX")
+			loop
+		camping1SFX:
+			"----" A 0 A_PlaySoundEx("TMBMBTIC", "Weapon")
+		camping1:
+			ALAB T 0 A_SeekerMissile(20, 90, SMF_LOOK, 256, 3)
+			"----" A 0 A_JumpIf(CallACS("core_targetexists", 1), "walking1A")
+			"----" AA 2 A_JumpIfCloser(32, "selfLatch")
+			loop			
+		walking3:
+			ALAB M 0 A_GiveInventory("XW Time Bomb Step")
+			"----" A 0 A_JumpIfCloser(32, "selfLatch")
+			"----" AA 1 A_JumpIf(user_timer >= 35, "walking2BSFX")
+			"----" A 0 A_JumpIfCloser(32, "selfLatch")
+			"----" AA 1 A_JumpIf(user_timer >= 35, "walking2BSFX")
+			ALAB N 0 A_GiveInventory("XW Time Bomb Step")
+			"----" A 0 A_JumpIfCloser(32, "selfLatch")
+			"----" AA 1 A_JumpIf(user_timer >= 35, "walking2CSFX")
+			"----" A 0 A_JumpIfCloser(32, "selfLatch")
+			"----" AA 1 A_JumpIf(user_timer >= 35, "walking2CSFX")
+			ALAB O 0 A_GiveInventory("XW Time Bomb Step")
+			"----" A 0 A_JumpIfCloser(32, "selfLatch")
+			"----" AA 1 A_JumpIf(user_timer >= 35, "walking2DSFX")
+			"----" A 0 A_JumpIfCloser(32, "selfLatch")
+			"----" AA 1 A_JumpIf(user_timer >= 35, "walking2DSFX")
+			ALAB N 0 A_GiveInventory("XW Time Bomb Step")
+			"----" A 0 A_JumpIfCloser(32, "selfLatch")
+			"----" AA 1 A_JumpIf(user_timer >= 35, "walking2ASFX")
+			"----" A 0 A_JumpIfCloser(32, "selfLatch")
+			"----" AA 1 A_JumpIf(user_timer >= 35, "walking2ASFX")
+			goto walking3
+			
+		walking2ASFX:
+			"----" A 0 A_PlaySoundEx("TMBMBTIC", "Weapon")
+		walking2A:
+			ALAB P 0 A_GiveInventory("XW Time Bomb Step")
+			"----" A 0 A_JumpIfCloser(32, "selfLatch")
+			"----" AA 1 A_JumpIf(user_timer >= 70, "walking1BSFX")
+			"----" A 0 A_JumpIfCloser(32, "selfLatch")
+			"----" AA 1 A_JumpIf(user_timer >= 70, "walking1BSFX")
+			goto walking2B
+		walking2BSFX:
+			"----" A 0 A_PlaySoundEx("TMBMBTIC", "Weapon")
+		walking2B:
+			ALAB Q 0 A_GiveInventory("XW Time Bomb Step")
+			"----" A 0 A_JumpIfCloser(32, "selfLatch")
+			"----" AA 1 A_JumpIf(user_timer >= 70, "walking1CSFX")
+			"----" A 0 A_JumpIfCloser(32, "selfLatch")
+			"----" AA 1 A_JumpIf(user_timer >= 70, "walking1CSFX")
+			goto walking2C
+		walking2CSFX:
+			"----" A 0 A_PlaySoundEx("TMBMBTIC", "Weapon")
+		walking2C:
+			ALAB R 0 A_GiveInventory("XW Time Bomb Step")
+			"----" A 0 A_JumpIfCloser(32, "selfLatch")
+			"----" AA 1 A_JumpIf(user_timer >= 70, "walking1DSFX")
+			"----" A 0 A_JumpIfCloser(32, "selfLatch")
+			"----" AA 1 A_JumpIf(user_timer >= 70, "walking1DSFX")
+			goto walking2D
+		walking2DSFX:
+			"----" A 0 A_PlaySoundEx("TMBMBTIC", "Weapon")
+		walking2D:
+			ALAB Q 0 A_GiveInventory("XW Time Bomb Step")
+			"----" A 0 A_JumpIfCloser(32, "selfLatch")
+			"----" AA 1 A_JumpIf(user_timer >= 70, "walking1ASFX")
+			"----" A 0 A_JumpIfCloser(32, "selfLatch")
+			"----" AA 1 A_JumpIf(user_timer >= 70, "walking1ASFX")
+			goto walking2A
+			
+		walking1ASFX:
+			"----" A 0 A_PlaySoundEx("TMBMBTIC", "Weapon")
+		walking1A:
+			ALAB S 0 A_GiveInventory("XW Time Bomb Step")
+			"----" AA 2 A_JumpIfCloser(32, "selfLatch")
+			goto walking1B
+		walking1BSFX:
+			"----" A 0 A_PlaySoundEx("TMBMBTIC", "Weapon")
+		walking1B:
+			ALAB T 0 A_GiveInventory("XW Time Bomb Step")
+			"----" AA 2 A_JumpIfCloser(32, "selfLatch")
+			goto walking1C
+		walking1CSFX:
+			"----" A 0 A_PlaySoundEx("TMBMBTIC", "Weapon")
+		walking1C:
+			ALAB U 0 A_GiveInventory("XW Time Bomb Step")
+			"----" AA 2 A_JumpIfCloser(32, "selfLatch")
+			goto walking1D
+		walking1DSFX:
+			"----" A 0 A_PlaySoundEx("TMBMBTIC", "Weapon")
+		walking1D:
+			ALAB T 0 A_GiveInventory("XW Time Bomb Step")
+			"----" AA 2 A_JumpIfCloser(32, "selfLatch")
+			goto walking1A
+			
+		selfLatch: 
+			"----" A 0 A_RearrangePointers(AAPTR_NULL, AAPTR_TARGET, AAPTR_TARGET)
+			goto xdeath}}
+			
+actor "XW Time Bomb Step" : item {
+	states { 
+		pickup: TNT1 A 0 A_FaceTracer(90,270)
+			TNT1 A 0 A_ChangeVelocity(XW_TIME_BOMB_STEP_SPD,0,velz, CVF_REPLACE | CVF_RELATIVE)
+			stop}}
+
+actor "XW Time Bomb Latched" : "XW Time Bomb" {
+	+FORCEXYBILLBOARD +NOGRAVITY states {
+		spawn: TNT1 A 0
+			XWAM X 0 A_TransferPointer(AAPTR_TARGET, AAPTR_DEFAULT, AAPTR_MASTER, AAPTR_MASTER)
+			XWAM X 0 A_TransferPointer(AAPTR_TARGET, AAPTR_DEFAULT, AAPTR_TRACER, AAPTR_TARGET)
+			
+			XWAM V 0 A_SetUserVar("user_timer", angle)
+			XWAM X 0 ACS_NamedExecuteWithResult("XW", XW_ASYNC_STATE, XW_TIME_BOMB_TICS-angle, true)
+			XWAM V 0 A_SetUserVar("user_unitHeight", 
+				(CallACS("XW", XW_GET_ACTOR_PROPERTY, 0, APROP_Height, AAPTR_TARGET) >> 16)+20)					
+			XWAM V 0 A_GiveToTarget("XW Time Bomb Stack", 1)
+			XWAM V 0 A_JumpIfInTargetInventory("XW Time Bomb Stack", 2, "async")
+			goto checkTic
+		async: TNT1 AA 1 A_Warp(AAPTR_TARGET, 0, 0, user_unitHeight, 0, WARPF_NOCHECKPOSITION)
+			goto checkTic			
+		checkTic:
+			"----" A 0 A_JumpIf(user_timer >= 71, "warp1")
+			"----" A 0 A_JumpIf(user_timer >= 36, "warp2")
+			goto warp3			
+			
+		warp3:
+			"----" A 0 A_JumpIf(user_timer >= 35, "warp2SFX")
+			ALAB N 1 A_Warp(AAPTR_TARGET, 0, 0, user_unitHeight, 0, WARPF_NOCHECKPOSITION)
+			"----" A 0 A_JumpIfInTargetInventory("XW Time Bomb Stack", 2, "prematurePromise")
+			"----" A 0 A_JumpIf(user_timer >= 35, "warp2SFX")
+			ALAB N 1 A_Warp(AAPTR_TARGET, 0, 0, user_unitHeight, 0, WARPF_NOCHECKPOSITION)
+			"----" A 0 A_JumpIfInTargetInventory("XW Time Bomb Stack", 2, "prematurePromise")
+			"----" A 0 A_JumpIf(!CallACS("core_targetexists"), "promiseThen")
+			loop
+		warp2SFX:
+			"----" A 0 A_PlaySoundEx("TMBMBTIC", "Weapon")
+		warp2:
+			"----" A 0 A_JumpIf(user_timer >= 70, "warp1SFX")
+			ALAB Q 1 A_Warp(AAPTR_TARGET, 0, 0, user_unitHeight, 0, WARPF_NOCHECKPOSITION)
+			"----" A 0 A_JumpIfInTargetInventory("XW Time Bomb Stack", 2, "prematurePromise")
+			"----" A 0 A_JumpIf(user_timer >= 70, "warp1SFX")
+			ALAB Q 1 A_Warp(AAPTR_TARGET, 0, 0, user_unitHeight, 0, WARPF_NOCHECKPOSITION)
+			"----" A 0 A_JumpIfInTargetInventory("XW Time Bomb Stack", 2, "prematurePromise")
+			"----" A 0 A_JumpIf(!CallACS("core_targetexists"), "promiseThen")
+			loop
+		warp1SFX:
+			"----" A 0 A_PlaySoundEx("TMBMBTIC", "Weapon")
+		warp1:
+			ALAB T 1 A_Warp(AAPTR_TARGET, 0, 0, user_unitHeight, 0, WARPF_NOCHECKPOSITION)
+			"----" A 0 A_JumpIfInTargetInventory("XW Time Bomb Stack", 2, "prematurePromise")
+			ALAB T 1 A_Warp(AAPTR_TARGET, 0, 0, user_unitHeight, 0, WARPF_NOCHECKPOSITION)
+			"----" A 0 A_JumpIfInTargetInventory("XW Time Bomb Stack", 2, "prematurePromise")
+			"----" A 0 A_JumpIf(!CallACS("core_targetexists"), "promiseThen")
+			loop
+		prematurePromise:
+			TNT1 A 0 A_GiveInventory("CutterFlag")
+		promiseThen:
+			TNT1 A 0 A_TakeFromTarget("XW Time Bomb Stack", 1)
+			TNT1 A 0 A_RearrangePointers(AAPTR_MASTER, AAPTR_NULL, AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("CutterFlag", 1, "slowBlast") 
+			goto super::promiseThen
+		slowBlast:
+			TNT1 A 0 A_SpawnItemEx("XW Time Bomb Slow Blast", 0,0,-user_unitHeight + 32)
+			stop}}
+			
+actor "XW Time Bomb Stack" : var8 { inventory.maxamount 2 }
+			
+actor "XW Time Bomb Blast" : watcher { 
+	damagetype "XWTimeBomb" obituary "$OB_XWTIMEBOMB"  translation "192:192=202:202"
+		states { spawn: TNT1 A 0
+					TNT1 A 0 A_SpawnItemEx("XW Time Bomb Blast GFX",0,0,-48)
+				main:
+					TNT1 A 0 A_PlaySoundEx("TMBMBDIN", "Weapon")
+					TNT1 A 0 A_PlaySoundEx("TMBMBXXX", "Item")
+					TNT1 A 0 A_Explode(24, XW_TIME_BOMB_BLAST, 0, 0, XW_TIME_BOMB_BLAST_FULL)					
+					TNT1 A 0 A_SpawnItemEx("XW TB Wave",0,0,0,24,0,0,0,SXF_TRANSFERTRANSLATION)
+					TNT1 A 0 A_SpawnItemEx("XW TB Wave",0,0,0,24,0,0,15,SXF_TRANSFERTRANSLATION)
+					TNT1 A 0 A_SpawnItemEx("XW TB Wave",0,0,0,24,0,0,30,SXF_TRANSFERTRANSLATION)
+					TNT1 A 0 A_SpawnItemEx("XW TB Wave",0,0,0,24,0,0,45,SXF_TRANSFERTRANSLATION)
+					TNT1 A 0 A_SpawnItemEx("XW TB Wave",0,0,0,24,0,0,60,SXF_TRANSFERTRANSLATION)
+					TNT1 A 0 A_SpawnItemEx("XW TB Wave",0,0,0,24,0,0,75,SXF_TRANSFERTRANSLATION)
+					TNT1 A 0 A_SpawnItemEx("XW TB Wave",0,0,0,24,0,0,90,SXF_TRANSFERTRANSLATION)
+					TNT1 A 0 A_SpawnItemEx("XW TB Wave",0,0,0,24,0,0,105,SXF_TRANSFERTRANSLATION)
+					TNT1 A 0 A_SpawnItemEx("XW TB Wave",0,0,0,24,0,0,120,SXF_TRANSFERTRANSLATION)
+					TNT1 A 0 A_SpawnItemEx("XW TB Wave",0,0,0,24,0,0,135,SXF_TRANSFERTRANSLATION)
+					TNT1 A 0 A_SpawnItemEx("XW TB Wave",0,0,0,24,0,0,150,SXF_TRANSFERTRANSLATION)
+					TNT1 A 0 A_SpawnItemEx("XW TB Wave",0,0,0,24,0,0,165,SXF_TRANSFERTRANSLATION)
+					TNT1 A 0 A_SpawnItemEx("XW TB Wave",0,0,0,24,0,0,180,SXF_TRANSFERTRANSLATION)
+					TNT1 A 0 A_SpawnItemEx("XW TB Wave",0,0,0,24,0,0,195,SXF_TRANSFERTRANSLATION)
+					TNT1 A 0 A_SpawnItemEx("XW TB Wave",0,0,0,24,0,0,210,SXF_TRANSFERTRANSLATION)
+					TNT1 A 0 A_SpawnItemEx("XW TB Wave",0,0,0,24,0,0,225,SXF_TRANSFERTRANSLATION)
+					TNT1 A 0 A_SpawnItemEx("XW TB Wave",0,0,0,24,0,0,240,SXF_TRANSFERTRANSLATION)
+					TNT1 A 0 A_SpawnItemEx("XW TB Wave",0,0,0,24,0,0,255,SXF_TRANSFERTRANSLATION)
+					TNT1 A 0 A_SpawnItemEx("XW TB Wave",0,0,0,24,0,0,270,SXF_TRANSFERTRANSLATION)
+					TNT1 A 0 A_SpawnItemEx("XW TB Wave",0,0,0,24,0,0,285,SXF_TRANSFERTRANSLATION)
+					TNT1 A 0 A_SpawnItemEx("XW TB Wave",0,0,0,24,0,0,300,SXF_TRANSFERTRANSLATION)
+					TNT1 A 0 A_SpawnItemEx("XW TB Wave",0,0,0,24,0,0,315,SXF_TRANSFERTRANSLATION)
+					TNT1 A 0 A_SpawnItemEx("XW TB Wave",0,0,0,24,0,0,330,SXF_TRANSFERTRANSLATION)
+					TNT1 A 0 A_SpawnItemEx("XW TB Wave",0,0,0,24,0,0,345,SXF_TRANSFERTRANSLATION)
+					stop}}
+					
+actor "XW Time Bomb Slow Blast" : "XW Time Bomb Blast" { 
+	translation "192:192=248:248" states {
+		spawn: TNT1 A 0
+			TNT1 A 0 A_PlaySoundEx("TMBMBSLO", "SoundSlot5")
+			TNT1 A 0 A_SpawnItemEx("XW Time Bomb Slow Blast GFX",0,0,-48)			
+			TNT1 A 0 A_RadiusGive("XW TID Data", XW_TIME_BOMB_BLAST, RGF_PLAYERS, CallACS("core_gettarget"))				
+			TNT1 A 0 A_RadiusGive("XW Time Bomb Player Slow", XW_TIME_BOMB_BLAST, RGF_PLAYERS)				
+			TNT1 A 0 A_RadiusGive("XW Time Bomb Monster Slow", XW_TIME_BOMB_BLAST, RGF_MONSTERS)
+			goto main}}
+			
+actor "XW Time Bomb Blast GFX" : "XW MMV Explosion" {
+	translation "198:198=192:192", "192:192=4:4" }
+actor "XW Time Bomb Slow Blast GFX" : "XW Time Bomb Blast GFX" { 
+	translation "198:198=248:248", "192:192=4:4" }
+
+					
+actor "XW TB Wave" : gfx { 
+	+FORCEXYBILLBOARD renderstyle "translucent" alpha 0.8 
+	 reactiontime 11 states {
+		spawn: TNT1 A 0 // spawnFrame
+			DUOR T 1 A_SetScale(2.0, 5.0)
+			DUOR TTTT 1 A_ChangeVelocity(-6,0,0, CVF_RELATIVE) /// 5+~10 11
+			DUOR T 0 A_ChangeVelocity(0,0,1)
+		go:
+			DUOR T 1 A_ChangeVelocity(-6,0,0, CVF_RELATIVE)
+			DUOR T 0 A_SetScale(scalex, scaley*0.85)
+			DUOR T 0 A_FadeOut(0.02)
+			DUOR T 0 A_Countdown
+			loop}}
+
+
+
+			
+			
+		// ######################### //
+	// 		Crowd control effect 		//
+		// ######################### //
+	
+actor "XW Time Bomb Slow Stack" : var8 { inventory.maxamount 45 }
+actor "XW Time Bomb CC" : PowerSpeed { powerup.duration 0x7FFFFFFA speed 0.31 }
+	
+actor "XW Time Bomb Slow" : item {
+	states {
+		pickup: 
+			TNT1 A 0 A_JumpIfInventory("XW Time Bomb Slow Stack", 1, "refresh")
+			TNT1 A 0 A_GiveInventory("XW Time Bomb CC")
+			TNT1 A 0 A_SpawnItemEx("XW Time Bomb CC Watcher")
+		refresh: 
+			TNT1 A 0 A_GiveInventory("XW Time Bomb Slow Stack", 45)
+			TNT1 A 0 A_JumpIfInventory("XW Data", 1, "monsterSlow")
+			stop
+		monsterSlow:
+			TNT1 A 0 A_GiveInventory("Xover Monster Speed")
+			TNT1 A 0 A_TakeInventory("XW Data")
+			stop}}
+			
+actor "XW Time Bomb Player Slow" : item { states {  
+	pickup: TNT1 A 0 A_JumpIf(!CallACS("XW", XW_IS_SAME_TEAM, true), 1)
+		goto clean
+		TNT1 A 0 A_GiveInventory("XW Time Bomb Slow")
+	clean: TNT1 A 0 A_TakeInventory("XW TID Data")
+		stop}}
+			
+actor "XW Time Bomb Monster Slow" : "XW Time Bomb Slow" { states {
+		pickup: TNT1 A 0 A_GiveInventory("XW Data")
+			goto super::pickup}}
+	
+// every 3 tics
+actor "XW Time Bomb Monster SlowVelocity" : item {
+	states { pickup: TNT1 A 0 A_ChangeVelocity(velx*0.89,vely*0.89,velz,CVF_REPLACE) stop }}
+	
+actor "XW Time Bomb CC Watcher" : watcher {
+	states {
+		spawn: TNT1 A 0
+			TNT1 A 0 A_GiveToTarget("XW Speed Down")
+			TNT1 A 5 A_TakeFromTarget("XW Time Bomb Slow Stack", 5)
+			TNT1 A 0 A_JumpIf(!CallACS("core_targetexists"), "end")
+			TNT1 A 0 A_JumpIfInTargetInventory("XW Time Bomb Slow Stack", 1, "spawn")
+			goto clean
+		clean:
+			TNT1 A 0 A_TakeFromTarget("XW Time Bomb CC")
+			stop}}

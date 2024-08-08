@@ -1,0 +1,377 @@
+const int XW_RAKUKOUJIN_AMMO = 10;//*XW_AMMOBAR_UNIT;
+const int XW_RAKUKOUJIN_HUNT_AMMO = 3;//*XW_AMMOBAR_UNIT;
+
+actor "Ground Dash Ground Limit" : Powerup { powerup.duration 35 } // /!\ affects Rakukoujin /!\
+actor XWFallingSteelSwordWep : BaseXoverWep { 
+	weapon.slotNumber 5
+	inventory.icon "RAKUKOJN" obituary "$OB_XWRAKUKOUJIN" tag "$TAG_XWRAKUKOUJIN"
+	states {
+		noAmmo:
+			XWAU P 0 offset(0,32) A_TakeInventory("Rakukoujin Underground")
+			goto super::noAmmo
+		select: XWAU P 0 ACS_NamedExecuteWithResult("core_weaponcolor",6775)
+				XWAU P 0 A_TakeInventory("varBool")
+				XWAU P 0 A_JumpIfInventory("XW PvM", 1, "cooperativeAmmo")
+				goto pvpAmmo
+		ready: XWAU P 0
+				goto super::ready
+		deselect: XWAU P 0 A_TakeInventory("Rakukoujin Underground")
+			goto super::deselect
+
+		cooperativeAmmo:
+			XWAU P 0 A_SetArg(1, XW_RAKUKOUJIN_AMMO>>1)
+			XWAU P 0 A_SetArg(2, XW_RAKUKOUJIN_HUNT_AMMO>>1)
+			goto super::select
+		pvpAmmo:
+			XWAU P 0 A_SetArg(1, XW_RAKUKOUJIN_AMMO)
+			XWAU P 0 A_SetArg(2, XW_RAKUKOUJIN_HUNT_AMMO)
+			goto super::select
+			
+			
+			
+	
+		altfire: althold: // messy online
+			/*"----" A 0 A_GiveInventory("altfireToken")
+			goto fire*/
+		fire: hold:
+			XWAU P 0 A_JumpIfInventory("varBool", 1, "drill") // chain use
+			XWAU P 0 A_JumpIf(!CallACS("XW Ammo Check", args[1]), "noAmmo")
+			XWAU Q 2 offset(0,62)
+			XWAU R 2 offset(0,92)
+			XWAU S 2 offset(0,122)
+			goto drill
+		drill:
+			TNT1 A 0 ThrustThingZ(0,60,1,0)
+			TNT1 A 0 A_GiveInventory("Ground Dash Ground Limit") // just a 35 tics powerup
+		findGround:
+			TNT1 A 2 A_CheckFloor("dig")
+			TNT1 A 0 A_JumpIfInventory("Ground Dash Ground Limit", 1, "findGround")
+			goto noAmmo
+		dig:
+			TNT1 A 0 ACS_NamedExecuteAlways("XW Ammo Use", 0, args[1])
+			TNT1 A 0 ACS_NamedExecuteWithResult("XW", 43) //viewz/stepheight
+			TNT1 A 0 A_TakeInventory("Ground Dash Ground Limit")
+
+			TNT1 A 0 A_GiveInventory("CentaurFlashNoAlphaGiver")
+			CENF D 0 ACS_NamedExecuteWithResult("core_cantseekplayer", 0, true)
+			CENF D 0 ACS_NamedExecuteWithResult("core_notargetplayer", 0, true)
+			CENF D 0 ACS_NamedExecuteWithResult("core_dontidentifytargetplayer", 0, true)
+			TNT1 A 0 ACS_NamedExecuteWithResult("core_unsolidplayer",0,USP_TOGGLEON)
+			TNT1 A 0 A_TakeInventory("var8")
+			TNT1 A 0 A_GiveInventory("Rakukoujin Underground Giver")
+			TNT1 A 0 A_SpawnItemEx("Rakukoujin Shark Watcher")
+			TNT1 A 0 A_GunFlash("drainAmmo",GFF_NOEXTCHANGE)
+			TNT1 A 0 A_TakeInventory("Rakukoujin Sharking")
+			TNT1 A 0 A_GiveInventory("Rakukoujin Sharking")
+		sharking:
+			TNT1 A 0 A_CheckFloor(2)
+			TNT1 A 0 A_ChangeFlag("FLOORHUGGER", true) goto hunt
+			TNT1 A 0 A_ChangeFlag("FLOORHUGGER", false)
+		hunt:
+			TNT1 A 1
+			TNT1 A 0 A_JumpIfInventory("Rakukoujin Sharking", 1, "sharking")
+			TNT1 A 0 A_JumpIfInventory("IsBot", 1, "rise")
+			//TNT1 A 0 A_JumpIfInventory("altfireToken", 1, "rise")
+			TNT1 A 0 A_JumpIfInventory("var8", 1, "rise") // no ammo
+			TNT1 A 0 A_Refire("sharking")
+			goto rise
+		drainAmmo:
+			TNT1 A 12
+			// check if user died
+			TNT1 A 0 A_JumpIfInventory("Rakukoujin Underground", 1, 1) goto end
+			TNT1 A 0 A_JumpIf(!CallACS("XW Ammo Check", args[2]), "forceStop")
+			TNT1 A 0 ACS_NamedExecuteAlways("XW Ammo Use", 0, args[2])
+			loop
+		forceStop: TNT1 A 0 A_GiveInventory("var8") stop
+			
+		rise:
+			//TNT1 A 0 a_log("rise")
+			TNT1 A 0 A_GunFlash("noflash", GFF_NOEXTCHANGE)
+			TNT1 A 0 A_TakeInventory("Rakukoujin Underground")
+			TNT1 A 0 A_ChangeFlag("FLOORHUGGER", false)
+			//TNT1 A 0 A_TakeInventory("Rakukoujin Action Timer")
+			TNT1 A 0 A_GiveInventory("Rakukoujin Action Timer")
+			TNT1 A 0 A_TakeInventory("varBool")
+			TNT1 A 0 A_PlaySoundEx("RAKJRISE", "SoundSlot6")
+			TNT1 A 0 A_SpawnItemEx("Rakukoujin Camera",0,0,0,0,0,0,0,0,0,TID+XW_CAMERA_TID-1000)
+			TNT1 A 0 A_TakeInventory("CentaurFlashNoAlpha", 999)
+			CENF D 0 ACS_NamedExecuteWithResult("core_cantseekplayer", 0, false)
+			CENF D 0 ACS_NamedExecuteWithResult("core_notargetplayer", 0, false)
+			CENF D 0 ACS_NamedExecuteWithResult("core_dontidentifytargetplayer", 0, false)
+			TNT1 A 0 A_SetArg(0, (pitch > 90 && pitch < 325))
+			TNT1 A 0 A_SetArg(0, pitch - ((pitch+46) * !args[0]))
+			
+			TNT1 A 0 A_SpawnItemEx("Rakukoujin Anchor",0,0,0, 8,0,9, random(-25,25))
+			XWAC J 0 A_JumpIfInventory("PowerSpreadRune", 1, 1) goto afterAnchor
+			TNT1 A 0 A_SpawnItemEx("Rakukoujin Anchor",0,0,0, 8,0,9, random(-45,5))
+			TNT1 A 0 A_SpawnItemEx("Rakukoujin Anchor",0,0,0, 8,0,9, random(-5,45))
+		afterAnchor:
+			TNT1 A 0 A_ChangeVelocity(44*cos(args[0]), 0, 44*-sin(args[0]), CVF_RELATIVE | CVF_REPLACE)
+			TNT1 A 0 A_TakeInventory("JumpCancler")
+			TNT1 A 2
+			TNT1 AAA 2 ThrustThingZ(0,10,1,1)
+			//TNT1 A 0 A_JumpIfInventory("altfireToken", 1, "crushStart")
+		heavyAction: 
+			TNT1 A 0 ThrustThingZ(0,10,1,1)
+			TNT1 A 1 A_Refire("crushStart")
+			TNT1 A 0 A_JumpIf(CallACS("core_CheckFooting_ThruPlayer"), "release")
+			TNT1 A 1 A_Refire("crushStart")
+			TNT1 A 0 A_JumpIf(CallACS("core_CheckFooting_ThruPlayer"), "release")
+			TNT1 A 0 A_JumpIfInventory("Rakukoujin Action Timer", 1, "heavyAction")
+			goto release
+		crushStart:
+			TNT1 A 0 A_JumpIf(true, 1)
+			//TNT1 A 0 a_log("crushstart")
+			TNT1 A 0 ACS_NamedExecuteWithResult("core_freezeplayer", 0, true)
+			TNT1 A 0 ACS_NamedExecuteWithResult("XW", XW_LOCKER, 15)
+			XWAI I 0 ACS_NamedExecuteWithResult("core_nogravityplayer", 0, true)
+			TNT1 A 0 A_ChangeFlag("NOGRAVITY", true) // clientside purpose
+			TNT1 A 0 A_Stop
+			TNT1 A 0 A_SpawnItemEx("Rakukoujin Flash Sword", 16,0,-128)//,0,0, 0,0,-13)
+			XWAC J 0 A_JumpIfInventory("PowerSpreadRune", 1, 1) goto afterSwordStart
+			TNT1 A 0 A_SpawnItemEx("Rakukoujin Flash Sword", 16,0,-128,0,0,0,-60)
+			TNT1 A 0 A_SpawnItemEx("Rakukoujin Flash Sword", 16,0,-128,0,0,0,60)
+		afterSwordStart:
+			TNT1 A 8
+			TNT1 A 8 A_PlaySoundEx("RAKJSTEL", "Weapon")
+			TNT1 A 0 ThrustThingZ(0,60,1,0)
+		crusher:
+			XWAC J 0 A_JumpIfInventory("PowerSpreadRune", 1, "spreadCrush")
+			TNT1 A 0 A_SpawnItemEx("Rakukoujin Damager", 16,0,-128, 0,0,abs(velz))
+			TNT1 AA 1 A_SpawnItemEx("Rakukoujin Sword", 16, 0, -128-velz, 0,0,velz)
+			goto crushNext
+		spreadCrush:
+			TNT1 A 0 A_SpawnItemEx("Rakukoujin Damager", 16,0,-128, 0,0,abs(velz))
+			TNT1 A 0 A_SpawnItemEx("Rakukoujin Damager", 16,0,-128, 0,0,abs(velz),-60)
+			TNT1 A 0 A_SpawnItemEx("Rakukoujin Damager", 16,0,-128, 0,0,abs(velz),60)
+			TNT1 A 0 A_SpawnItemEx("Rakukoujin Sword", 16, 0, -128-velz, 0,0,velz)
+			TNT1 A 0 A_SpawnItemEx("Rakukoujin Sword", 16, 0, -128-velz, 0,0,velz,60)
+			TNT1 A 1 A_SpawnItemEx("Rakukoujin Sword", 16, 0, -128-velz, 0,0,velz,-60)
+			TNT1 A 0 A_SpawnItemEx("Rakukoujin Sword", 16, 0, -128-velz, 0,0,velz)
+			TNT1 A 0 A_SpawnItemEx("Rakukoujin Sword", 16, 0, -128-velz, 0,0,velz,60)
+			TNT1 A 1 A_SpawnItemEx("Rakukoujin Sword", 16, 0, -128-velz, 0,0,velz,-60)
+		crushNext:
+			TNT1 A 0 ThrustThingZ(0,24,1,1)
+			TNT1 A 0 A_CheckFloor("quake")
+			TNT1 A 0 A_JumpIfInventory("Rakukoujin Action Timer", 1, "crusher")
+			TNT1 A 0 A_JumpIf(true, "unlockRelease")
+			goto crusher
+		quake:
+			//TNT1 A 0 a_log("quake")
+			TNT1 A 0 ACS_NamedExecuteWithResult("core_freezeplayer", 0, false)
+			XWAI I 0 ACS_NamedExecuteWithResult("core_nogravityplayer", 0, false)
+			TNT1 A 0 ACS_NamedExecuteWithResult("XW", XW_EARTHQUAKE, 4, 18, 320)
+			TNT1 A 0 A_PlaySoundEx("RAKJCRSH", "SoundSlot6")
+			TNT1 A 0 A_SpawnItemEx("Rakukoujin Quake")
+			goto nextReady
+			
+		nextReady:
+			TNT1 A 0 A_JumpIf(!CallACS("XW Ammo Check", args[1]), "release")
+			TNT1 A 0 A_GiveInventory("varBool")
+			//TNT1 A 0 A_TakeInventory("altfireToken")
+			TNT1 A 0 A_TakeInventory("Rakukoujin Action Timer")				
+			TNT1 AA 1 A_WeaponReady(WRF_NOSWITCH)
+			TNT1 A 0 A_JumpIf(true, "releaseUndergroundClean") // online fix
+			goto fire
+		releaseUndergroundClean: 
+			TNT1 A 0 A_TakeInventory("Rakukoujin Underground")
+			goto releaseNoTics
+		unlockRelease:
+			TNT1 A 0 ACS_NamedExecuteWithResult("core_freezeplayer", 0, false)
+			TNT1 A 0 ACS_NamedExecuteWithResult("core_nogravityplayer", 0, false)
+			goto release
+		release:
+			//TNT1 A 0 A_TakeInventory("altfireToken")
+			TNT1 A 0 A_TakeInventory("Rakukoujin Action Timer")
+			TNT1 A 2
+		releaseNoTics:
+			XWAJ A 0 ACS_NamedExecuteWithResult("core_unsolidplayer",0,USP_TOGGLEOFF_DAMAGE)
+			XWAU S 1 offset(0,132)
+			XWAU S 1 offset(0,120)
+			XWAU S 1 offset(0,108)
+			XWAU R 1 offset(0,98)
+			XWAU R 1 offset(0,88)
+			XWAU R 1 offset(0,80)
+			XWAU Q 1 offset(0,72)
+			XWAU Q 1 offset(0,66)
+			XWAU Q 1 offset(0,62)
+			XWAU P 1 offset(0,42)
+			XWAU P 1 offset(0,36)
+			XWAU P 0 A_TakeInventory("varBool")
+			XWAU P 16 A_WeaponReady(WRF_NOFIRE | WRF_DISABLESWITCH)
+			TNT1 A 0 A_TakeInventory("Rakukoujin Underground")
+			goto ready}}
+			
+actor "Rakukoujin Sharking" : Powerup { powerup.duration 22 }
+actor "Rakukoujin Action Timer" : Powerup { powerup.duration 70 }
+
+actor "Rakukoujin Underground Giver" : PowerApropGiver  { }	
+actor "Rakukoujin Underground" : PowerSpeed { 	
+	+POWERSPEED.NOTRAIL speed 1.35 
+	Powerup.Colormap 0.251, 0.251, 0.565,      0.627, 0.69, 0.878
+	powerup.duration 0x7FFFFFFA }
+			
+/*
+// that name is convenient
+actor "XW Metal Shark Player" : XWMegaman { 
+	height 4 player.jumpz 0  //-NOGRAVITY
+	Player.ViewHeight 12.0 maxstepheight 64
+	Player.MorphWeapon "XWRakukoujinWep" }*/
+
+		/*
+actor "Rakukoujin Underground" : PowerMorph { 	
+	powermorph.playerclass "XW Metal Shark Player"
+	powermorph.morphflash "XW NULL" 
+	powermorph.unmorphflash "XW NULL"
+	// these flags actually do the opposite
+	powermorph.morphstyle MRF_LOSEACTUALWEAPON | MRF_NEWTIDBEHAVIOUR  
+	Powerup.Colormap 0.251, 0.251, 0.565,      0.627, 0.69, 0.878
+	powerup.duration 0x7FFFFFFA } */
+			
+		
+actor "Rakukoujin Damager" : proj { +RIPPER +DONTBLAST +DONTREFLECT +THRUGHOST
+	damage (42+ (2.8*(velz > 15)*(velz-15)))
+	damagetype "Rakukoujin" obituary "$OB_XWRAKUKOUJIN" radius 76 height 176 states { 
+	spawn: TNT1 A 0 //A_LogInt()
+		stop}}
+			
+actor "Rakukoujin Anchor" : proj { 
+	damage (30) damagetype "RakukoujinAnchor" obituary "$OB_XWRAKUKOUJINANCHOR"
+	radius 22 height 44 scale 2.0 args 0 speed 8 -USEBOUNCESTATE +ALLOWBOUNCEONACTORS
+	bouncetype classic +BOUNCEONWALLS +CANBOUNCEWATER bouncefactor 1.0 //+SKYEXPLODE
+	states { 
+		spawn: TNT1 A 0 
+			XWAU ABC 2
+			XWAU C 0 A_ChangeFlag("NOGRAVITY", false)
+		speen:
+			XWAU DGH 2
+			TNT1 A 0 A_SetScale(-scalex, scaley)
+			XWAU GDEF 2
+			TNT1 A 0 A_SetScale(-scalex, scaley)
+			XWAU E 2
+			XWAU H 0 A_SetArg(0, args[0]+1)
+			XWAU H 0 A_JumpIf(args[0] < 19, "speen")
+			XWAU H 0 A_ChangeFlag("USEBOUNCESTATE", true)
+			goto speen
+		bounce: death: TNT1 A 0 A_JumpIf(true, 1) // online fix
+			XWAU G 0 A_PlaySoundEx("MMXEXPLO", "Weapon")
+			XWAU G 1 A_SpawnItemEx("MSP Anchor Explosion", 0,0,0,0,0,0,0,SXF_TRANSFERSCALE)
+			stop}}
+	
+		
+		
+			
+			
+			// ################################ //
+			//  	Visuals / clientside  		//
+			// ################################ //
+			
+actor "Rakukoujin Shark Watcher" : watcher { states { 
+	spawn: TNT1 A 0
+	junk: TNT1 A 5 A_GiveToTarget("Rakukoujin Hunt Debris Summon")
+		TNT1 A 0 A_JumpIfInTargetInventory("Rakukoujin Underground", 1, "junk")
+		stop}}
+		
+actor "Rakukoujin Hunt Debris Summon" : item { states { 
+	pickup: TNT1 A 0 A_JumpIf(abs(velx)+abs(vely) >= 4, "summon") stop
+	summon: TNT1 A 0 A_PlaySoundEx("RAKJDIG", "Weapon")
+		TNT1 A 0 A_SpawnItemEx("Rakukoujin Hunt Debris", 0,0,0, velx,vely,0,0,SXF_ABSOLUTEVELOCITY)
+	stop}}
+	
+actor "__Rakukoujin Hunt Debris" : watcher { states {
+	spawn: TNT1 A 0 nodelay A_SpawnItemEx("Rakukoujin Hunt Debris", 0,0,0, velx,vely,0,0,SXF_ABSOLUTEVELOCITY) stop}}
+	
+actor "Rakukoujin Hunt Debris" : gfx { states {
+	spawn: TNT1 A 0 nodelay A_SetArg(0,-(velx/4)+random(-2,2))
+		TNT1 A 0 A_SetArg(1,-(vely/4)+random(-2,2))
+		TNT1 A 0 A_JumpIf(random(0,1), "a")
+		goto b
+	a: TNT1 A 0 A_SpawnItemEx("Rakukoujin Hunt Debris 1",0,0,0, args[0],args[1],12,0,SXF_ABSOLUTEVELOCITY) stop
+	b: TNT1 A 0 A_SpawnItemEx("Rakukoujin Hunt Debris 2",0,0,0, args[0],args[1],12,0,SXF_ABSOLUTEVELOCITY) stop}}
+	
+actor "Rakukoujin Quake Debris" : xwColliderGFX { reactiontime 7
+	args 18 -NOGRAVITY gravity 2.0 scale 1.25 +FORCEXYBILLBOARD states { 
+	spawn: XWAU M 0
+		goto animation
+	animation: "----" A 0 A_JumpIf(random(0,1),2)
+		"----" A 0 A_SetScale(-scalex, scaley)
+		"----" A 69 A_SetTics(args[0])
+	blink:
+		"----" A 1 A_FadeOut(0.99)
+		"----" A 1 A_FadeIn(0.99)
+		"----" A 0 A_Countdown
+		loop}}
+		
+actor "Rakukoujin Hunt Debris 1" : "Rakukoujin Quake Debris" { gravity 1.0 args 20 reactiontime 4
+	states { spawn: XWAU N 0
+		goto animation}}
+actor "Rakukoujin Hunt Debris 2" : "Rakukoujin Hunt Debris 1" { states { spawn: XWAU O 0
+		goto animation}}
+		
+		
+actor "Rakukoujin Quake" : gfx { args 64,0 reactiontime 3 states {
+	spawn: TNT1 A 0
+		// efishenci
+		TNT1 A 0 A_SpawnItemEx("Rakukoujin Quake Debris", args[0],0,0,0,0,16+(args[0]/10),args[1])
+		TNT1 A 0 A_SetArg(1, args[1]+120)
+		TNT1 A 0 A_JumpIf(!(args[1] % 360), 1) goto spawn
+		TNT1 A 6 A_Countdown
+		TNT1 A 0 A_SetAngle(angle+60)
+		TNT1 A 0 A_SetArg(0, args[0]+32)
+		goto spawn}}
+		
+		
+actor "MSP Anchor Explosion" : gfx { states {
+	spawn: TNT1 A 0 nodelay A_SpawnItemEx("XW MMX PS1 Explosion")
+		TNT1 A 0 A_SpawnItemEx("MSP Anchor Debris 1",0,0,0, 0,0,0, random(0,359), SXF_TRANSFERSCALE)
+		TNT1 A 0 A_SpawnItemEx("MSP Anchor Debris 2",0,0,0, 0,0,0, random(0,359), SXF_TRANSFERSCALE)
+		TNT1 A 0 A_SpawnItemEx("MSP Anchor Debris 3",0,0,0,0,0,0,0,SXF_TRANSFERSCALE)
+		stop}}
+			
+actor "MSP Anchor Debris 1" : xwColliderGFX { -NOGRAVITY gravity 1.5
+	renderstyle "translucent" scale 2.0 alpha 0.6 reactiontime 4 states {
+	spawnframe: XWAU I 0
+		goto start
+	start: "----" A 0 A_ChangeVelocity(random(3,6),0,18,CVF_RELATIVE)
+	animation: "----" A 3 A_FadeOut(0.59)
+		"----" A 3 A_FadeIn(0.59)
+		"----" A 0 A_Countdown
+		loop}}
+			
+actor "MSP Anchor Debris 2" : "MSP Anchor Debris 1" { states { spawnframe: XWAU J 0
+	goto start}}
+	
+actor "MSP Anchor Debris 3A" : "MSP Anchor Debris 1" { states { spawnframe: XWAU K 0
+	goto start}}
+actor "MSP Anchor Debris 3B" : "MSP Anchor Debris 1" { states { 
+	spawnframe: XWAU K 0 A_SetScale(-scalex,scaley) goto start}}
+	
+actor "MSP Anchor Debris 3" : gfx {
+	states {
+		spawn: 
+			TNT1 A 0 nodelay A_SetArg(0, random(0,359))
+			TNT1 A 0 A_SpawnItemEx("MSP Anchor Debris 3A",0,0,0, 0,0,0, 90, SXF_TRANSFERSCALE)
+			TNT1 A 0 A_SpawnItemEx("MSP Anchor Debris 3B",0,0,0, 0,0,0, -90, SXF_TRANSFERSCALE)
+			stop}}
+			
+actor "Rakukoujin Camera" : watcher { +CLIENTSIDEONLY renderstyle none
+	states {
+		spawn: TNT1 A 0 
+			TNT1 A 0 ACS_NamedExecuteWithResult("XW CS", 8)
+			TNT1 A 0 A_SetArg(0,TID-XW_CAMERA_TID) // playerNumber
+			TNT1 A 0 A_SetScale(args[0]+1)
+		acsWork: TNT1 A 35 A_JumpIf(!CallACS("core_targetexists"),"end")
+			loop}}
+			
+actor "Rakukoujin Sword" : gfx { scale 2.5 states {
+	spawnframe: TNT1 A 0
+		XWAU L 1
+		stop}}
+							// : "Rakukoujin Sword" // clientsiding is inconsistant
+actor "Rakukoujin Flash Sword" : watcher { renderstyle normal translation "0:255=4:4" yscale 0.0 reactiontime 4 states {
+		spawn: TNT1 A 0
+			XWAU LLLLLLLL 1 A_SetScale(scalex, scaley+0.3125)
+		blink:
+			TNT1 A 1 A_SpawnItemEx("Rakukoujin Sword")
+			XWAU L 1 A_Countdown
+			loop}}

@@ -96,3 +96,43 @@ script "xover_translations" OPEN CLIENTSIDE {
 	CreateTranslation(JAWZHUNTERS_JAWZWET, 192:192=205:205, 198:198=74:74, 88:88=64:64, 93:93=206:206);	
 	CreateTranslation(__WHITE, 0:255=4:4);
 }
+
+script "XW CS" (int type, int arg1, int arg2, int arg3) CLIENTSIDE {
+	int localPlayer = ConsolePlayerNumber(), tmp, x, y;
+	switch(type) {
+		/*
+		@arg1 (optional) a TID
+		*/
+		case XW_CS_POV:
+			if (!arg1) {
+				SetActivatorToTarget(0);
+				arg1 = PlayerNumber();
+			}	
+			else arg1--;
+			SetResultValue(arg1==localPlayer);
+		break;
+
+		case 8: // Falling Steel Sword camera
+			type = ActivatorTID();
+			if (ConsolePlayerNumber() != type-XW_CAMERA_TID) {
+				Thing_Remove(type); terminate;
+			}
+			SetActivatorToTarget(0);
+			arg3 = 70;
+			while (CheckInventory("Rakukoujin Action Timer")) {
+				ChangeCamera(type,0,0);
+				SetActorPitch(type, GetActorPitch(0));
+				delay(1);
+				SetActorVelocity(type,
+					GetActorVelX(0), GetActorVelY(0), GetActorVelZ(0), FALSE, FALSE);	
+				arg1 = GetActorPitch(0);	
+				arg3 = min(350, arg3+35);						
+				x = (cos(arg1)*arg3); // xDist
+				y = (sin(arg1)*arg3);//+28.0; // zDist
+				Warp(type, -x, 0, y+28.0, 0, WARPF_MOVEPTR | WARPF_NOCHECKPOSITION); // move camera
+			}
+			Thing_Remove(type);
+			terminate;
+		break;
+	}
+}

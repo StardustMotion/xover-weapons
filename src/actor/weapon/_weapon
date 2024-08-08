@@ -1,0 +1,90 @@
+actor BaseXoverWep : BaseMM8BDMWep	{
+	+WEAPON.CHEATNOTWEAPON +WEAPON.NOAUTOAIM +INVENTORY.UNDROPPABLE
+	inventory.Amount 1	inventory.MaxAmount 1
+	obituary "$OB_XOVERWEAPON" tag "$TAG_BASEXOVERWEAPON" inventory.pickupMessage "$PU_XOVER"
+	states	{
+		spawn: TNT1 A 0
+			stop
+		ready: "----" A 1 A_WeaponReady
+			goto ready
+		noAmmo:
+			"----" A 0 ACS_NamedExecuteAlways("core_noammo",0)
+			"----" A 0 A_TakeInventory("altfireToken")
+			"----" A 9
+			goto ready
+		fire: "----" A 1
+			goto ready
+		select: "----" A 0 ACS_NamedExecuteWithResult("XW Ammo Update") 		goto selectSwap
+		deselect: "----" A 0 ACS_NamedExecuteWithResult("XW Ammo Hide", 0, 1) 	goto deselectSwap
+	}
+}
+
+actor "altfireToken" : varBool {}
+
+
+			
+		// ######################### //
+	// 			Misc effects		 	//
+		// ######################### //
+
+
+actor "XW Attack Down" : item { states { pickup: TNT1 A 0 A_SpawnItemEx("__XW Attack Down Arrow", 0,0,0, 0,0,0, 0, 0, 0, TID-999) stop}}
+actor "XW Attack Up" : item { states { pickup: TNT1 A 0 A_SpawnItemEx("__XW Attack Up Arrow", 0,0,0, 0,0,0, 0, 0, 0, TID-999) stop}}
+actor "__XW Attack Down Arrow" : watcher { states { spawn: 
+    TNT1 A 0 nodelay A_SetScale(TID)
+	TNT1 A 0 A_SpawnItemEx("XW Attack Down Arrow", random(-40, 40), random(-40, 40), 90, 0, 0, -6, 0, SXF_TRANSFERSCALE) stop}}
+actor "__XW Attack Up Arrow" : watcher { states { spawn: 
+	TNT1 A 0 nodelay A_SetScale(TID)
+	TNT1 A 0 A_SpawnItemEx("XW Attack Up Arrow", random(-40, 40), random(-40, 40), 0, 0, 0, 6, 0, SXF_TRANSFERSCALE) stop}}
+actor "XW Attack Up Arrow" : "XW CS Frame TID" { 
+	alpha 0.2 translation "106:106=184:184"
+	states {	
+		otherPOV:
+			"----" A 0 A_FadeIn(0.65)
+			"----" A 0 A_JumpIf(true, "clientSidePOV")
+		clientSidePOV:
+			9WAR HIJKLMN 1
+			stop}}			
+actor "XW Attack Down Arrow" : "XW Attack Up Arrow" {  translation "106:106=176:176" 
+	states { clientSidePov: TNT1 A 0 A_SetScale(scalex,-2.5) goto super::clientSidePOV }}
+
+actor "XW Speed Down" : item { states { pickup: TNT1 A 0 A_SpawnItemEx("__XW Speed Down Arrow", 0,0,0, 0,0,0, 0, 0, 0, TID-999) stop}}
+actor "XW Speed Up" : item { states { pickup: TNT1 A 0 A_SpawnItemEx("__XW Speed Up Arrow", 0,0,0, 0,0,0, 0, 0, 0, TID-999) stop}}
+actor "__XW Speed Down Arrow" : watcher { states { spawn: 
+    TNTT A 0 nodelay A_SetScale(TID) 
+    TNT1 A 0 A_SpawnItemEx("XW Speed Down Arrow",random(-40, 40), random(-40, 40), 90, 0, 0, -6, 0, SXF_TRANSFERSCALE) stop}}
+actor "__XW Speed Up Arrow" : watcher { states { spawn: 
+    TNT1 A 0 nodelay A_SetScale(TID)
+	TNT1 A 0 A_SpawnItemEx("XW Speed Up Arrow", random(-40, 40), random(-40, 40), 0, 0, 0, 6, 0, SXF_TRANSFERSCALE) stop}}
+actor "XW Speed Down Arrow" : "XW Attack Down Arrow" { translation "106:106=129:129" }
+actor "XW Speed Up Arrow" : "XW Attack Up Arrow" { translation "106:106=107:107" }
+
+
+
+
+
+
+// --------------------------- Explosions --------------------------- //
+// ExplosionEffect 4/5
+actor "XW MMV Explosion" : gfx { 
+    mass 2 +FORCEXYBILLBOARD
+	states {
+		spawnframe: TNT1 A 0
+			XWAN FGHIJKLMNO 1 A_SetTics(mass)
+			stop}}
+
+actor "XW Star Explosion" : "XW MMV Explosion" { states {
+	spawnframe: TNT1 A 0
+		DBR1 OPQRST 1 A_SetTics(mass)
+		stop}}
+
+actor "XW MMX PS1 Explosion" : gfx {
+	translation "192:192=228:228", "198:198=226:226", "5:8=140:140"
+	states {
+		spawnframe:
+			TNT1 A 0 //nodelay A_PlaySoundEx("MMXEXPLO", "Weapon")
+			XWAL DEFGHIJ 2
+			stop}}
+		
+actor ExplosionEffect1_4 : ExplosionEffect1 { mass 4 }
+            

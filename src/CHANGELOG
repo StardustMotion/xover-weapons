@@ -8,8 +8,15 @@
 Originally a v6b compatibility patch, it offers some new weapons, a rework of the system, and allow modders
 to interact with Xover Weapons
 
-- optimized size graphic
-
+- optimized size graphic/cleaned up code
+- mod compat
+- moved whiterose sfx to ball
+- slightly readjusted whitrose melee ball position
+- recycle inhale gives wep instead of edddie, replace utility with modern v6b items, hitbox repositioned
+-doppler cantseek
+- ice gatling doesnt make monster pacifist when frozen
+- rakukoujin dont seek + no identify + no target
+- JAWZHUNTERS 2 =< 7 slots
 
 						#-------------------#
 						#	  ~ 2.1.0 ~     #

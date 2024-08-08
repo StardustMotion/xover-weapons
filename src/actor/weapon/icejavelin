@@ -1,0 +1,317 @@
+// ammo 4.5
+const int XW_ICE_JAVELIN_SPEED = 12;
+const int XW_ICE_JAVELIN_T = 3; // tics between each new body part
+
+actor XWIceJavelinWep : BaseXoverWep { 
+	weapon.slotNumber 2
+	inventory.icon "ICEJAVLN" obituary "$OB_XWICEJAVELIN" tag "$TAG_XWICEJAVELIN"
+	states {
+		noAmmo: XWAT K 0 offset(0,32)
+			goto super::noAmmo
+		select: XWAT K 0 ACS_NamedExecuteWithResult("core_weaponcolor",6774)
+			goto super::select
+		ready:
+			XWAT K 0
+			goto super::ready
+		altfire:
+			"----" A 0 A_GiveInventory("altfireToken")
+		fire:
+			XWAT K 0 A_JumpIf(!CallACS("XW Ammo Check", 5), "noAmmo")
+			XWAT K 0 ACS_NamedExecuteAlways("XW Ammo Use", 0, 5)
+			XWAT K 0 A_TakeInventory("IceJavelinParts")
+			XWAT L 0 A_JumpIfInventory("IsBot", 1, "botBehavior")
+			goto shaftGeneration			
+		botBehavior: TNT1 A 0 A_GunFlash("botBigBrain", GFF_NOEXTCHANGE)
+			goto shaftGeneration			
+		botBigBrain: TNT1 AAA 3 A_Recoil(2)
+			XWAT L 0 A_JumpIfInventory("Ice Javelin Timer", 1, 1)
+			goto end			
+			TNT1 A 0 A_Jump(192, "botBigBrain")
+			TNT1 A 0 A_TakeInventory("Ice Javelin Timer")
+			stop			
+		shaftGeneration:
+			XWAT L 2
+			XWAT L 0 A_SpawnItemEx("Ice Javelin Watcher", 32*cos(pitch), 0, 22+(32*-sin(pitch)), 0,0,0, 0, SXF_TRANSFERPITCH, 0, TID+5770)
+			XWAC J 0 A_JumpIfInventory("PowerSpreadRune", 1, "spread") goto shaftGo
+		spread:
+			XWAT L 0 A_SpawnItemEx("Ice Javelin Watcher", 32*cos(pitch), 0, 22+(32*-sin(pitch)), 0,0,0, 20, SXF_TRANSFERPITCH, 0, TID+5770)
+			XWAT L 0 A_SpawnItemEx("Ice Javelin Watcher", 32*cos(pitch), 0, 22+(32*-sin(pitch)), 0,0,0, -20, SXF_TRANSFERPITCH, 0, TID+5770)
+		shaftGo:
+			XWAT L 0 A_GiveInventory("Ice Javelin Timer")
+			XWAT L 0 A_GiveInventory("Ice Javelin Min Timer")			
+		trail: 
+			XWAT L 1 offset(2,34)
+			XWAT L 0 A_JumpIfInventory("Ice Javelin Min Timer", 1, 2)
+			XWAT L 0 A_ReFire(1) goto release
+			XWAT L 1 offset(4,36) A_GiveInventory("IceJavelinParts")
+			XWAT L 0 A_JumpIfInventory("Ice Javelin Min Timer", 1, 2)
+			XWAT L 0 A_ReFire(1) goto release
+			XWAT L 1 offset(6,38)
+			XWAT L 0 A_JumpIfInventory("Ice Javelin Min Timer", 1, 2)
+			XWAT L 0 A_ReFire(1) goto release
+			XWAT L 1 offset(4,38) A_GiveInventory("IceJavelinParts")
+			XWAT L 0 A_JumpIfInventory("Ice Javelin Min Timer", 1, "trail")
+			XWAT L 0 A_JumpIfInventory("Ice Javelin Timer", 1, 1)
+			goto release
+			XWAT L 0 A_JumpIfInventory("altfireToken", 1, "release")
+			XWAT L 0 A_ReFire("trail") 
+			goto release
+		release:
+			XWAT L 0 A_TakeInventory("Ice Javelin Timer")
+			XWAT L 2 offset(2,34)
+			XWAT L 2 A_TakeInventory("altfireToken")
+			XWAT L 0 A_TakeInventory("IceJavelinParts")
+			XWAT K 36 A_WeaponReady(WRF_NOFIRE | WRF_NOSWITCH)
+			goto ready}}
+			
+actor "Ice Javelin Min Timer" : Powerup { powerup.duration 10 }
+actor "Ice Javelin Timer" : Powerup { powerup.duration 64 }
+			
+actor "Ice Javelin Watcher" : watcher { args 0
+	translation "198:198=197:197", "192:192=196:196" +FORCEXYBILLBOARD
+	states { spawn: TNT1 A 0 nodelay A_SetArg(0, TID-6770)
+		TNT1 A 0 Thing_ChangeTID(0,0)
+		TNT1 A 0 A_PlaySoundEx("ICEJAVST", "Weapon")
+		XWAT P 2 A_SpawnItemEx("Ice Javelin Head", 0,0,6, 0,0,0, 0, SXF_TRANSFERPITCH)
+		XWAT Q 2
+		TNT1 A 0 A_SetScale(args[0]+1)
+	generating:
+		TNT1 AA 1 A_SpawnItemEx("Ice Javelin Orb 1",0,0,0,0,0,0,0,SXF_TRANSFERSCALE)
+		TNT1 AA 1 A_SpawnItemEx("Ice Javelin Orb 2",0,0,0,0,0,0,0,SXF_TRANSFERSCALE)
+		TNT1 A 0 A_JumpIfInTargetInventory("Ice Javelin Timer", 1, 2) 
+		TNT1 A 0 A_JumpIf(true, "death")
+		TNT1 AA 1 A_SpawnItemEx("Ice Javelin Orb 3",0,0,0,0,0,0,0,SXF_TRANSFERSCALE)
+		TNT1 AA 1 A_SpawnItemEx("Ice Javelin Orb 4",0,0,0,0,0,0,0,SXF_TRANSFERSCALE)
+		TNT1 A 0 A_SetArg(0, args[0]+1)
+		TNT1 A 0 A_JumpIfInTargetInventory("Ice Javelin Timer", 1, "generating") 
+		TNT1 A 0 A_JumpIf(true, "death")
+		loop
+	death:
+		TNT1 A 0 A_JumpIf(args[0] > 5, 2)
+		TNT1 A 0 A_PlaySoundEx("ICEJAVEN", "Weapon")
+		TNT1 A 0 A_SetScale(2.5)
+		XWAT QP 2
+		stop}}
+		
+actor "Ice Javelin Head" : proj { +NOINTERACTION radius 8 height 12 damage (0) +RIPPER 
+	speed 16 // XW_ICE_JAVELIN_SPEED+5 (reflection fix)
+	reactiontime 28 +FORCEXYBILLBOARD +DONTREFLECT +DONTBLAST reactiontime 30
+	args 0,0,0,0,0 // [x,y,z,fwdSpd,count]
+	states {
+	spawn: TNT1 A 0
+		TNT1 A 1 A_GiveInventory("varBool")
+		TNT1 A 0 A_SetArg(0, x) TNT1 A 0 A_SetArg(1, y) TNT1 A 0 A_SetArg(2, z)
+		TNT1 A 0 A_SetArg(3, XW_ICE_JAVELIN_SPEED*cos(pitch))
+		TNT1 A 0 A_ChangeFlag("NOINTERACTION", false)
+		TNT1 A 0 ACS_NamedExecuteWithResult("XW", 42, args[3])
+		TNT1 A 0 A_ChangeVelocity(args[3], 0, XW_ICE_JAVELIN_SPEED*-sin(pitch), CVF_RELATIVE | CVF_REPLACE)
+	leading:
+		XWAT M 0 A_GiveInventory("Ice Javelin DoFreeze")
+		XWAT M 1 A_ChangeVelocity(args[3], 0, velz, CVF_RELATIVE | CVF_REPLACE)
+		XWAT M 0 A_GiveInventory("Ice Javelin DoFreeze")
+		XWAT M 1 A_ChangeVelocity(args[3], 0, velz, CVF_RELATIVE | CVF_REPLACE)
+		XWAT M 0 A_GiveInventory("Ice Javelin DoFreeze")
+		XWAT M 1 A_ChangeVelocity(args[3], 0, velz, CVF_RELATIVE | CVF_REPLACE)
+		XWAT M 0 A_RearrangePointers(AAPTR_NULL, AAPTR_TARGET, AAPTR_DEFAULT)
+		XWAT M 0 A_SetArg(4, args[4]+1)
+		XWAT M 0 A_SpawnItemEx("Ice Javelin Body", args[0], args[1], args[2],
+			0,0,velz, 0, SXF_ABSOLUTEPOSITION | SXF_TRANSFERPITCH | SXF_TRANSFERTRANSLATION, 0, 6770+args[4])
+		XWAT M 0 A_RearrangePointers(AAPTR_MASTER, AAPTR_DEFAULT, AAPTR_DEFAULT)
+		// jumping to free state done through async ACS
+		loop
+	death: TNT1 A 0 A_JumpIfInventory("varBool", 1, "end")
+	vanish: TNT1 A 0 A_SpawnItemEx("__Ice Javelin Vanish",0,0,-6) stop
+	
+	// accessed through ACS
+	free: TNT1 A 0 A_TakeInventory("varBool")
+		TNT1 A 0 A_ChangeFlag("DONTBLAST", false)
+		TNT1 A 0 A_ChangeFlag("DONTREFLECT", false)
+	final: XWAT MMMMMMMM 1 A_GiveInventory("Ice Javelin DoFreeze")
+			"----" A 0 A_Countdown loop}}
+	
+actor "Ice Javelin Tail Candidate" : powerup { powerup.duration 5 }
+actor IceJavelinParts : var8 { inventory.maxamount 32 }	
+		
+actor "Ice Javelin Body" : "Ice Javelin Head"  {
+	args 0,0,0,0 // [count, fwdOffset, zOffset, fwdSpd]
+	states {
+		spawn: TNT1 A 0 nodelay A_TransferPointer(AAPTR_TARGET, AAPTR_DEFAULT, AAPTR_MASTER, AAPTR_MASTER)
+			TNT1 A 0 A_RearrangePointers(AAPTR_MASTER, AAPTR_TARGET, AAPTR_DEFAULT)
+			TNT1 A 0 A_SetArg(0, TID-6770)
+			TNT1 A 0 Thing_ChangeTID(0,0)
+			TNT1 A 0 A_SetArg(3, XW_ICE_JAVELIN_SPEED*cos(pitch))
+			TNT1 A 0 A_SetArg(1, XW_ICE_JAVELIN_T*-args[3]*args[0])
+			TNT1 A 0 A_SetArg(2, XW_ICE_JAVELIN_T*-velz*args[0])
+			TNT1 A 0 A_ChangeVelocity(args[3], 0, velz, CVF_RELATIVE | CVF_REPLACE)
+			TNT1 A 0 A_SetScale(CallACS("core_gettarget",0,1)+1)
+			TNT1 A 0 A_ChangeVelocity(args[3], 0, velz, CVF_RELATIVE | CVF_REPLACE)
+			TNT1 A 0 A_Warp(AAPTR_MASTER, args[1], 0, args[2], 0, WARPF_NOCHECKPOSITION)
+			TNT1 A 0 A_ChangeFlag("NOINTERACTION", false)
+			TNT1 A 1 A_GiveInventory("Ice Javelin Tail Candidate")
+		following:
+			XWAT N 0 A_GiveInventory("Ice Javelin DoDmg")
+			TNT1 A 0 A_ChangeVelocity(args[3], 0, velz, CVF_RELATIVE | CVF_REPLACE)
+			XWAT N 0 A_SpawnItemEx("Ice Javelin Body GFX",0,0,0,0,0,0,0,SXF_TRANSFERSCALE)
+			TNT1 A 1 A_Warp(AAPTR_MASTER, args[1], 0, args[2], 0, WARPF_NOCHECKPOSITION)
+			TNT1 A 0 A_RearrangePointers(AAPTR_MASTER, AAPTR_TARGET)
+			XWAT N 0 A_JumpIfInTargetInventory("varBool", 1, 2)
+			XWAT N 0 A_JumpIf(true, "headCheck") // check head status
+			TNT1 A 0 A_RearrangePointers(AAPTR_MASTER, AAPTR_TARGET)
+			goto following
+		headCheck: TNT1 A 0 A_JumpIfCloser(1024, "free") 
+			TNT1 A 0 A_JumpIf(true, "brokenLink")
+		free: 
+			TNT1 A 0 A_RearrangePointers(AAPTR_MASTER, AAPTR_TARGET)
+			ICES B 0 A_ChangeVelocity(args[3], 0, velz, CVF_RELATIVE | CVF_REPLACE)
+			ICES B 0 A_Warp(AAPTR_MASTER, args[1], 0, args[2], 0, WARPF_NOCHECKPOSITION)
+			TNT1 A 0 A_SetScale(2.5)
+			TNT1 A 0 A_ChangeFlag("DONTBLAST", false)
+			TNT1 A 0 A_ChangeFlag("DONTREFLECT", false)
+			XWAT N 0 A_JumpIfInventory("Ice Javelin Tail Candidate", 1, "tail")
+		final: "----" AAAAAAAA 1 A_GiveInventory("Ice Javelin DoDmg") 
+			"----" A 0 A_Countdown loop
+		tail: XWAT O 0
+			goto final
+		brokenLink:
+			XWAT N 0 A_SetScale(1.0+args[0],1.0)
+			TNT1 A 0 A_SpawnItemEx("__Ice Javelin Broken",0,0,0,0,0,0,0,SXF_TRANSFERSCALE|SXF_TRANSFERTRANSLATION) stop
+		death: 
+			XWAT N 0 A_JumpIf(args[0] % 2, "end")
+			goto vanish}}
+			
+			
+actor "Ice Javelin Damager" : proj { +HITTRACER damage (10) +DONTSPLASH +DONTREFLECT
+	radius 26 height 42 damagetype "IceJavelin" obituary "$OB_XWICEJAVELIN" states {
+		spawn: TNT1 A 0
+			TNT1 A 1
+			stop
+		death: goto end
+		xdeath: crash: TNT1 A 0 A_JumpIf(CallACS("XW", XW_IS_SAME_TEAM), "end")
+			TNT1 A 0 A_RearrangePointers(AAPTR_TRACER, AAPTR_NULL, AAPTR_NULL)
+			TNT1 A 0 A_JumpIf(true, "checks")
+		checks:
+			TNT1 A 0 A_JumpIfInTargetInventory("Ice Javelin Protection", 1, "end")
+			TNT1 A 0 A_GiveToTarget("Ice Javelin Protection")
+			stop}}
+			
+actor "Ice Javelin Freeze" : "Ice Javelin Damager" { damage (0) states {
+	checks:
+		TNT1 A 0 A_JumpIfInTargetInventory("Ice Javelin Frozen Lock", 1, "end")
+		TNT1 A 0 A_JumpIf(CallACS("XW", XW_IS_LIVING_BEING, AAPTR_TARGET), 1) goto end
+		TNT1 A 0 A_GiveToTarget("Ice Javelin Frozen")
+		stop}}
+			
+actor "Ice Javelin Frozen" : ITEM { states { pickup:
+	TNT1 A 0 A_SpawnItemEx("__Ice Javelin Prison")
+	TNT1 A 0 ACS_NamedExecuteWithResult("XW", XW_LOCKER, 32)
+	TNT1 A 0 A_GiveInventory("Ice Javelin Frozen Lock")
+	stop}}
+	
+actor "Ice Javelin Frozen Lock" : Powerup { powerup.duration 45
+	powerup.color "a6 ee f9" }
+
+actor "Ice Javelin Protection"  : PowerProtection { powerup.duration 4
+	damagefactor "IceJavelin", 0.0 }
+
+actor "Ice Javelin DoDmg" : item { states { pickup: 
+	TNT1 A 0 A_SpawnItemEx("Ice Javelin Damager", 0,0,0, velx,vely,velz, 0, SXF_ABSOLUTEVELOCITY)
+	stop}}
+actor "Ice Javelin DoFreeze" : "Ice Javelin DoDmg" { states { pickup: 
+	TNT1 A 0 A_SpawnItemEx("Ice Javelin Freeze", 0,0,0, velx,vely,velz, 0, SXF_ABSOLUTEVELOCITY)
+	goto super::pickup}}
+		
+	
+	
+		
+		
+		
+		
+		
+		
+		
+			// ################################ //
+			//  	Visuals / clientside  		//
+			// ################################ //
+			
+			
+actor "Ice Javelin Orb 1" : "XW CS Frame TID" { 
+	translation "198:198=197:197", "192:192=196:196"  +FORCEXYBILLBOARD alpha 0.35 states {
+	sprite: XWAT R 0
+		goto clientSideCheck}}
+actor "Ice Javelin Orb 2" : "Ice Javelin Orb 1" { states { sprite: XWAT S 0
+		goto clientSideCheck}}
+actor "Ice Javelin Orb 3" : "Ice Javelin Orb 1" { states { sprite: XWAT T 0
+		goto clientSideCheck}}
+actor "Ice Javelin Orb 4" : "Ice Javelin Orb 1" { states { sprite: XWAT U 0
+		goto clientSideCheck}}
+		
+actor "__Ice Javelin Vanish" : watcher {
+	states { spawn: TNT1 A 0 nodelay A_SpawnItemEx("Ice Javelin Vanish") stop}}
+		
+actor "Ice Javelin Vanish" : gfx { translation "198:198=197:197", "192:192=196:196" 
+	+FORCEXYBILLBOARD states {
+	spawnframe: TNT1 A 0
+		XWAT TSRQP 2
+		stop}}
+		
+actor "Ice Javelin Dust" : gfx { reactiontime 3 +FORCEXYBILLBOARD states {
+	spawn: TNT1 A 0 A_ChangeVelocity(0,0,-2)
+		XWAT Z 2
+		TNT1 A 2 A_SetScale(-2.5,2.5)
+		XWAT Z 2
+		TNT1 A 2
+		XWAT \ 2
+		TNT1 A 2 A_SetScale(2.5,2.5)
+		XWAT \ 2
+		TNT1 A 2 A_Countdown
+		goto spawn+1}}
+		
+actor "Ice Javelin Debris 1" : gfx { +FORCEXYBILLBOARD reactiontime 5 states {
+	spawn: XWAT V 0
+		goto sprite
+	sprite: "----" A 0 A_ChangeVelocity(random(-6,6), random(-4,4), 8)
+		"----" A 0 A_Jump(true, 1, "animation")
+		"----" A 0 A_SetScale(scalex*-1, scaley)
+	animation:
+		"----" A 2 ThrustThingZ(0,8,1,1)
+		"----" A 2 A_FadeOut(0.6)
+		"----" A 0 A_FadeIn(0.6)
+		"----" AA 2 ThrustThingZ(0,8,1,1)
+		"----" A 0 A_Countdown
+		loop}}
+
+actor "Ice Javelin Debris 2" : "Ice Javelin Debris 1" { states { spawn: XWAT W 0
+	goto sprite}}
+actor "Ice Javelin Debris 3" : "Ice Javelin Debris 1" { states { spawn: XWAT X 0
+	goto sprite}}
+	
+actor "__Ice Javelin Broken" : watcher { +NOINTERACTION
+	states { spawn: TNT1 A 0 nodelay A_SpawnItemEx("Ice Javelin Broken",
+		0,0,0,0,0,0,0,SXF_TRANSFERSCALE|SXF_TRANSFERTRANSLATION) stop}}
+	
+actor "Ice Javelin Broken" : gfx { args 0
+	renderstyle "translucent" alpha 0.6 states { spawn: TNT1 A 0
+		TNT1 A 0 A_SetArg(0, scalex-1)
+		TNT1 A 0 A_SetScale(2.5)
+		XWAT N 69 A_SetTics(args[0]*2)
+		XWAT N 0 A_PlaySoundEx("ICEJAVBK", "Weapon") 
+		XWAT N 0 A_SpawnItemEx("Ice Javelin Dust",0,0,0,0,0,0,0,SXF_TRANSFERTRANSLATION)
+		TNT1 A 0 A_JumpIf(!(args[0] % 3), "eclat1")
+		TNT1 A 0 A_JumpIf((args[0] % 3) == 1, "eclat2")
+		goto eclat3
+		eclat1: TNT1 A 0 A_SpawnItemEx("Ice Javelin Debris 1",0,0,0,0,0,0,0,SXF_TRANSFERTRANSLATION) stop
+		eclat2: TNT1 A 0 A_SpawnItemEx("Ice Javelin Debris 2",0,0,0,0,0,0,0,SXF_TRANSFERTRANSLATION) stop
+		eclat3: TNT1 A 0 A_SpawnItemEx("Ice Javelin Debris 3",0,0,0,0,0,0,0,SXF_TRANSFERTRANSLATION) stop}}
+		
+actor "Ice Javelin Body GFX" : "XW CS Frame TID" { alpha 0.2 
+	+FORCEXYBILLBOARD states { sprite: XWAT N 0
+		goto clientSideCheck}}
+		
+actor "__Ice Javelin Prison" : watcher {
+	states { spawn: TNT1 A 0 nodelay A_SpawnItemEx("Ice Javelin Prison",12)
+		TNT1 A 0 A_PlaySoundEx("ICEJAVFR", "SoundSlot6") stop}}
+		
+actor "Ice Javelin Prison" : gfx { +FORCEXYBILLBOARD 
+	reactiontime 3 states { spawn: XWAT Y 22
+	blink: XWAT Y 2 A_FadeOut(0.8) XWAT Y 2 A_FadeIn(0.8) "----" A 0 A_Countdown
+		loop}}

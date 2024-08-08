@@ -1,0 +1,324 @@
+const int XW_BRANDISHING_BLADE_AMMO = 10;//*XW_AMMOBAR_UNIT;
+const int XW_BRANDISHING_BLADE_RADIUS = 270;
+const int XW_BRANDISHING_BLADE_RADIUS_MAX = XW_BRANDISHING_BLADE_RADIUS/4;
+const int XW_BRANDISHING_SLICER = XW_BRANDISHING_BLADE_RADIUS/4;
+
+const int XW_BRANDISH_ADD_FURY = 1;
+const int XW_BRANDISH_HIT_FURY = XW_BRANDISH_ADD_FURY*4;
+const int XW_BRANDISH_FURY = 32;
+//const int XW_BRANDISH_FURY_COST = XW_BRANDISH_FURY/2;
+actor BrandishingBladeFuryStack : var8 { inventory.maxamount 32 }
+
+actor XWBrandishingBladeWep : BaseXoverWep {
+	weapon.slotNumber 3 	
+	inventory.icon "BRNDBLAD" obituary "$OB_XWBRANDISHINGBLADE" tag "$TAG_XWBRANDISHINGBLADE"
+	states {
+		noAmmo: XWAP B 0 offset(0,32)
+			goto super::noAmmo		
+		select: XWAP B 0 ACS_NamedExecuteWithResult("core_weaponcolor",6765)
+			goto super::select
+		ready: XWAP B 0 offset(0,32)
+			goto super::ready
+		deselect: XWAP B 0 offset(0,32) A_TakeInventory("varBool")
+			XWAP B 0 offset(0,32) A_TakeInventory("var8")
+			goto super::deselect
+		holdDab0: XWAP F 1 offset(60,32) A_JumpIfInventory("BrandishingBladeFuryStack", XW_BRANDISH_FURY, "danceAmmoCheck")
+			XWAP F 0 A_ReFire(1) goto slash
+		holdDab1: XWAP F 1 offset(120,16) A_JumpIfInventory("BrandishingBladeFuryStack", XW_BRANDISH_FURY, "danceAmmoCheck")
+			XWAP F 0 A_JumpIfInventory("IsBot", 1, "slash")
+			XWAP F 0 A_ReFire(1) goto slash
+		holdDab2: XWAP F 1 offset(120,16) A_JumpIfInventory("BrandishingBladeFuryStack", XW_BRANDISH_FURY, "danceAmmoCheck")
+			XWAP F 0 A_ReFire(1) goto slash
+		holdDab3: XWAP F 1 offset(120,16) A_JumpIfInventory("BrandishingBladeFuryStack", XW_BRANDISH_FURY, "danceAmmoCheck")
+			XWAP F 0 A_ReFire(1) goto slash
+		holdDab4: XWAP F 1 offset(120,16) A_JumpIfInventory("BrandishingBladeFuryStack", XW_BRANDISH_FURY, "danceAmmoCheck")
+			XWAP F 0 A_ReFire(1) goto slash
+		holdDab5: XWAP F 1 offset(120,16) A_JumpIfInventory("BrandishingBladeFuryStack", XW_BRANDISH_FURY, "danceAmmoCheck")
+			XWAP F 0 A_ReFire(1) goto slash
+		holdDab6: XWAP F 1 offset(120,16) A_JumpIfInventory("BrandishingBladeFuryStack", XW_BRANDISH_FURY, "danceAmmoCheck")
+			XWAP F 0 A_ReFire(1) goto slash
+		holdDab7: XWAP F 1 offset(110,8) A_JumpIfInventory("BrandishingBladeFuryStack", XW_BRANDISH_FURY, "danceAmmoCheck")
+			XWAP F 0 A_ReFire(1) goto slash
+		holdDab8: XWAP F 1 offset(100,1) A_JumpIfInventory("BrandishingBladeFuryStack", XW_BRANDISH_FURY, "danceAmmoCheck")
+			XWAP F 0 A_ReFire(1) goto slash
+		holdDab9: XWAP B 1 offset(20,48) A_JumpIfInventory("BrandishingBladeFuryStack", XW_BRANDISH_FURY, "danceAmmoCheck")
+			XWAP F 0 A_ReFire(1) goto slash
+		holdDab10: XWAP B 1 offset(10,36) A_JumpIfInventory("BrandishingBladeFuryStack", XW_BRANDISH_FURY, "danceAmmoCheck")
+			XWAP F 0 A_ReFire("fire") goto slash
+			
+		fire: altfire:
+			XWAP B 0 A_JumpIfInventory("BrandishingBladeFuryStack", XW_BRANDISH_FURY, "danceAmmoCheck")
+			XWAP B 0 A_JumpIfInventory("IsBot", 1, "slash")
+			goto freeHold			
+		freeHold:
+			XWAP B 2 A_WeaponReady
+			goto slash
+		slash:
+			XWAD D 0 A_PlaySoundEx("BRNDBLAD", "Weapon")
+			XWAP D 0 A_SpawnItemEx("Brandish Slash", 56*cos(pitch), 0, 24+(56*sin(-pitch)))
+			XWAC J 0 A_JumpIfInventory("PowerSpreadRune", 1, "spreadSlash") goto slashVisuals
+		spreadSlash:
+			XWAP D 0 A_SpawnItemEx("Brandish Slash", 56*cos(pitch), 0, 24+(56*sin(-pitch)),0,0,0,45)
+			XWAP D 0 A_SpawnItemEx("Brandish Slash", 56*cos(pitch), 0, 24+(56*sin(-pitch)),0,0,0,-45)
+		slashVisuals:
+			XWAP D 0 A_GunFlash("noflash", GFF_NOEXTCHANGE)
+			XWAP D 1 offset(-200,64) 
+			XWAP D 1 offset(-80,40)
+			XWAP D 1 offset(40,16)
+			XWAP F 1 offset(1,48)
+		dab:
+			XWAP F 1 offset(60,32) A_ReFire("holdDab0")
+			XWAP F 1 offset(120,16) A_ReFire("holdDab1")
+			XWAP F 1 offset(120,16) A_ReFire("holdDab2")
+			XWAP F 1 offset(120,16) A_ReFire("holdDab3")
+			XWAP F 1 offset(120,16) A_ReFire("holdDab4")
+			XWAP F 1 offset(120,16) A_ReFire("holdDab5")
+			XWAP F 1 offset(120,16) A_ReFire("holdDab6")
+			XWAP F 1 offset(110,8) A_ReFire("holdDab7")
+			XWAP F 1 offset(100,1) A_ReFire("holdDab8")
+			XWAP B 1 offset(20,48) A_ReFire("holdDab9")
+			XWAP B 1 offset(10,36) A_ReFire("holdDab10")
+			goto ready
+			
+		danceAmmoCheck:
+			XWAP B 0 A_JumpIf(!CallACS("XW Ammo Check", 10), "freeHold")
+			goto danceCharge
+		
+		danceCharge:
+			XWAP B 1 offset(-1, 32) 
+			XWAP D 0 A_Refire(1) goto slash				
+			XWAP B 1 offset(-2, 32)
+			XWAP D 0 A_Refire(1) goto slash	
+			XWAP B 1 offset(-4, 33)
+			XWAP D 0 A_Refire(1) goto slash	
+			XWAP B 1 offset(-6, 34)
+			XWAP D 0 A_Refire(1) goto slash	
+			XWAP B 1 offset(-9, 36)
+			XWAP D 0 A_Refire(1) goto slash	
+			XWAP B 1 offset(-13, 38)
+			XWAP D 0 A_Refire(1) goto slash	
+			XWAP D 0 A_GunFlash("chargeGFX", GFF_NOEXTCHANGE)
+			XWAP B 1 offset(-18, 41) A_PlaySoundEx("BRNDCHRG", "Weapon")
+			XWAP D 0 A_Refire(1) goto slash	
+			XWAP B 1 offset(-26, 45)
+			XWAP D 0 A_Refire(1) goto slash	
+			XWAP B 1 offset(-37, 51)
+			XWAP D 0 A_Refire(1) goto slash	
+			XWAP B 1 offset(-50, 58)
+			XWAP D 0 A_Refire(1) goto slash	
+		bendArm:
+			XWAP D 1 offset(1, 58)
+			XWAP D 0 A_Refire(1) goto slash	
+			XWAP D 1 offset(-40, 60)
+			XWAP D 0 A_Refire(1) goto slash	
+			XWAP D 1 offset(-77, 61)
+			XWAP D 0 A_Refire(1) goto slash	
+			XWAP D 1 offset(-99, 62)
+			XWAP D 0 A_Refire(1) goto slash	
+			XWAP D 1 offset(-120, 63)
+			XWAP D 0 A_Refire(1) goto slash	
+			
+			XWAP D 1 offset(-138, 64)
+			XWAP D 0 A_Refire(1) goto slash	
+			XWAP D 1 offset(-152, 64)
+			XWAP D 0 A_Refire(1) goto slash	
+			XWAP D 1 offset(-163, 65)
+			XWAP D 0 A_Refire(1) goto slash	
+			XWAP D 1 offset(-172, 65)
+			XWAP D 0 A_Refire(1) goto slash	
+			XWAP D 1 offset(-179, 66)
+			XWAP D 0 A_Refire(1) goto slash	
+			
+			XWAP D 1 offset(-185, 66)
+			XWAP D 0 A_Refire(1) goto slash	
+			XWAP D 1 offset(-190, 66)
+			XWAP D 0 A_Refire(1) goto slash	
+			XWAP D 1 offset(-194, 67)
+			XWAP D 0 A_Refire(1) goto slash	
+			XWAP D 1 offset(-197, 67)
+			XWAP D 0 A_Refire(1) goto slash	
+			XWAP D 1 offset(-199, 67)
+			XWAP D 0 A_Refire(1) goto slash	
+			
+			XWAP D 1 offset(-202, 68)
+			XWAP D 0 A_Refire(1) goto slash	
+			XWAP D 1 offset(-203, 68)
+			XWAP D 0 A_Refire(1) goto slash	
+			XWAP D 1 offset(-204, 68)
+			XWAP D 0 A_Refire(1) goto slash	
+			XWAP D 1 offset(-206, 68)
+			XWAP D 0 A_Refire(1) goto slash	
+			XWAP D 1 offset(-206, 69)
+			XWAP D 0 A_Refire(1) goto slash	
+			
+			XWAP D 1 offset(-207, 69)
+			XWAP D 0 A_Refire(1) goto slash	
+			XWAP D 1 offset(-208, 69)
+			XWAP D 0 A_Refire(1) goto slash	
+			XWAP D 1 offset(-208, 69)
+			XWAP D 0 A_Refire(1) goto slash	
+			XWAP D 1 offset(-208, 70)
+			XWAP D 0 A_Refire(1) goto slash	
+			XWAP D 1 offset(-209, 70)
+			XWAP D 0 A_Refire(1) goto slash	
+			XWAP D 0 A_PlaySoundEx("BRNDCHGX", "Voice")
+			XWAP D 0 A_JumpIfInventory("IsBot", 1, "botDanceReady")
+			
+		danceReady: XWAP D 1 offset(-210,70)
+			XWAP D 0 A_Refire("danceReady")
+			goto bladeDance
+		
+		botDanceReady: XWAP D 12 offset(-210,70) A_Jump(128, "bladeDance")
+			loop
+			
+		bladeDance:
+			XWAP D 0 A_GunFlash("noflash", GFF_NOEXTCHANGE)
+			TNT1 A 0 A_Recoil(-12)
+			TNT1 A 0 ACS_NamedExecuteWithResult("core_freezeplayer", 0, true)
+			TNT1 A 0 A_SetArg(0,velx)
+			TNT1 A 0 A_SetArg(1,vely)
+			TNT1 A 0 A_TakeInventory("var8")
+			TNT1 A 0 A_TakeInventory("varBool")
+			TNT1 A 0 A_TakeInventory("BrandishingBladeFuryStack", XW_BRANDISH_FURY)
+			TNT1 A 0 ACS_NamedExecuteAlways("XW Ammo Use", 0, 10)
+			TNT1 A 0 A_GiveInventory("Brandishing BladeDance Protection")
+			goto dance
+			
+		sliceRight:
+			XWAP D 1 offset(1, 32) A_GiveInventory("Brandishing Slice")
+			XWAP K 1 offset(21, 32) A_GiveInventory("Brandishing Slice")
+			XWAP F 1 offset(107, -42) A_GiveInventory("Brandishing Slice")
+			goto dance
+			
+		sliceLeft:
+			XWAP L 1 offset(1, 32) A_GiveInventory("Brandishing Slice")
+			XWAP M 1 offset(-19, 32) A_GiveInventory("Brandishing Slice")
+			XWAP N 1 offset(-34, -42) A_GiveInventory("Brandishing Slice")
+			goto dance
+			
+		dance: "----" A 0 A_GiveInventory("Brandishing BladeDance Tic")
+			"----" A 0 A_JumpIfInventory("var8", 20, "endDance")
+			"----" A 0 A_GiveInventory("var8")
+			"----" A 0 A_JumpIf(random(0,1) == 0, "sliceLeft")
+			goto sliceRight
+			
+		endDance:
+			TNT1 A 0 A_TakeInventory("Brandishing BladeDance Protection")
+			TNT1 A 0 ACS_NamedExecuteWithResult("core_freezeplayer", 0, false)
+			TNT1 A 0 A_SetAngle(angle+random(0,359)) //   o wo ?
+			TNT1 A 0 A_WeaponReady(WRF_NOFIRE | WRF_DISABLESWITCH)
+			TNT1 A 0 A_WeaponReady(WRF_NOFIRE | WRF_NOSWITCH)
+			goto slashVisuals
+		
+		chargeGFX:
+			TNT1 A 1 A_SetArg(2, random(-96,96))
+			TNT1 A 0 A_SpawnItemEx("Brandishing Blade Charge", 
+				96, 0, 28+args[2], 0, 0,  (-args[2])/4, random(0,359))
+			loop}}
+			
+		
+	
+actor "Brandish Slash" : proj { +NOINTERACTION
+	 scale 3.5 translation "192:192=84:84" renderstyle "normal" +FORCEXYBILLBOARD states { 
+	spawn: TNT1 A 0 
+		TNT1 A 0 A_JumpIfInTargetInventory("BrandishingBladeFuryStack", XW_BRANDISH_FURY, "noStack")
+		goto stack
+	noStack: TNT1 A 0 A_SpawnItemEx("Branding Slash Damager",0,0,-50)
+		goto gfx
+	stack: TNT1 A 0 A_SpawnItemEx("Branding Slash Damager++",0,0,-50)
+		goto gfx
+	gfx:
+		XWAP GHI 1
+		stop}}
+	
+actor "Branding Slash Damager" : proj { obituary "$OB_XWBRANDISHINGBLADE" +HITTRACER
+	damagetype "BrandishingBlade" damage (14) radius 50 height 100 // +DONTDEFLECT
+	states { spawn: TNT1 AA 0
+			stop}}
+			
+actor "Branding Slash Damager++" : "Branding Slash Damager" {
+	states { 
+		spawn:
+			TNT1 AA 0
+		basicStack: death:
+			XWAD D 0 A_JumpIfInTargetInventory("BrandishingBladeFuryStack", XW_BRANDISH_FURY-XW_BRANDISH_ADD_FURY, "danceReady")
+			goto slashStack
+		
+		slashStack:
+			XWAD D 0 A_GiveToTarget("BrandishingBladeFuryStack", XW_BRANDISH_ADD_FURY)
+			stop
+		slashHitStack:
+			XWAD D 0 A_GiveToTarget("BrandishingBladeFuryStack", XW_BRANDISH_HIT_FURY)
+			stop
+			
+		xdeath: crash: 
+			TNT1 A 0 A_JumpIf(CallACS("XW", XW_IS_PLAYER, AAPTR_TRACER), 1) goto basicStack
+			TNT1 A 0 A_JumpIf(CallACS("XW", XW_IS_SAME_TEAM), "basicStack")
+		hitStack: 		
+			TNT1 A 0 A_JumpIfInTargetInventory("BrandishingBladeFuryStack", XW_BRANDISH_FURY-XW_BRANDISH_HIT_FURY, "danceReady")
+				goto slashHitStack
+			
+		danceReady:
+			XWAD D 0 A_GiveToTarget("Brandishing Blade Ready SFX")
+			XWAD D 0 A_GiveToTarget("BrandishingBladeFuryStack", XW_BRANDISH_FURY)
+			stop}}
+	
+	
+actor "Brandishing Blade Ready SFX" : item { states {
+	pickup: TNT1 A 0 A_PlaySoundEx("BRNDFULL", "SoundSlot6")
+		stop}}
+	
+	
+	
+	
+			// ################################ //
+			//			 BLADE DANCE			//
+			// ################################ //
+
+actor "Brandishing BladeDance Protection" : PowerProtection { 
+	powerup.duration 0x7FFFFFFA
+	damagefactor "normal", 0.0 
+	damagefactor "crush", 1.0 damagefactor "telefrag", 1.0
+	damagefactor "falling", 1.0 damagefactor "fire", 1.0
+	damagefactor "drowning", 1.0 damagefactor "slime", 1.0
+	damagefactor "spiney", 1.0 damagefactor "ice", 1.0	}
+	
+	
+actor "Brandishing BladeDance Tic" : item { states {
+	pickup: TNT1 A 0 A_ChangeVelocity(args[0], args[1], velz, CVF_REPLACE)
+			TNT1 A 0 A_Blast(0, 255, XW_BRANDISHING_BLADE_RADIUS, 42) // *sweats profusely*
+			TNT1 A 0 A_SetAngle(angle+80)
+			TNT1 A 0 A_SpawnItemEx("Brandishing BladeDance")
+			XWAC J 0 A_JumpIfInventory("PowerSpreadRune", 1, 1) goto afterSlash
+			TNT1 AA 0 A_SpawnItemEx("Brandishing BladeDance")
+		afterSlash:
+			TNT1 A 0 A_JumpIfInventory("varBool", 1, "alt")
+			TNT1 A 0 A_PlaySoundEx("BRNDDANC", "Weapon")
+			TNT1 A 0 A_GiveInventory("varBool")
+			stop
+		alt: TNT1 A 0 A_TakeInventory("varBool")
+			stop}}
+			
+actor "Brandishing BladeDance" : watcher { damagetype "BrandishingBladeDance"
+	obituary "$OB_XWBRANDISHINGBLADEDANCE" states {
+		spawn: TNT1 A 0 nodelay A_Explode(10, XW_BRANDISHING_BLADE_RADIUS, 0,0,XW_BRANDISHING_BLADE_RADIUS_MAX)
+			stop}}
+			
+actor "Brandishing Slice" : item { states { 
+	pickup: TNT1 AAAA 0 A_SpawnItemEx("Brandishing Slice GFX", 56, 0, random(15,41), XW_BRANDISHING_SLICER, 0, random(-24,24), random(0,359))
+				stop}}
+				
+actor "Brandishing Slice GFX" : gfx { translation "192:192=160:160"
+	+FORCEXYBILLBOARD states { spawnframe: TNT1 A 0
+		XWAP GHI 1
+		stop}}
+		
+actor "Brandishing Blade Charge" : "XW CS Frame" { scale 2.0
+	translation "130:130=186:186", "104:104=175:175", "110:110=180:180"
+	alpha 0.1 +FORCEXYBILLBOARD
+	states { 
+		otherPOV:
+			"----" A 0 A_FadeIn(0.3)
+		clientSidePOV: TNT1 A 0 A_ChangeVelocity(-12*cos(pitch), 0, velz, CVF_RELATIVE | CVF_REPLACE)
+			GDEV FFGGH 1 A_FadeIn(0.08)
+			stop}}

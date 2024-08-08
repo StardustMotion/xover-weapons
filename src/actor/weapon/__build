@@ -1,5 +1,79 @@
 
-#include "actor/weapon/_base"
+#include "actor/weapon/_weapon"
 
-#include "actor/weapon/delayflame"
-#include "actor/weapon/glueshot"
+// 2D
+#include "actor/weapon/metGuard1"
+#include "actor/weapon/delayFlame"
+#include "actor/weapon/recycleInhaler"
+#include "actor/weapon/forestWhip"
+#include "actor/weapon/blastMissile"
+#include "actor/weapon/thousandSpear"
+#include "actor/weapon/whiteRoseCluster"
+#include "actor/weapon/leafBoomerang"
+#include "actor/weapon/scatteRring"
+#include "actor/weapon/yogaInferno"
+#include "actor/weapon/glueShot"
+#include "actor/weapon/superArrow"
+#include "actor/weapon/hellfireCutter"
+#include "actor/weapon/timeBomb"
+#include "actor/weapon/virusOutbreak"
+#include "actor/weapon/photonFlare"
+#include "actor/weapon/brandishingBlade"
+#include "actor/weapon/dopplerAttack"
+#include "actor/weapon/iceJavelin"
+
+// 3D
+#include "actor/weapon/metGuard2"
+#include "actor/weapon/thousandSpearV2"
+#include "actor/weapon/countershadingTracer"
+#include "actor/weapon/iceGatling"
+#include "actor/weapon/jawzHunters"
+
+// 4D
+#include "actor/weapon/metGuard3"
+#include "actor/weapon/thousandSpearV3"
+#include "actor/weapon/thousandKnives"
+#include "actor/weapon/fallingSteelSword"
+
+// 5D
+#include "actor/weapon/metGuard3EX"
+#include "actor/weapon/thousandSpearV5"
+
+actor "Xover Weapons" : item { states { pickup:
+    TNT1 A 0 A_GiveInventory("XWBlastMissileWep")
+    TNT1 A 0 A_GiveInventory("XWBrandishingBladeWep")
+    TNT1 A 0 A_GiveInventory("XWCountershadingTracerWep")
+    TNT1 A 0 A_GiveInventory("XWDelayFlameWep")
+    TNT1 A 0 A_GiveInventory("XWDopplerAttackWep")
+    TNT1 A 0 A_GiveInventory("XWFallingSteelSwordWep")
+    TNT1 A 0 A_GiveInventory("XWForestWhipWep")
+    TNT1 A 0 A_GiveInventory("XWGlueShotWep")
+    TNT1 A 0 A_GiveInventory("XWHellfireCutterWep")
+    TNT1 A 0 A_GiveInventory("XWIceGatlingWep")
+    TNT1 A 0 A_GiveInventory("XWIceJavelinWep")
+    TNT1 A 0 A_GiveInventory("XWJawzHuntersWep")
+    TNT1 A 0 A_GiveInventory("XWLeafBoomerangWep")
+    TNT1 A 0 A_GiveInventory("XWMetGuard1Wep")
+    TNT1 A 0 A_GiveInventory("XWMetGuard2Wep")
+    TNT1 A 0 A_GiveInventory("XWMetGuard3Wep")
+    TNT1 A 0 A_GiveInventory("XWMetGuard3EXWep")
+    TNT1 A 0 A_GiveInventory("XWPhotonFlareWep")
+    TNT1 A 0 A_GiveInventory("XWRecycleInhalerWep")
+    TNT1 A 0 A_GiveInventory("XWScatterRingWep")
+    TNT1 A 0 A_GiveInventory("XWSonicSlicerWep")
+    TNT1 A 0 A_GiveInventory("XWSuperArrowWep")
+    TNT1 A 0 A_GiveInventory("XWThousandKnivesWep")
+    TNT1 A 0 A_GiveInventory("XWThousandSpearWep")
+    TNT1 A 0 A_GiveInventory("XWThousandSpearV2Wep")
+    TNT1 A 0 A_GiveInventory("XWThousandSpearV3Wep")
+    TNT1 A 0 A_GiveInventory("XWThousandSpearV5Wep")
+    TNT1 A 0 A_GiveInventory("XWTimeBombWep")
+    TNT1 A 0 A_GiveInventory("XWVirusOutbreakWep")
+    TNT1 A 0 A_GiveInventory("XWWhiteRoseClusterWep")
+    TNT1 A 0 A_GiveInventory("XWYogaInfernoWep")
+stop}}
+
+
+
+
+    

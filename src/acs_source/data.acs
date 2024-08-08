@@ -1,8 +1,34 @@
+#DEFINE XW_CAMERA_TID 7800
+
 // ------------------------------------------ //
 //    				server			     	  //
 // ------------------------------------------ //
 
 // ------------------- core ------------------- //
-#DEFINE XW_WEP_PICKUP 1
-#DEFINE XW_ARTIFICIAL_RESPAWN 2
-#DEFINE XW_MODS_PICKUP 3
+#DEFINE XW_WARP_2_TID 9
+#DEFINE XW_DIST_TO_TARGET 10
+#DEFINE XW_HEALTH_TRIBUTE 12
+#DEFINE XW_IS_SPEC 19
+#DEFINE XW_GET_ACTOR_PROPERTY 21
+#DEFINE XW_ASYNC_STATE 22
+#DEFINE XW_IS_SAME_TEAM 23
+#DEFINE XW_BLIND 29
+#DEFINE XW_SET_ACTOR_PROPERTY 30
+#DEFINE XW_IS_PLAYER 31
+    #DEFINE XW_DOPPLER_DELTA 24.0 // 34
+#DEFINE XW_IS_LIVING_BEING 36
+#DEFINE XW_MONSTER_SPEED 38
+#DEFINE XW_PULL_TO_TID 41
+
+#DEFINE XW_EARTHQUAKE 64
+#DEFINE XW_LOCKER 65
+#DEFINE XW_ARTIFICIAL_RESPAWN 66
+#DEFINE XW_MODS_PICKUP 67
+
+
+// ------------------------------------------ //
+//    				client			     	  //
+// ------------------------------------------ //
+
+// ------------------- core ------------------- //
+#DEFINE XW_CS_POV 0

@@ -1,0 +1,198 @@
+const int XW_THOUSAND_KNIVES_AMMO = 37;// * XW_AMMOBAR_UNIT;
+
+actor XWThousandKnivesWep : BaseXoverWep { 
+	weapon.slotNumber 6 	
+	inventory.icon "THSNKNIV"	obituary "$OB_XWTHOUSANDKNIVES"	tag "$TAG_XWTHOUSANDKNIVES"
+	states {
+		noAmmo: XWAF R 0 offset(0,32)
+			goto super::noAmmo
+		select: XWAF R 0 ACS_NamedExecuteWithResult("core_weaponcolor",6749)
+			goto super::select
+		ready: XWAF R 0
+			goto super::ready	
+	
+			
+		fire: altfire: hold: althold:
+			"----" A 0 A_JumpIfInventory("isBot", 1, "botStrategy")
+			"----" A 0 A_JumpIfInventory("ThousandKnivesCooldown", 1, "ready")
+			"----" A 0 A_JumpIf(!CallACS("XW Ammo Check", XW_THOUSAND_KNIVES_AMMO), "noAmmo")
+			goto leMonde
+
+		leMonde:
+			XWAF R 2
+			XWAF R 1 offset(-4,40)
+			XWAF R 1 offset(-7,46)
+			XWAF R 3 offset(-10,50)	
+			XWAF R 1 offset(-4,40)
+			XWAF S 1 offset(2,30)
+			XWAF S 1 offset(8,20)
+			XWAF S 1 offset(14,10)
+			
+			FLAS D 0 ACS_NamedExecuteAlways("core_whiteflash",0)
+			XWAC J 0 ACS_NamedExecuteAlways("XW Ammo Use", 0, XW_THOUSAND_KNIVES_AMMO)
+			FLAS D 0 A_PlaySoundEx("weapon/timestopper","Weapon")
+			TNT1 A 0 A_SpawnItem("Thousand Knives CD Watcher")
+			XWAC J 0 ACS_NamedExecuteAlways("XW", 0, XW_LOCKER, 12)
+			XWAC J 0 A_SpawnItemEx("Thousand Knives AOE",0,0,0,0,0,0,0,0,0,TID+5770)
+			XWAC J 0 A_JumpIfInventory("PowerSpreadRune", 1, 1) goto afterLeMonde
+			XWAF S 1 offset(20,0)
+			XWAF S 1 offset(20,0) A_SpawnItemEx("Thousand Knives AOE",0,0,48,0,0,0,0,0,0,TID+5770)
+			TNT1 A 0 A_SpawnItemEx("Thousand Knives AOE",0,0,96,0,0,0,0,0,0,TID+5770)
+			goto afterLeMonde+1
+		afterLeMonde:
+			XWAF S 2 offset(20,0)
+			XWAF S 18 offset(20,0)
+			XWAF S 1 offset(20,0)
+			XWAF S 1 offset(14,10)
+			XWAF S 1 offset(8,20)
+			XWAF R 1 offset(5,24)
+			XWAF R 1 offset(2,28)
+			goto ready
+			
+		botStrategy:
+			"----" A 0 A_JumpIfInventory("ThousandKnivesCooldown", 1, 1)
+			goto leMonde
+			BUST B 0 A_PlaySoundEx("weapon/mbuster","Weapon")
+			BUST B 0 A_FireCustomMissile("MegaShot",0,0,8,0)
+			BUST CD 3
+			BUST B 2
+			BUST B 0 A_Refire
+			goto ready}}
+			
+const int XW_THOUSANDKNIVES_RADIUS = 350; //TSTOPPER_RADIUS
+const int XW_THOUSANDKNIVE_SPD1 = XW_THOUSANDKNIVES_RADIUS/17;
+const int XW_THOUSANDKNIVE_SPD2 = XW_THOUSANDKNIVE_SPD1*3;
+const int XW_THOUSANDKNIVES_TIME = 105-26; // knives release time based on CC duration
+
+// ------------------------ GAMEPLAY ------------------------ //
+
+actor ThousandKnivesCooldown : var8 { inventory.maxamount 70 } // *5 tics
+
+actor "Thousand Knives CD Watcher" : watcher { states { 
+	spawn: TNT1 A 0 nodelay A_GiveToTarget("ThousandKnivesCooldown", 70)
+	being:
+		TNT1 A 5
+		TNT1 A 0 A_TakeFromTarget("ThousandKnivesCooldown", 1)
+		TNT1 A 0 A_JumpIfInTargetInventory("ThousandKnivesCooldown", 1, "being")
+		stop}}
+
+actor "Thousand Knives AOE" : watcher { obituary "$OB_XWTHOUSANDKNIVES"
+	damagetype "ThousandKnivesStop" reactiontime 18
+	args 0,0 // [timeElapsed, knifeTimedRelease]
+	states { 
+	spawn: TNT1 A 0
+		TNT1 A 0 A_RadiusGive("XW TID Data", XW_THOUSANDKNIVES_RADIUS, RGF_PLAYERS | RGF_MONSTERS | RGF_CUBE, TID-5770)
+		TNT1 A 0 A_RadiusGive("Thousand Knives Frozen", XW_THOUSANDKNIVES_RADIUS, RGF_PLAYERS | RGF_MONSTERS | RGF_CUBE)
+		TNT1 A 0 Thing_ChangeTID(0,0)
+		TNT1 A 0 A_Explode(7, XW_THOUSANDKNIVES_RADIUS, 0, 0, XW_THOUSANDKNIVES_RADIUS)
+		TNT1 A 0 A_SpawnItemEx("Thousand Knives Party")
+	circles:
+		TNT1 A 0 A_SetArg(1,6770+(XW_THOUSANDKNIVES_TIME-args[0]))
+		TNT1 A 0 A_SetArg(2,(args[0]%4)/2)
+		// inner circle
+		TNT1 A 0 A_SpawnItemEx("Thousand Knives Knife", 0, 0, 22, XW_THOUSANDKNIVE_SPD1, 0, 0, (180*args[2])+((args[0]/4)*20), 0, 0, args[1])
+		// outer circle
+		TNT1 A 0 A_SpawnItemEx("Thousand Knives Knife", 0, 0, 22, -XW_THOUSANDKNIVE_SPD2, 0, 0, args[0]*5, 0, 0, args[1])
+		TNT1 A 0 A_SpawnItemEx("Thousand Knives Knife", 0, 0, 22, -XW_THOUSANDKNIVE_SPD2, 0, 0, 180+(args[0]*5), 0, 0, args[1])
+		TNT1 A 2 A_SetArg(0,args[0]+2)
+		TNT1 A 0 A_Countdown
+		loop
+	death: 
+		TNT1 A 69 A_SetTics(XW_THOUSANDKNIVES_TIME-args[0])
+		TNT1 A 20 A_PlaySoundEx("THSNKNF3", "Weapon")
+		stop}}
+
+// +SCREENSEEKER
+actor "Thousand Knives Knife" : proj { height 8 radius 14 +RIPPER 
+	renderstyle "translucent" alpha 0.67  +FORCEXYBILLBOARD +THRUGHOST +DONTREFLECT 
+	+DONTBLAST +SEEKERMISSILE  +BOUNCEONWALLS wallbouncefactor 0.0 
+	speed 4 reactiontime 33 scale 1.5 obituary "$OB_XWTHOUSANDKNIVESKNIFE" damagetype "ThousandKnives" damage (0)
+	states { 
+		spawn: 
+			TNT1 A 0 nodelay ACS_NamedExecuteWithResult("XW", XW_ASYNC_STATE, TID-6770)
+			TNT1 A 6 Thing_ChangeTID(0,0)		
+			TNT1 A 0 A_Stop
+			TNT1 A 0 A_SpawnItemEx("Thousand Knives Particle",0,0,20)
+			TNT1 A 0 A_ChangeFlag("DONTBLAST", false)
+		being: XWAF Q 69// waiting for async
+			loop
+		promiseThen: 
+			TNT1 A 0 A_ChangeFlag("BOUNCEONWALLS", false)
+			TNT1 A 0 A_ChangeFlag("THRUGHOST", false)
+			TNT1 A 0 A_ChangeFlag("DONTREFLECT", false)
+			XWAF Q 0 A_FadeIn(0.33)
+			XWAF Q 0 A_ChangeVelocity(4, 0, 0, CVF_REPLACE | CVF_RELATIVE)
+			TNT1 A 0 A_SeekerMissile(69, 70, SMF_LOOK | SMF_PRECISE, 256, 5)
+		grazeTime:
+			XWAF Q 6 A_Explode(2,14,0,0,14)
+			XWAF Q 0 A_Countdown
+			loop
+		death:
+			XWAF QQQQQ 1 A_FadeOut(0.15)
+			stop}}
+
+
+			
+// ------------------------ STATUS ------------------------ //
+
+
+// should reuse T.Stopper's lock mechanisms for consistancy
+actor "Thousand Knives Frozen" : TimeStopActivator { states { 
+	pickup: TNT1 A 0 A_JumpIf(!CallACS("XW", XW_IS_SAME_TEAM, true), 1) 
+		goto clean
+		TNT1 A 0 A_TakeInventory("XW TID Data")
+		TNT1 A 0 A_CheckFlag("ISMONSTER", "monsterFreeze")
+		TNT1 A 0 A_GiveInventory("ThousandKnivesToken",1)
+		goto super::pickup
+	clean: TNT1 A 0 A_TakeInventory("XW TID Data")
+		stop
+		
+	monsterFreeze: TNT1 A 0// use T.Stopper's sparkles since colorated powerups don't work
+		TNT1 A 0 A_JumpIfInventory("TimeStoppedCounter", 1, "no")
+		TNT1 A 0 ACS_NamedExecuteAlways("XW", 0, XW_LOCKER, 105)
+		goto super::pickup}}
+		
+		
+actor ThousandKnivesToken : Powerup { powerup.duration -20 powerup.Color InverseMap }
+
+actor "XW Time Stop" : TimeStoppedWatcher replaces TimeStoppedWatcher { states {
+	spawn: TNT1 A 0
+		TNT1 A 0 A_JumpIfInTargetInventory("ThousandKnivesToken", 1, "sakuya")
+		TNT1 A 0 A_Jump(256, "super::Spawn")
+		goto super::Spawn
+	sakuya: TNT1 A 5
+		TNT1 A 0 A_JumpIfInTargetInventory("TimeStoppedCounter", 1, "sakuya")
+		TNT1 A 0 A_TakeFromTarget("ThousandKnivesToken")
+		TNT1 A 5 A_GiveToTarget("TimeUnstopped")
+		stop}}
+		
+
+
+
+
+		
+
+			// ###### //
+			// 	GFX   //
+			// ###### //
+				
+// Random explosions for no reason lol
+actor "Thousand Knives Party" : gfx {
+	args 0,0 states {
+	spawn: TNT1 A 0 nodelay A_PlaySoundEx("THSNKNF1", "Item")
+		TNT1 A 0 A_SetArg(0,XW_THOUSANDKNIVES_TIME/3)
+	hakureiFestival:
+		TNT1 AAA 0 A_SpawnItemEx("Thousand Knives Particle", 
+			random(0,XW_THOUSANDKNIVES_RADIUS), 0,random(-XW_THOUSANDKNIVES_RADIUS,XW_THOUSANDKNIVES_RADIUS),
+			0, 0, 0,random(0, 359))
+		TNT1 A 0 A_JumpIf(args[1] > 11, 2) // knives circle 2*18
+		TNT1 A 0 A_PlaySoundEx("THSNKNF2", "Weapon")
+		TNT1 A 3 A_SetArg(1, args[1]+1)
+		TNT1 A 0 A_JumpIf(args[1] >= args[0], "end")
+		goto hakureiFestival // I wish I could // wait I can now 2024
+}}
+		
+actor "Thousand Knives Particle" : gfx {  +FORCEXYBILLBOARD states {
+	spawn: ASEX FEDCB 1
+		ASEX BBBBB 1 A_SetScale(scalex*0.7)
+		stop}}
